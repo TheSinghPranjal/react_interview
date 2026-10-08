@@ -1,0 +1,3657 @@
+[
+ {
+  "id": "next_what_is_next",
+  "category": "Next.js Fundamentals",
+  "title": "What is Next.js?",
+  "difficulty": "Easy",
+  "estimatedMinutes": 4,
+  "description": "Next.js is a React framework for building full-stack web applications.",
+  "keyConcepts": [
+   "React framework",
+   "File-system routing",
+   "Server rendering",
+   "Full-stack",
+   "Vercel"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "Next.js is an open-source React framework maintained by Vercel. It adds what React leaves out: routing, data fetching, server rendering, caching, image and font optimization, and a build system (Turbopack)."
+   },
+   {
+    "title": "Why does it exist?",
+    "content": "Building a production React app requires many decisions and tools. Next.js gives you sensible defaults so you can focus on features, and lets each route choose how it renders: static, dynamic or streamed."
+   },
+   {
+    "title": "Key ideas",
+    "content": "- **App Router** (`app/` directory) built on React Server Components.\n- Files define routes; special files (`page`, `layout`, `loading`, `error`) define UI.\n- Server Functions and Route Handlers for backend logic."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "A minimal page",
+    "language": "tsx",
+    "code": "// app/page.tsx\nexport default function HomePage() {\n  return <h1>Hello from Next.js</h1>;\n}",
+    "explanation": "A file named `page.tsx` inside `app/` becomes the `/` route. It's a Server Component by default."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Thinking Next.js replaces React — it's built on React.",
+   "Assuming every page must be server-rendered on each request."
+  ],
+  "realWorldExample": "Netflix Jobs, TikTok, Notion's marketing site and many SaaS dashboards are built with Next.js.",
+  "interviewTip": "Describe it as 'a full-stack React framework' and name 3 capabilities: routing, rendering strategies, data/caching.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "Next.js is best described as…",
+    "options": [
+     "A CSS framework",
+     "A React framework for full-stack web apps",
+     "A replacement for Node.js",
+     "A database"
+    ],
+    "correctAnswer": 1,
+    "explanation": "It's a framework built on top of React."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Which company maintains Next.js?",
+    "back": "Vercel."
+   }
+  ],
+  "track": "next",
+  "order": 1
+ },
+ {
+  "id": "next_why_next",
+  "category": "Next.js Fundamentals",
+  "title": "Why Next.js?",
+  "difficulty": "Easy",
+  "estimatedMinutes": 4,
+  "description": "The problems Next.js solves compared with a plain client-side React app.",
+  "keyConcepts": [
+   "SEO",
+   "Performance",
+   "Less client JS",
+   "Built-in optimizations",
+   "Full-stack in one repo"
+  ],
+  "sections": [
+   {
+    "title": "Problems with client-only SPAs",
+    "content": "A plain SPA sends an almost empty HTML file and builds the page in the browser. That can hurt SEO, slow the first meaningful paint, and push all data fetching to the client."
+   },
+   {
+    "title": "What Next.js adds",
+    "content": "- Pre-rendered HTML (static or per request) for fast loads and SEO.\n- Server Components that keep code and secrets on the server.\n- Automatic code splitting per route, prefetching links.\n- `next/image`, `next/font`, metadata APIs.\n- Backend code (Server Actions, Route Handlers) next to the UI."
+   },
+   {
+    "title": "Trade-offs",
+    "content": "More concepts to learn (caching, server/client boundaries), and a server or platform to run dynamic features."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Same route, server data",
+    "language": "tsx",
+    "code": "// app/blog/page.tsx — runs on the server\nexport default async function Blog() {\n  const posts = await fetch('https://api.example.com/posts').then(r => r.json());\n  return (\n    <ul>\n      {posts.map((p: { id: string; title: string }) => <li key={p.id}>{p.title}</li>)}\n    </ul>\n  );\n}",
+    "explanation": "The HTML arrives with the posts already in it — good for SEO and first paint. No loading spinner or client fetch needed."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Choosing Next.js for an internal tool behind login where SEO doesn't matter, without considering simpler options.",
+   "Ignoring the operational cost of running a server."
+  ],
+  "realWorldExample": "Marketing sites, e-commerce and content platforms rely on Next.js for SEO and fast first loads.",
+  "interviewTip": "Give a balanced answer: benefits plus trade-offs.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "A client-only SPA sends fully rendered HTML for each page by default.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "It usually sends a near-empty HTML shell rendered by JavaScript in the browser."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Main SEO advantage of Next.js?",
+    "back": "Pre-rendered HTML that crawlers can read immediately."
+   }
+  ],
+  "track": "next",
+  "order": 2
+ },
+ {
+  "id": "next_create_app",
+  "category": "Next.js Fundamentals",
+  "title": "Project Structure",
+  "difficulty": "Easy",
+  "estimatedMinutes": 5,
+  "description": "Create a Next.js app and understand its folders and special files.",
+  "keyConcepts": [
+   "create-next-app",
+   "app/ directory",
+   "public/",
+   "next.config",
+   "Special files"
+  ],
+  "sections": [
+   {
+    "title": "Getting started",
+    "content": "Run `npx create-next-app@latest`. Next.js 16 uses Turbopack by default and requires Node.js 20.9+."
+   },
+   {
+    "title": "Top-level folders",
+    "content": "- `app/` — routes, layouts and UI (App Router).\n- `public/` — static files served from `/`.\n- `src/` — optional wrapper for `app/`.\n- `next.config.ts` — framework configuration."
+   },
+   {
+    "title": "Special files in app/",
+    "content": "- `layout` — shared UI wrapping child routes (the root layout is required).\n- `page` — makes a route publicly accessible.\n- `loading` — Suspense fallback; `error` — error boundary; `not-found` — 404 UI.\n- `route` — API endpoint (Route Handler); `template` — re-mounted layout.\n- `default` — fallback for parallel routes."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "A typical tree",
+    "language": "bash",
+    "code": "app/\n  layout.tsx          # root layout (html, body)\n  page.tsx            # /\n  blog/\n    page.tsx          # /blog\n    [slug]/\n      page.tsx        # /blog/:slug\n  api/\n    health/route.ts   # GET /api/health\npublic/\n  logo.svg            # /logo.svg",
+    "explanation": "Folders create URL segments; `page` and `route` files make them reachable."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Putting `page.tsx` and `route.ts` in the same folder (not allowed).",
+   "Forgetting that a folder without `page` isn't a route."
+  ],
+  "realWorldExample": "Teams colocate components inside route folders using private folders like `_components`.",
+  "interviewTip": "Name the special files and what each does.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "Which file makes a folder publicly routable?",
+    "options": [
+     "layout.tsx",
+     "page.tsx",
+     "template.tsx",
+     "default.tsx"
+    ],
+    "correctAnswer": 1,
+    "explanation": "A route is only accessible when it has a page (or route) file."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Which layout is required?",
+    "back": "The root layout in app/, with <html> and <body>."
+   }
+  ],
+  "track": "next",
+  "order": 3
+ },
+ {
+  "id": "next_pages_router",
+  "category": "Next.js Fundamentals",
+  "title": "Pages Router (Overview)",
+  "difficulty": "Medium",
+  "estimatedMinutes": 5,
+  "description": "The original Next.js router — still supported, but the App Router is recommended for new work.",
+  "keyConcepts": [
+   "pages/ directory",
+   "getServerSideProps",
+   "getStaticProps",
+   "_app / _document",
+   "Migration"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "Before Next.js 13, routes lived in `pages/`. Each file exported a React component, and data was loaded with special functions."
+   },
+   {
+    "title": "Data functions",
+    "content": "- `getStaticProps` — fetch at build time (SSG), optionally with `revalidate` (ISR).\n- `getStaticPaths` — list dynamic paths to pre-render.\n- `getServerSideProps` — fetch on every request (SSR).\n- API routes in `pages/api`."
+   },
+   {
+    "title": "App Router vs Pages Router",
+    "content": "The App Router adds Server Components, nested layouts, streaming, Server Actions and the new caching model. Both routers can coexist in one project during migration. The Pages Router is still supported but new features land in the App Router."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Pages Router data fetching",
+    "language": "tsx",
+    "code": "// pages/products/[id].tsx\nexport async function getServerSideProps({ params }) {\n  const product = await getProduct(params.id);\n  return { props: { product } };\n}\n\nexport default function ProductPage({ product }) {\n  return <h1>{product.name}</h1>;\n}",
+    "explanation": "Data loads on each request and is passed as props. In the App Router, the page itself would be an async Server Component."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Mixing `getServerSideProps` into App Router files — it only works in `pages/`.",
+   "Assuming you must migrate everything at once."
+  ],
+  "realWorldExample": "Many large production apps still run on the Pages Router and migrate route by route.",
+  "interviewTip": "Interviewers ask about both routers; know the mapping: getServerSideProps → dynamic Server Component, getStaticProps → cached/static Server Component.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "getServerSideProps works inside the app/ directory.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "It's a Pages Router API only."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Pages Router equivalent of ISR?",
+    "back": "getStaticProps with a revalidate value."
+   }
+  ],
+  "track": "next",
+  "order": 4
+ },
+ {
+  "id": "next_app_router",
+  "category": "App Router",
+  "title": "The App Router",
+  "difficulty": "Easy",
+  "estimatedMinutes": 6,
+  "description": "Next.js's file-system router built on React Server Components, layouts and streaming.",
+  "keyConcepts": [
+   "app/ directory",
+   "Server Components by default",
+   "Nested layouts",
+   "Colocation",
+   "Streaming"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "The App Router uses the `app/` directory. Folders map to URL segments, and special files define UI for each segment. It's built on React's latest features: Server Components, Suspense, transitions and Actions."
+   },
+   {
+    "title": "Why use it?",
+    "content": "- Layouts that persist across navigations without re-rendering.\n- Server Components by default → less client JavaScript.\n- Built-in loading and error states per segment.\n- Streaming and fine-grained caching."
+   },
+   {
+    "title": "Component hierarchy",
+    "content": "For each segment Next.js nests: `layout` → `template` → `error` boundary → `loading` (Suspense) → `not-found` boundary → `page`."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Nested routes and layouts",
+    "language": "tsx",
+    "code": "// app/dashboard/layout.tsx\nexport default function DashboardLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <section className=\"dashboard\">\n      <Sidebar />\n      <main>{children}</main>\n    </section>\n  );\n}\n\n// app/dashboard/settings/page.tsx  →  /dashboard/settings\nexport default function Settings() {\n  return <h1>Settings</h1>;\n}",
+    "explanation": "Visiting `/dashboard/settings` renders the settings page inside the dashboard layout, inside the root layout. Navigating between dashboard pages keeps the sidebar mounted."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Adding 'use client' to layouts unnecessarily.",
+   "Expecting layouts to re-render on every navigation."
+  ],
+  "realWorldExample": "SaaS dashboards use nested layouts for sidebars and tabs that stay mounted across pages.",
+  "interviewTip": "Explain the special-file hierarchy and server-first default.",
+  "quiz": [
+   {
+    "type": "ordering",
+    "prompt": "Order the wrappers Next.js renders for a segment (outer → inner):",
+    "items": [
+     "layout",
+     "template",
+     "error boundary",
+     "loading (Suspense)",
+     "page"
+    ],
+    "explanation": "Layout wraps template, which wraps error, loading and finally the page."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Do layouts re-render on navigation between their child pages?",
+    "back": "No, they preserve state and stay mounted."
+   }
+  ],
+  "track": "next",
+  "order": 5
+ },
+ {
+  "id": "next_file_routing",
+  "category": "App Router",
+  "title": "File-based Routing",
+  "difficulty": "Easy",
+  "estimatedMinutes": 5,
+  "description": "Folders become URL segments; special files make them render.",
+  "keyConcepts": [
+   "Folders = segments",
+   "page.tsx",
+   "Private folders _",
+   "Colocation",
+   "Route groups ()"
+  ],
+  "sections": [
+   {
+    "title": "How it works",
+    "content": "- `app/page.tsx` → `/`\n- `app/about/page.tsx` → `/about`\n- `app/blog/[slug]/page.tsx` → `/blog/anything`"
+   },
+   {
+    "title": "Colocation",
+    "content": "Only `page` and `route` files are public, so you can safely keep components, tests and styles inside route folders. Prefix a folder with `_` (private folder) to exclude it from routing entirely."
+   },
+   {
+    "title": "Organizing without changing URLs",
+    "content": "Folders in parentheses — route groups like `(marketing)` — organize files or share a layout without adding a URL segment."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Mapping files to URLs",
+    "language": "bash",
+    "code": "app/page.tsx                      ->  /\napp/pricing/page.tsx              ->  /pricing\napp/(marketing)/about/page.tsx    ->  /about\napp/shop/[category]/page.tsx      ->  /shop/shoes\napp/docs/[...slug]/page.tsx       ->  /docs/a/b/c\napp/_components/Button.tsx        ->  (not routable)",
+    "explanation": "Route groups and private folders help organize code; dynamic segments in brackets capture URL parts."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Expecting a component file inside a route folder to be routable.",
+   "Creating two route groups that resolve to the same URL (build error)."
+  ],
+  "realWorldExample": "Marketing and app sections often live in `(marketing)` and `(app)` groups with different root layouts.",
+  "interviewTip": "Explain colocation: only page/route files are public.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "What URL does app/(shop)/cart/page.tsx serve?",
+    "options": [
+     "/cart",
+     "/(shop)/cart",
+     "/shop/cart",
+     "Not routable"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Route groups are omitted from the URL."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "How to exclude a folder from routing?",
+    "back": "Prefix it with an underscore (_folder)."
+   }
+  ],
+  "track": "next",
+  "order": 6
+ },
+ {
+  "id": "next_link",
+  "category": "App Router",
+  "title": "The Link Component",
+  "difficulty": "Easy",
+  "estimatedMinutes": 4,
+  "description": "Client-side navigation with automatic prefetching.",
+  "keyConcepts": [
+   "next/link",
+   "Prefetching",
+   "Soft navigation",
+   "Scroll restoration",
+   "prefetch prop"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "`<Link href=\"/about\">` from `next/link` extends `<a>` with client-side navigation: only the changed segments are fetched and rendered, layouts persist, and state is preserved."
+   },
+   {
+    "title": "Prefetching",
+    "content": "In production, links in the viewport are prefetched automatically. For static routes the whole route is prefetched; for dynamic routes, down to the nearest `loading.js` boundary. Use `prefetch={false}` for rarely used links."
+   },
+   {
+    "title": "Tips",
+    "content": "- Use Link for internal navigation, plain `<a>` for external URLs.\n- Highlight the active link with `usePathname()` in a Client Component."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Active navigation link",
+    "language": "tsx",
+    "code": "'use client';\n\nimport Link from 'next/link';\nimport { usePathname } from 'next/navigation';\n\nexport function NavLink({ href, children }: { href: string; children: React.ReactNode }) {\n  const pathname = usePathname();\n  const active = pathname === href;\n  return (\n    <Link href={href} aria-current={active ? 'page' : undefined} className={active ? 'active' : ''}>\n      {children}\n    </Link>\n  );\n}",
+    "explanation": "`usePathname` reads the current path so the link can style itself and set `aria-current` for screen readers."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Using `<a href>` for internal links, causing full page reloads.",
+   "Expecting prefetching to happen in development (it's production behaviour)."
+  ],
+  "realWorldExample": "E-commerce category menus prefetch product listing pages so navigation feels instant.",
+  "interviewTip": "Mention soft navigation, prefetching and preserved layouts.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "Links in the viewport are automatically prefetched in production.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Next.js prefetches visible links by default."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Hook for the current path?",
+    "back": "usePathname from next/navigation."
+   }
+  ],
+  "track": "next",
+  "order": 7
+ },
+ {
+  "id": "next_navigation",
+  "category": "App Router",
+  "title": "Programmatic Navigation",
+  "difficulty": "Medium",
+  "estimatedMinutes": 5,
+  "description": "Navigate with useRouter, redirect and permanentRedirect.",
+  "keyConcepts": [
+   "useRouter (next/navigation)",
+   "router.push / replace / refresh",
+   "redirect()",
+   "useSearchParams",
+   "useParams"
+  ],
+  "sections": [
+   {
+    "title": "Client-side",
+    "content": "In Client Components, `useRouter()` from **`next/navigation`** (not `next/router`) gives `push`, `replace`, `back`, `forward`, `prefetch` and `refresh`. `router.refresh()` re-fetches Server Components for the current route without losing client state."
+   },
+   {
+    "title": "Server-side",
+    "content": "In Server Components, Server Actions and Route Handlers, call `redirect('/login')` or `permanentRedirect('/new')` from `next/navigation`. They throw a special error to stop rendering, so don't wrap them in try/catch."
+   },
+   {
+    "title": "Reading the URL",
+    "content": "`usePathname()`, `useSearchParams()` and `useParams()` in Client Components. Pages receive `params` and `searchParams` as **promises** (Next.js 15+)."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Redirect after a mutation",
+    "language": "tsx",
+    "code": "'use server';\nimport { redirect } from 'next/navigation';\nimport { revalidatePath } from 'next/cache';\n\nexport async function createPost(formData: FormData) {\n  const post = await db.post.create({ data: { title: String(formData.get('title')) } });\n  revalidatePath('/posts');\n  redirect(`/posts/${post.id}`); // throws — keep it outside try/catch\n}",
+    "explanation": "After saving, the action revalidates the list and redirects to the new post."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Importing useRouter from 'next/router' in the App Router.",
+   "Calling redirect() inside a try block, which swallows the redirect."
+  ],
+  "realWorldExample": "Checkout flows redirect to a confirmation page from a Server Action after payment.",
+  "interviewTip": "Know which import to use in each router and that redirect throws.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "Where should useRouter be imported from in the App Router?",
+    "options": [
+     "next/router",
+     "next/navigation",
+     "react-router",
+     "next/link"
+    ],
+    "correctAnswer": 1,
+    "explanation": "next/navigation is the App Router module."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "What does router.refresh() do?",
+    "back": "Re-fetches Server Components for the current route, keeping client state."
+   }
+  ],
+  "track": "next",
+  "order": 8
+ },
+ {
+  "id": "next_dynamic_routes",
+  "category": "Routing",
+  "title": "Dynamic Routes",
+  "difficulty": "Easy",
+  "estimatedMinutes": 5,
+  "description": "Capture parts of the URL with [param], [...slug] and [[...slug]].",
+  "keyConcepts": [
+   "[slug]",
+   "Catch-all [...slug]",
+   "Optional catch-all [[...slug]]",
+   "params is a Promise",
+   "generateStaticParams"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "Wrap a folder name in square brackets to create a dynamic segment. The value is passed to the page as `params`."
+   },
+   {
+    "title": "Variants",
+    "content": "- `[id]` — one segment: `/posts/42`.\n- `[...slug]` — one or more segments: `/docs/a/b`.\n- `[[...slug]]` — zero or more: also matches `/docs`."
+   },
+   {
+    "title": "Async params",
+    "content": "Since Next.js 15, `params` and `searchParams` are Promises. Await them in Server Components, or use `use()` / `useParams()` in Client Components."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Reading params",
+    "language": "tsx",
+    "code": "// app/blog/[slug]/page.tsx\nexport default async function Post({ params }: { params: Promise<{ slug: string }> }) {\n  const { slug } = await params;\n  const post = await getPost(slug);\n  if (!post) notFound();\n  return <article><h1>{post.title}</h1></article>;\n}",
+    "explanation": "The page awaits `params`, loads the post and calls `notFound()` (from next/navigation) when it doesn't exist."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Accessing `params.slug` synchronously (deprecated in 15, removed in 16).",
+   "Forgetting to handle unknown ids with notFound()."
+  ],
+  "realWorldExample": "Product pages (`/products/[id]`) and docs sites (`/docs/[...slug]`) use dynamic routes.",
+  "interviewTip": "Mention async params as a recent breaking change.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "Which folder matches /docs, /docs/a and /docs/a/b?",
+    "options": [
+     "[slug]",
+     "[[...slug]]",
+     "[...slug]",
+     "(slug)"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Optional catch-all also matches the base path."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Type of params in Next.js 15+ pages?",
+    "back": "A Promise you must await."
+   }
+  ],
+  "track": "next",
+  "order": 9
+ },
+ {
+  "id": "next_route_groups",
+  "category": "Routing",
+  "title": "Route Groups",
+  "difficulty": "Easy",
+  "estimatedMinutes": 4,
+  "description": "Organize routes and share layouts without affecting the URL.",
+  "keyConcepts": [
+   "(folderName)",
+   "Multiple root layouts",
+   "Opt segments into a layout",
+   "No URL impact"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "A folder wrapped in parentheses, like `(marketing)`, is a route group. It's left out of the URL path."
+   },
+   {
+    "title": "Uses",
+    "content": "- Organize routes by section or team.\n- Give a subset of routes their own layout (e.g. `(auth)` pages without the main nav).\n- Create **multiple root layouts** — each group has its own `layout.tsx` with `<html>` and `<body>`."
+   },
+   {
+    "title": "Caveats",
+    "content": "Two groups must not resolve to the same URL. Navigating between different root layouts triggers a full page load."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Different layouts per section",
+    "language": "bash",
+    "code": "app/\n  (marketing)/\n    layout.tsx        # marketing header & footer\n    page.tsx          # /\n    pricing/page.tsx  # /pricing\n  (app)/\n    layout.tsx        # authenticated shell with sidebar\n    dashboard/page.tsx  # /dashboard",
+    "explanation": "Marketing pages and the app share no layout, yet URLs stay clean."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Creating `(a)/about` and `(b)/about` — conflicting routes.",
+   "Expecting the group name to appear in the URL."
+  ],
+  "realWorldExample": "SaaS products separate marketing, auth and app shells with route groups.",
+  "interviewTip": "Mention multiple root layouts and the full reload caveat.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "Route group names appear in the URL.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Parenthesized folders are omitted from the path."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Syntax for a route group?",
+    "back": "A folder name in parentheses: (group)."
+   }
+  ],
+  "track": "next",
+  "order": 10
+ },
+ {
+  "id": "next_parallel_routes",
+  "category": "Routing",
+  "title": "Parallel Routes",
+  "difficulty": "Hard",
+  "estimatedMinutes": 6,
+  "description": "Render multiple pages in the same layout at once with named slots.",
+  "keyConcepts": [
+   "@slot folders",
+   "Slots as layout props",
+   "default.js",
+   "Independent loading/error",
+   "Conditional slots"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "Parallel routes let a layout render several pages simultaneously. Create slots with `@name` folders; each slot is passed to the parent layout as a prop."
+   },
+   {
+    "title": "Why use them?",
+    "content": "Dashboards with independent panels, split views, and modals (combined with intercepting routes). Each slot can have its own `loading` and `error` states and navigate independently."
+   },
+   {
+    "title": "default.js",
+    "content": "On a hard navigation (full page load), Next.js can't recover the active state of slots that don't match the URL, so it renders the slot's `default.js`. In Next.js 16 every slot must have an explicit `default.js` (return `null` or `notFound()`), otherwise the build fails."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Dashboard with two slots",
+    "language": "tsx",
+    "code": "// app/dashboard/layout.tsx\nexport default function Layout({\n  children,\n  analytics,\n  team,\n}: {\n  children: React.ReactNode;\n  analytics: React.ReactNode;\n  team: React.ReactNode;\n}) {\n  return (\n    <>\n      {children}\n      <div className=\"grid\">\n        {analytics}\n        {team}\n      </div>\n    </>\n  );\n}\n\n// app/dashboard/@analytics/page.tsx\n// app/dashboard/@team/page.tsx\n// app/dashboard/@analytics/default.tsx  -> export default () => null",
+    "explanation": "`@analytics` and `@team` render side by side. Slots aren't URL segments, so `/dashboard` renders both."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Forgetting `default.tsx`, causing 404s on refresh (and build errors in Next 16).",
+   "Thinking slots change the URL."
+  ],
+  "realWorldExample": "Admin dashboards render metrics and activity panels as independent slots with separate loading skeletons.",
+  "interviewTip": "Pair parallel routes with intercepting routes to explain the 'modal with shareable URL' pattern.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "How is a parallel route slot defined?",
+    "options": [
+     "(slot) folder",
+     "@slot folder",
+     "_slot folder",
+     "[slot] folder"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Slots use the @ prefix."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "What does default.js do for a slot?",
+    "back": "Provides fallback UI when the slot's state can't be recovered from the URL."
+   }
+  ],
+  "track": "next",
+  "order": 11
+ },
+ {
+  "id": "next_intercepting_routes",
+  "category": "Routing",
+  "title": "Intercepting Routes",
+  "difficulty": "Hard",
+  "estimatedMinutes": 6,
+  "description": "Load a route inside the current layout — e.g. open a photo in a modal while keeping a shareable URL.",
+  "keyConcepts": [
+   "(.) (..) (...) conventions",
+   "Soft vs hard navigation",
+   "Modals",
+   "Pairs with parallel routes"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "Intercepting routes show a different route's content in the current context during **soft navigation** (clicking a Link). On a hard navigation (refresh, shared URL), the original full page renders."
+   },
+   {
+    "title": "Conventions",
+    "content": "Based on route segments (not file paths):\n\n- `(.)` — same level\n- `(..)` — one level up\n- `(..)(..)` — two levels up\n- `(...)` — from the app root"
+   },
+   {
+    "title": "The modal pattern",
+    "content": "Feed at `/feed`, photo page at `/photo/[id]`. Inside a `@modal` slot, `(..)photo/[id]` intercepts the navigation and shows the photo in a modal over the feed. Refreshing `/photo/123` shows the full photo page."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Folder structure for a modal",
+    "language": "bash",
+    "code": "app/\n  layout.tsx            # renders {children} and {modal}\n  feed/page.tsx\n  photo/[id]/page.tsx   # full page (hard navigation)\n  @modal/\n    default.tsx         # returns null\n    (.)photo/[id]/page.tsx  # modal (soft navigation)",
+    "explanation": "Clicking a photo link in the feed renders the intercepted route in the modal slot; the URL updates to `/photo/123` so it's shareable."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Using file-system levels instead of route segments to count (..).",
+   "Not closing the modal with router.back()."
+  ],
+  "realWorldExample": "Instagram-style photo modals and login modals use intercepting routes.",
+  "interviewTip": "Explain soft vs hard navigation behaviour clearly.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "When you refresh an intercepted URL, the modal version renders.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Hard navigation renders the original route's full page."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Convention to intercept from the root?",
+    "back": "(...)"
+   }
+  ],
+  "track": "next",
+  "order": 12
+ },
+ {
+  "id": "next_not_found",
+  "category": "Routing",
+  "title": "not-found and notFound()",
+  "difficulty": "Easy",
+  "estimatedMinutes": 4,
+  "description": "Render 404 UI for unknown routes and missing resources.",
+  "keyConcepts": [
+   "not-found.tsx",
+   "notFound()",
+   "global-not-found",
+   "404 status"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "`not-found.tsx` defines the UI shown when `notFound()` is called in a segment, and the root `app/not-found.tsx` handles all unmatched URLs."
+   },
+   {
+    "title": "When to call notFound()",
+    "content": "When a dynamic segment doesn't match data: a deleted product, an unknown slug. It throws, stops rendering and returns a 404 status (for non-streamed responses)."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Missing product",
+    "language": "tsx",
+    "code": "import { notFound } from 'next/navigation';\n\nexport default async function Product({ params }: { params: Promise<{ id: string }> }) {\n  const { id } = await params;\n  const product = await getProduct(id);\n  if (!product) notFound();\n  return <h1>{product.name}</h1>;\n}\n\n// app/products/not-found.tsx\nexport default function NotFound() {\n  return <p>We couldn't find that product.</p>;\n}",
+    "explanation": "Unknown ids render the segment's not-found UI with a 404 status, which is better for SEO than an empty page."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Rendering 'Not found' text with a 200 status instead of calling notFound().",
+   "Wrapping notFound() in try/catch."
+  ],
+  "realWorldExample": "E-commerce sites show friendly 404s with search suggestions for discontinued products.",
+  "interviewTip": "Mention correct status codes matter for SEO.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "notFound() throws to stop rendering the current segment.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Like redirect, it uses a special thrown error."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "File for 404 UI?",
+    "back": "not-found.tsx"
+   }
+  ],
+  "track": "next",
+  "order": 13
+ },
+ {
+  "id": "next_layouts",
+  "category": "Layouts",
+  "title": "Layouts",
+  "difficulty": "Easy",
+  "estimatedMinutes": 5,
+  "description": "Shared UI that wraps pages and persists across navigation.",
+  "keyConcepts": [
+   "layout.tsx",
+   "children prop",
+   "Root layout",
+   "State preserved",
+   "No searchParams"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "A layout is UI shared between multiple pages. It receives `children` (the page or nested layout) and stays mounted when navigating between its child routes."
+   },
+   {
+    "title": "Root layout",
+    "content": "`app/layout.tsx` is required and must render `<html>` and `<body>`. Put global providers, fonts and metadata defaults here."
+   },
+   {
+    "title": "Limitations",
+    "content": "- Layouts don't re-render on navigation, so they can't read the current pathname on the server (use a Client Component with `usePathname`).\n- Layouts don't receive `searchParams`.\n- Data fetching in layouts runs once per layout render; fetch where data is needed."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Root layout",
+    "language": "tsx",
+    "code": "// app/layout.tsx\nimport { Inter } from 'next/font/google';\nimport './globals.css';\n\nconst inter = Inter({ subsets: ['latin'] });\n\nexport const metadata = { title: { default: 'Acme', template: '%s | Acme' } };\n\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang=\"en\" className={inter.className}>\n      <body>{children}</body>\n    </html>\n  );\n}",
+    "explanation": "The root layout sets the font, global CSS and a metadata title template that child pages fill in."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Trying to read searchParams in a layout.",
+   "Making the root layout a Client Component."
+  ],
+  "realWorldExample": "App shells with sidebars and top bars live in layouts so they don't flicker between pages.",
+  "interviewTip": "Explain persistence and what layouts cannot access.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "Which must the root layout render?",
+    "options": [
+     "<Suspense>",
+     "<head> only",
+     "<html> and <body>",
+     "<main>"
+    ],
+    "correctAnswer": 2,
+    "explanation": "The root layout defines the document structure."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Do layouts receive searchParams?",
+    "back": "No."
+   }
+  ],
+  "track": "next",
+  "order": 14
+ },
+ {
+  "id": "next_nested_layouts",
+  "category": "Layouts",
+  "title": "Nested Layouts",
+  "difficulty": "Easy",
+  "estimatedMinutes": 4,
+  "description": "Layouts nest automatically along the route hierarchy.",
+  "keyConcepts": [
+   "Segment layouts",
+   "Composition",
+   "Partial rendering",
+   "Shared state"
+  ],
+  "sections": [
+   {
+    "title": "How it works",
+    "content": "A `layout.tsx` in any folder wraps all routes below it, and is itself wrapped by parent layouts. `/dashboard/settings` renders root layout → dashboard layout → settings page."
+   },
+   {
+    "title": "Partial rendering",
+    "content": "When navigating between sibling routes, only the segments that change re-render. Shared layouts keep their state and aren't re-fetched."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Settings sub-layout with tabs",
+    "language": "tsx",
+    "code": "// app/dashboard/settings/layout.tsx\nimport Link from 'next/link';\n\nexport default function SettingsLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <div>\n      <nav>\n        <Link href=\"/dashboard/settings/profile\">Profile</Link>\n        <Link href=\"/dashboard/settings/billing\">Billing</Link>\n      </nav>\n      {children}\n    </div>\n  );\n}",
+    "explanation": "Switching between profile and billing keeps the tab nav and the outer dashboard layout mounted."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Duplicating navigation in every page instead of using a nested layout."
+  ],
+  "realWorldExample": "Settings pages with tabbed sub-navigation use nested layouts.",
+  "interviewTip": "Mention partial rendering as a performance benefit.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "Navigating between /dashboard/a and /dashboard/b re-renders the dashboard layout.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Shared layouts are preserved."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "What re-renders on sibling navigation?",
+    "back": "Only the segments that changed."
+   }
+  ],
+  "track": "next",
+  "order": 15
+ },
+ {
+  "id": "next_templates",
+  "category": "Layouts",
+  "title": "Templates",
+  "difficulty": "Medium",
+  "estimatedMinutes": 4,
+  "description": "Like layouts, but re-mounted on every navigation.",
+  "keyConcepts": [
+   "template.tsx",
+   "Fresh state per navigation",
+   "Enter animations",
+   "Effects re-run"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "`template.tsx` wraps children like a layout, but gets a unique key per route, so it **remounts** on navigation: state resets and Effects re-run."
+   },
+   {
+    "title": "When to use it",
+    "content": "- Enter/exit animations per page.\n- Per-page analytics in useEffect.\n- Resetting a form or feedback widget on each page.\n\nPrefer layouts unless you specifically need the remount."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Fade-in per page",
+    "language": "tsx",
+    "code": "// app/blog/template.tsx\n'use client';\nimport { motion } from 'motion/react';\n\nexport default function Template({ children }: { children: React.ReactNode }) {\n  return (\n    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>\n      {children}\n    </motion.div>\n  );\n}",
+    "explanation": "Because the template remounts on every navigation, the fade-in runs each time."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Using templates by default, losing layout persistence benefits."
+  ],
+  "realWorldExample": "Blogs use templates for page-transition animations.",
+  "interviewTip": "Contrast layout (persist) vs template (remount).",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "What's the key difference between layout and template?",
+    "options": [
+     "Templates can't render children",
+     "Layouts are client-only",
+     "Templates are required",
+     "Templates remount on navigation"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Templates get a new instance per navigation."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Template vs layout state?",
+    "back": "Template state resets each navigation; layout state persists."
+   }
+  ],
+  "track": "next",
+  "order": 16
+ },
+ {
+  "id": "next_loading_ui",
+  "category": "Layouts",
+  "title": "Loading UI",
+  "difficulty": "Easy",
+  "estimatedMinutes": 4,
+  "description": "Instant loading states with loading.tsx and Suspense.",
+  "keyConcepts": [
+   "loading.tsx",
+   "Wraps page in Suspense",
+   "Instant feedback",
+   "Prefetched fallback",
+   "Granular Suspense"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "`loading.tsx` automatically wraps the segment's page in a `<Suspense>` boundary. Its UI shows immediately on navigation while the page's data loads, then streams in."
+   },
+   {
+    "title": "Why it matters",
+    "content": "Users get instant feedback; the layout stays interactive. For dynamic routes, the loading UI is prefetched so it appears without a network round-trip."
+   },
+   {
+    "title": "Going further",
+    "content": "Use `<Suspense>` inside pages for finer control so fast sections show before slow ones."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Skeleton loader",
+    "language": "tsx",
+    "code": "// app/dashboard/loading.tsx\nexport default function Loading() {\n  return (\n    <div aria-busy=\"true\" aria-live=\"polite\">\n      <div className=\"skeleton h-8 w-48\" />\n      <div className=\"skeleton h-64 w-full\" />\n    </div>\n  );\n}",
+    "explanation": "Shown instantly while `app/dashboard/page.tsx` fetches. `aria-busy` informs assistive technologies."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Only relying on one loading.tsx for a page with very different data speeds."
+  ],
+  "realWorldExample": "Dashboards show skeleton cards while analytics queries run.",
+  "interviewTip": "Explain that loading.tsx = automatic Suspense boundary + streaming.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "loading.tsx wraps the page in a Suspense boundary.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 0,
+    "explanation": "It's a convention for a Suspense fallback."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "What does loading.tsx render?",
+    "back": "The Suspense fallback for its segment."
+   }
+  ],
+  "track": "next",
+  "order": 17
+ },
+ {
+  "id": "next_error_ui",
+  "category": "Layouts",
+  "title": "Error Handling UI",
+  "difficulty": "Medium",
+  "estimatedMinutes": 5,
+  "description": "Catch errors per segment with error.tsx and global-error.tsx.",
+  "keyConcepts": [
+   "error.tsx",
+   "Must be a Client Component",
+   "reset()",
+   "global-error.tsx",
+   "Expected vs unexpected errors"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "`error.tsx` creates a React error boundary around a segment's page (and nested children). It must be a Client Component and receives `error` and `reset`."
+   },
+   {
+    "title": "Scope",
+    "content": "An `error.tsx` does not catch errors in the `layout` of the same segment — put it one level up for that. `global-error.tsx` catches errors in the root layout and must render its own `<html>` and `<body>`."
+   },
+   {
+    "title": "Expected errors",
+    "content": "Model expected failures (validation, 'not found') as return values or `notFound()`, not thrown exceptions. Use error boundaries for unexpected errors."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Segment error boundary",
+    "language": "tsx",
+    "code": "// app/dashboard/error.tsx\n'use client';\n\nexport default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {\n  return (\n    <div role=\"alert\">\n      <h2>Something went wrong loading the dashboard.</h2>\n      <button onClick={() => reset()}>Try again</button>\n    </div>\n  );\n}",
+    "explanation": "`reset()` re-renders the segment. In production, server error messages are replaced with a generic message and a `digest` you can match in server logs."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Forgetting 'use client' in error.tsx.",
+   "Expecting error.tsx to catch errors from the layout in the same folder."
+  ],
+  "realWorldExample": "A failing analytics panel shows a retry button instead of crashing the whole dashboard.",
+  "interviewTip": "Explain digest and why production hides server error messages (to avoid leaking secrets).",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "error.tsx can be a Server Component.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Error boundaries must be Client Components."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Which file catches root layout errors?",
+    "back": "global-error.tsx"
+   }
+  ],
+  "track": "next",
+  "order": 18
+ },
+ {
+  "id": "next_server_components",
+  "category": "Server Components",
+  "title": "Server Components in Next.js",
+  "difficulty": "Medium",
+  "estimatedMinutes": 6,
+  "description": "In the App Router every component is a Server Component unless marked otherwise.",
+  "keyConcepts": [
+   "Default on the server",
+   "async/await data",
+   "Secrets stay on server",
+   "Smaller bundles",
+   "RSC payload"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "Pages, layouts and components in `app/` are React Server Components by default. They render on the server (at build time or per request) and send an RSC payload plus HTML to the browser."
+   },
+   {
+    "title": "Benefits",
+    "content": "- Fetch data directly with `await` — databases, CMS, internal services.\n- Keep API keys and heavy libraries off the client.\n- Less JavaScript to download and hydrate.\n- Results can be cached and reused across requests."
+   },
+   {
+    "title": "When you need a Client Component instead",
+    "content": "State, Effects, event handlers, browser APIs (`window`, `localStorage`), or client-only libraries."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Fetching on the server",
+    "language": "tsx",
+    "code": "// app/team/page.tsx\nimport { getTeamMembers } from '@/lib/data';\n\nexport default async function TeamPage() {\n  const members = await getTeamMembers(); // runs on the server\n  return (\n    <ul>\n      {members.map(m => <li key={m.id}>{m.name}</li>)}\n    </ul>\n  );\n}",
+    "explanation": "No `useEffect`, no loading spinner state, no API route — the page awaits data and renders HTML on the server."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Adding 'use client' just to fetch data.",
+   "Importing server-only modules (db clients) into Client Components."
+  ],
+  "realWorldExample": "Blogs, docs and product listings are mostly Server Components with small client islands.",
+  "interviewTip": "Mention that Server Components are the default and why that reduces bundle size.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "In the App Router, components are Client Components unless marked with 'use server'.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "They're Server Components by default; 'use client' marks client boundaries."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "What directive opts into a client boundary?",
+    "back": "'use client'"
+   }
+  ],
+  "track": "next",
+  "order": 19
+ },
+ {
+  "id": "next_server_only",
+  "category": "Server Components",
+  "title": "Keeping Code Server-Only",
+  "difficulty": "Medium",
+  "estimatedMinutes": 5,
+  "description": "Prevent secrets and server code from leaking into client bundles.",
+  "keyConcepts": [
+   "server-only package",
+   "client-only",
+   "NEXT_PUBLIC_ prefix",
+   "Data Access Layer",
+   "Taint APIs"
+  ],
+  "sections": [
+   {
+    "title": "The risk",
+    "content": "A module that reads `process.env.DATABASE_URL` could accidentally be imported into a Client Component. Non-`NEXT_PUBLIC_` env vars become empty strings on the client, but the code itself still ships."
+   },
+   {
+    "title": "The fix",
+    "content": "Add `import 'server-only'` at the top of server modules. If a Client Component imports them, the build fails with a clear error. The `client-only` package does the reverse."
+   },
+   {
+    "title": "Data Access Layer",
+    "content": "Put all data access in a dedicated server-only layer that checks auth and returns **DTOs** (only the fields the UI needs), never raw database rows."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "A server-only data module",
+    "language": "ts",
+    "code": "// lib/data/users.ts\nimport 'server-only';\nimport { db } from '@/lib/db';\nimport { verifySession } from '@/lib/auth';\n\nexport async function getProfile() {\n  const session = await verifySession();\n  const user = await db.user.findUnique({ where: { id: session.userId } });\n  // Return a DTO, not the whole row (no password hash, no internal flags).\n  return { name: user.name, avatarUrl: user.avatarUrl };\n}",
+    "explanation": "The `server-only` import guards against client imports, and the function returns only safe fields."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Passing full database objects to Client Components.",
+   "Prefixing secrets with NEXT_PUBLIC_."
+  ],
+  "realWorldExample": "Teams keep `lib/data/*` server-only and review any new NEXT_PUBLIC_ variables in code review.",
+  "interviewTip": "Mention 'server-only' and the DTO pattern; it shows security awareness.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "What happens if a Client Component imports a module with `import 'server-only'`?",
+    "options": [
+     "It works silently",
+     "Secrets are encrypted",
+     "The module runs twice",
+     "The build fails with an error"
+    ],
+    "correctAnswer": 3,
+    "explanation": "server-only causes a build-time error for client imports."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "What's a DTO here?",
+    "back": "A minimal object with only fields safe for the UI."
+   }
+  ],
+  "track": "next",
+  "order": 20
+ },
+ {
+  "id": "next_composition_patterns",
+  "category": "Server Components",
+  "title": "Server & Client Composition Patterns",
+  "difficulty": "Hard",
+  "estimatedMinutes": 6,
+  "description": "Interleave Server and Client Components effectively.",
+  "keyConcepts": [
+   "Push client down",
+   "children slots",
+   "Serializable props",
+   "Context providers as client wrappers",
+   "Shared data via cache()"
+  ],
+  "sections": [
+   {
+    "title": "Pattern 1: push client components to the leaves",
+    "content": "Keep layouts and pages on the server; make only the interactive bits (search box, like button) client components."
+   },
+   {
+    "title": "Pattern 2: pass Server Components as children",
+    "content": "A Client Component can't import a Server Component, but it can receive one as `children`. The server renders it and React slots it into the client tree."
+   },
+   {
+    "title": "Pattern 3: providers",
+    "content": "Context only works in Client Components. Create a `'use client'` `Providers` component and render it in the root layout around `{children}` — children stay Server Components."
+   },
+   {
+    "title": "Pattern 4: share data with React cache()",
+    "content": "Need the same data in a layout and a page? Call a function wrapped in React's `cache()`; duplicate calls in one request are deduplicated."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Client wrapper with server children",
+    "language": "tsx",
+    "code": "// components/Collapsible.tsx\n'use client';\nimport { useState } from 'react';\n\nexport function Collapsible({ children }: { children: React.ReactNode }) {\n  const [open, setOpen] = useState(true);\n  return (\n    <section>\n      <button onClick={() => setOpen(o => !o)}>{open ? 'Hide' : 'Show'}</button>\n      {open && children}\n    </section>\n  );\n}\n\n// app/page.tsx (Server Component)\nexport default function Page() {\n  return (\n    <Collapsible>\n      <ServerRenderedStats />\n    </Collapsible>\n  );\n}",
+    "explanation": "`ServerRenderedStats` still runs on the server; `Collapsible` only controls whether its already-rendered output is shown."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Wrapping the whole app in 'use client' to use one context.",
+   "Passing functions from Server to Client Components (not serializable)."
+  ],
+  "realWorldExample": "Theme and auth providers wrap `{children}` in the root layout while pages remain server-rendered.",
+  "interviewTip": "The children pattern is a favourite interview question — be ready to explain why it works.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "A Client Component can render a Server Component passed to it as children.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 0,
+    "explanation": "The server renders it; the client receives the result."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "How to use Context with Server Components?",
+    "back": "Wrap children in a 'use client' provider component."
+   }
+  ],
+  "track": "next",
+  "order": 21
+ },
+ {
+  "id": "next_client_components",
+  "category": "Client Components",
+  "title": "Client Components in Next.js",
+  "difficulty": "Medium",
+  "estimatedMinutes": 5,
+  "description": "Interactive components that are pre-rendered on the server and hydrated in the browser.",
+  "keyConcepts": [
+   "'use client'",
+   "Hooks and events",
+   "SSR + hydration",
+   "Browser APIs in effects",
+   "Bundle cost"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "A file starting with `'use client'` (and everything it imports) becomes part of the client bundle. These components render to HTML on the server for the first load, then hydrate."
+   },
+   {
+    "title": "When to use",
+    "content": "- State and lifecycle: `useState`, `useEffect`, `useReducer`.\n- Event listeners: `onClick`, `onChange`.\n- Browser-only APIs: geolocation, localStorage, IntersectionObserver.\n- Client-only libraries (charts, maps, animation)."
+   },
+   {
+    "title": "Browser APIs safely",
+    "content": "Because Client Components also render on the server, access `window` inside `useEffect` or event handlers. For libraries that crash on the server, use `next/dynamic` with `ssr: false` (inside a Client Component)."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Loading a client-only map",
+    "language": "tsx",
+    "code": "'use client';\nimport dynamic from 'next/dynamic';\n\nconst Map = dynamic(() => import('./LeafletMap'), {\n  ssr: false,\n  loading: () => <p>Loading map…</p>,\n});\n\nexport function StoreLocator() {\n  return <Map />;\n}",
+    "explanation": "The map library only loads in the browser, avoiding `window is not defined` errors during server rendering."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Accessing window during render.",
+   "Using `ssr: false` in a Server Component (not allowed)."
+  ],
+  "realWorldExample": "Store locators, rich editors and charts are typical client components.",
+  "interviewTip": "Clarify 'Client Components still SSR' — a common misconception.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "Client Components are rendered to HTML on the server during the initial page load.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 0,
+    "explanation": "They pre-render then hydrate."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Load a client-only library without SSR?",
+    "back": "next/dynamic with ssr: false inside a Client Component."
+   }
+  ],
+  "track": "next",
+  "order": 22
+ },
+ {
+  "id": "next_use_client",
+  "category": "Client Components",
+  "title": "The 'use client' Boundary",
+  "difficulty": "Medium",
+  "estimatedMinutes": 5,
+  "description": "Understand exactly what the directive does and where to put it.",
+  "keyConcepts": [
+   "Module boundary",
+   "Entry points only",
+   "Serializable props",
+   "Third-party components"
+  ],
+  "sections": [
+   {
+    "title": "What it does",
+    "content": "`'use client'` declares a boundary in the **module graph**. The file and all modules it imports are bundled for the client. It doesn't need to be in every client file — only in files imported by server code."
+   },
+   {
+    "title": "Props across the boundary",
+    "content": "Props from Server to Client Components must be serializable: strings, numbers, plain objects, arrays, Dates, Maps, Sets, JSX, Promises, and Server Functions. Not regular functions or class instances."
+   },
+   {
+    "title": "Third-party components",
+    "content": "Some libraries use hooks but lack the directive. Re-export them from your own file with `'use client'` so they can be used in Server Components."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Wrapping a third-party component",
+    "language": "tsx",
+    "code": "// components/Carousel.tsx\n'use client';\nexport { Carousel } from 'acme-carousel';\n\n// app/page.tsx (Server Component)\nimport { Carousel } from '@/components/Carousel';\nexport default function Page() {\n  return <Carousel slides={['a.jpg', 'b.jpg']} />;\n}",
+    "explanation": "The wrapper marks the boundary so the hook-based library runs on the client."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Sprinkling 'use client' in every file 'just in case'.",
+   "Passing an onClick function from a Server Component to a Client Component."
+  ],
+  "realWorldExample": "Design system libraries ship with 'use client' on interactive components so they work in RSC apps.",
+  "interviewTip": "Explain module-graph boundaries rather than per-component flags.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "Which prop can a Server Component pass to a Client Component?",
+    "options": [
+     "() => alert('hi')",
+     "{ id: 1, name: 'Ada' }",
+     "A DOM node",
+     "A class instance"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Plain serializable objects can cross the boundary."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Where must 'use client' appear?",
+    "back": "At the very top of the file, before imports."
+   }
+  ],
+  "track": "next",
+  "order": 23
+ },
+ {
+  "id": "next_data_fetching",
+  "category": "Data Fetching",
+  "title": "Data Fetching in the App Router",
+  "difficulty": "Medium",
+  "estimatedMinutes": 7,
+  "description": "Fetch on the server with async components, in parallel, close to where data is used.",
+  "keyConcepts": [
+   "async Server Components",
+   "Parallel fetching",
+   "Request memoization",
+   "React cache()",
+   "Client fetching (SWR/TanStack Query)"
+  ],
+  "sections": [
+   {
+    "title": "Server-first fetching",
+    "content": "Make Server Components `async` and `await` data. Use `fetch`, an ORM, or any SDK. `fetch` calls with the same URL and options in one render are memoized automatically; wrap ORM calls in React's `cache()` for the same deduplication."
+   },
+   {
+    "title": "Avoid waterfalls",
+    "content": "Sequential awaits wait for each other. Start independent requests together with `Promise.all`, or split into separate components with their own Suspense boundaries so each streams independently."
+   },
+   {
+    "title": "Fetching on the client",
+    "content": "For data that changes with user interaction (infinite scroll, live search), use a client library like SWR or TanStack Query, or pass a promise from the server and read it with `use()`."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Parallel requests",
+    "language": "tsx",
+    "code": "export default async function ArtistPage({ params }: { params: Promise<{ id: string }> }) {\n  const { id } = await params;\n\n  // Start both requests before awaiting either.\n  const [artist, albums] = await Promise.all([getArtist(id), getAlbums(id)]);\n\n  return (\n    <>\n      <h1>{artist.name}</h1>\n      <AlbumList albums={albums} />\n    </>\n  );\n}",
+    "explanation": "Both requests run simultaneously, so the page waits for the slowest one rather than the sum of both."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Fetching your own Route Handlers from Server Components (an unnecessary network hop) — call the data function directly.",
+   "Sequential awaits for independent data."
+  ],
+  "realWorldExample": "A product page fetches product, reviews and recommendations in parallel; reviews stream later inside Suspense.",
+  "interviewTip": "Name request memoization, Promise.all, and Suspense streaming as tools against waterfalls.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "A Server Component should fetch from your own /api route handler to get data.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Call the data source directly; the extra HTTP hop is unnecessary."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Dedupe ORM calls within a request with…",
+    "back": "React's cache() function."
+   }
+  ],
+  "beforeAfter": {
+   "title": "Fix the waterfall",
+   "before": "const user = await getUser(id);\nconst posts = await getPosts(id);      // waits for user first\nconst followers = await getFollowers(id);",
+   "after": "const [user, posts, followers] = await Promise.all([\n  getUser(id),\n  getPosts(id),\n  getFollowers(id),\n]);",
+   "language": "tsx",
+   "explanation": "The 'before' version takes the sum of all three latencies; the 'after' version takes only the slowest."
+  },
+  "track": "next",
+  "order": 24
+ },
+ {
+  "id": "next_api_integration",
+  "category": "Data Fetching",
+  "title": "Integrating External APIs",
+  "difficulty": "Medium",
+  "estimatedMinutes": 5,
+  "description": "Call third-party and internal APIs safely from the server.",
+  "keyConcepts": [
+   "Server-side API keys",
+   "Error handling",
+   "Timeouts",
+   "Typed responses",
+   "Caching responses"
+  ],
+  "sections": [
+   {
+    "title": "Where to call APIs",
+    "content": "Call APIs from Server Components, Server Actions or Route Handlers so keys stay secret and responses can be cached. Only call from the client when the API is public and user-specific interaction demands it."
+   },
+   {
+    "title": "Robust calls",
+    "content": "- Check `res.ok` and throw or handle non-2xx responses.\n- Add timeouts with `AbortSignal.timeout(ms)`.\n- Validate the response shape (e.g. Zod) instead of trusting it.\n- Decide caching explicitly: `cache: 'force-cache'`, `next: { revalidate: 3600 }`, or `\"use cache\"` with Cache Components."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "A typed, cached API helper",
+    "language": "ts",
+    "code": "import 'server-only';\nimport { z } from 'zod';\n\nconst Weather = z.object({ tempC: z.number(), summary: z.string() });\n\nexport async function getWeather(city: string) {\n  const res = await fetch(`https://api.weather.example/v1?city=${encodeURIComponent(city)}`, {\n    headers: { Authorization: `Bearer ${process.env.WEATHER_API_KEY}` },\n    next: { revalidate: 600 },          // reuse for 10 minutes\n    signal: AbortSignal.timeout(5000),  // fail fast\n  });\n  if (!res.ok) throw new Error(`Weather API failed: ${res.status}`);\n  return Weather.parse(await res.json());\n}",
+    "explanation": "The key stays on the server, the response is cached for 10 minutes, slow requests abort after 5 seconds, and the data is validated."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Exposing API keys via NEXT_PUBLIC_ variables.",
+   "Ignoring non-2xx responses."
+  ],
+  "realWorldExample": "Dashboards aggregate Stripe, GitHub and analytics APIs on the server and cache results.",
+  "interviewTip": "Mention secrets, validation, timeouts and caching strategy.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "Best place to call an API that needs a secret key?",
+    "options": [
+     "A Client Component useEffect",
+     "Inline in JSX on the client",
+     "In next.config.js",
+     "A Server Component or Server Action"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Server code keeps the key private."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Timeout helper for fetch?",
+    "back": "AbortSignal.timeout(ms)."
+   }
+  ],
+  "track": "next",
+  "order": 25
+ },
+ {
+  "id": "next_database",
+  "category": "Data Fetching",
+  "title": "Database Integration",
+  "difficulty": "Medium",
+  "estimatedMinutes": 6,
+  "description": "Query databases directly from server code with an ORM or query builder.",
+  "keyConcepts": [
+   "ORM (Prisma, Drizzle)",
+   "Connection reuse",
+   "Serverless connections",
+   "Data Access Layer",
+   "Migrations"
+  ],
+  "sections": [
+   {
+    "title": "The basics",
+    "content": "Server Components and Server Actions can import a database client directly. Popular choices: Prisma, Drizzle, Kysely, or provider SDKs (Neon, Supabase, PlanetScale)."
+   },
+   {
+    "title": "Connections",
+    "content": "In development, hot reloading can create many clients — store a single instance on `globalThis`. In serverless environments, use pooled or HTTP-based drivers to avoid exhausting connections."
+   },
+   {
+    "title": "Organize access",
+    "content": "Put queries in a server-only Data Access Layer that checks authorization, returns DTOs and is wrapped in `cache()` where useful."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Singleton client + query",
+    "language": "ts",
+    "code": "// lib/db.ts\nimport 'server-only';\nimport { PrismaClient } from '@prisma/client';\n\nconst globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };\nexport const db = globalForPrisma.prisma ?? new PrismaClient();\nif (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db;\n\n// app/orders/page.tsx\nexport default async function Orders() {\n  const orders = await db.order.findMany({ take: 20, orderBy: { createdAt: 'desc' } });\n  return <OrderTable orders={orders.map(o => ({ id: o.id, total: o.total }))} />;\n}",
+    "explanation": "One client per process avoids connection storms during development. The page maps rows to minimal objects before passing them to a component."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Creating a new database client on every request.",
+   "Querying the database from Client Components (impossible — and a sign of mixed boundaries)."
+  ],
+  "realWorldExample": "SaaS apps use Drizzle or Prisma with serverless Postgres from Server Components and Actions.",
+  "interviewTip": "Mention connection pooling in serverless and the DAL pattern.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "You can import a database client directly into a Server Component.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Server Components run only on the server."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Why store the client on globalThis in dev?",
+    "back": "To avoid creating new connections on every hot reload."
+   }
+  ],
+  "track": "next",
+  "order": 26
+ },
+ {
+  "id": "next_caching",
+  "category": "Caching",
+  "title": "Caching Overview",
+  "difficulty": "Hard",
+  "estimatedMinutes": 8,
+  "description": "How Next.js caches data and rendered output — and how Next.js 16's Cache Components change it.",
+  "keyConcepts": [
+   "Request memoization",
+   "Data cache",
+   "Full route cache",
+   "Client router cache",
+   "Cache Components ('use cache')"
+  ],
+  "sections": [
+   {
+    "title": "Why caching matters",
+    "content": "Caching avoids repeating work — fetching, rendering — for every request, making pages faster and cheaper. The challenge is keeping cached data fresh."
+   },
+   {
+    "title": "The layers",
+    "content": "- **Request memoization:** identical `fetch` calls (and `cache()`-wrapped functions) in one render run once.\n- **Data cache:** persisted results of cached fetches/functions across requests and deployments.\n- **Full route cache:** pre-rendered HTML and RSC payload for static routes.\n- **Client router cache:** RSC payloads kept in the browser during a session for instant back/forward."
+   },
+   {
+    "title": "Defaults changed",
+    "content": "Since Next.js 15, `fetch` requests and GET Route Handlers are **not cached by default**. You opt in with `cache: 'force-cache'`, `next: { revalidate }`, or route segment config."
+   },
+   {
+    "title": "Cache Components (Next.js 16)",
+    "content": "With `cacheComponents: true` in `next.config`, rendering is dynamic by default and you opt into caching with the `\"use cache\"` directive on files, components or functions, tuned with `cacheLife()` and tagged with `cacheTag()`. Static parts are prerendered into a shell, and dynamic parts stream in through Suspense (this replaces the experimental PPR flag)."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Opting into caching (classic model)",
+    "language": "tsx",
+    "code": "// Cached for an hour, shared across requests\nconst posts = await fetch('https://cms.example.com/posts', {\n  next: { revalidate: 3600, tags: ['posts'] },\n}).then(r => r.json());\n\n// Always fresh\nconst stock = await fetch('https://api.example.com/stock', { cache: 'no-store' });",
+    "explanation": "Each fetch states its freshness. The tag lets a Server Action invalidate posts on demand with `revalidateTag('posts', 'max')`."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Assuming fetch is cached by default (true in Next 14, not in 15+).",
+   "Caching user-specific data in a shared cache."
+  ],
+  "realWorldExample": "Content sites cache CMS data for hours and revalidate instantly via a CMS webhook calling revalidateTag.",
+  "interviewTip": "Name the layers, mention the Next 15 default change, and show awareness of 'use cache' in Next 16.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "In Next.js 15+, fetch requests are cached by default.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "They default to no caching; opt in explicitly."
+   },
+   {
+    "type": "mcq",
+    "prompt": "Which directive enables caching with Cache Components in Next.js 16?",
+    "options": [
+     "'use static'",
+     "'use server'",
+     "'use cache'",
+     "'use client'"
+    ],
+    "correctAnswer": 2,
+    "explanation": "\"use cache\" marks cacheable functions, components or files."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Four caching layers?",
+    "back": "Request memoization, data cache, full route cache, client router cache."
+   },
+   {
+    "front": "Config flag for Cache Components?",
+    "back": "cacheComponents: true"
+   }
+  ],
+  "track": "next",
+  "order": 27
+ },
+ {
+  "id": "next_revalidation",
+  "category": "Caching",
+  "title": "Revalidation",
+  "difficulty": "Hard",
+  "estimatedMinutes": 6,
+  "description": "Keep cached data fresh with time-based and on-demand revalidation.",
+  "keyConcepts": [
+   "Time-based (revalidate)",
+   "On-demand: revalidatePath",
+   "revalidateTag",
+   "updateTag (Next 16)",
+   "Stale-while-revalidate"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "Revalidation refreshes cached data and pages. It's how static pages stay up to date without rebuilding the whole site (historically called ISR — Incremental Static Regeneration)."
+   },
+   {
+    "title": "Time-based",
+    "content": "`fetch(url, { next: { revalidate: 60 } })`, `export const revalidate = 60` in a segment, or `cacheLife()` with `\"use cache\"`. After the time passes, the next request still gets the stale version while a fresh one is generated in the background (stale-while-revalidate)."
+   },
+   {
+    "title": "On-demand",
+    "content": "- `revalidatePath('/blog')` — invalidate a route.\n- `revalidateTag('posts', 'max')` — invalidate data tagged `posts` with stale-while-revalidate semantics (Next 16 requires a cache-life profile as the second argument).\n- `updateTag('posts')` (Next 16, Server Actions only) — expire immediately so the user sees their own write."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Revalidate after a mutation",
+    "language": "ts",
+    "code": "'use server';\nimport { updateTag, revalidatePath } from 'next/cache';\n\nexport async function publishPost(id: string) {\n  await db.post.update({ where: { id }, data: { published: true } });\n  updateTag('posts');          // author sees the change immediately\n  revalidatePath('/sitemap.xml');\n}",
+    "explanation": "`updateTag` gives read-your-own-writes semantics in a Server Action. A CMS webhook in a Route Handler would use `revalidateTag('posts', 'max')` instead."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Using very short revalidate times on everything, defeating caching.",
+   "Forgetting to revalidate after mutations, showing stale data."
+  ],
+  "realWorldExample": "News sites revalidate article pages when editors hit publish via a webhook.",
+  "interviewTip": "Explain stale-while-revalidate and time-based vs on-demand.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "After a revalidate period expires, what does the next visitor get?",
+    "options": [
+     "Always a freshly built page with a delay",
+     "The stale page while a fresh one regenerates in the background",
+     "An error",
+     "A blank page"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Stale-while-revalidate serves cached content and regenerates in the background."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Next 16 immediate read-your-writes API?",
+    "back": "updateTag (Server Actions only)."
+   }
+  ],
+  "interviewQuestion": {
+   "question": "What is revalidation in Next.js?",
+   "answer": "It's refreshing cached data or pre-rendered pages. Time-based revalidation regenerates content in the background after a period; on-demand revalidation (revalidatePath, revalidateTag, updateTag) invalidates it immediately after an event such as a CMS publish or a mutation."
+  },
+  "track": "next",
+  "order": 28
+ },
+ {
+  "id": "next_use_cache",
+  "category": "Caching",
+  "title": "'use cache' & Cache Components",
+  "difficulty": "Hard",
+  "estimatedMinutes": 7,
+  "description": "Next.js 16's explicit caching model: dynamic by default, cache what you choose.",
+  "keyConcepts": [
+   "cacheComponents: true",
+   "'use cache'",
+   "cacheLife",
+   "cacheTag",
+   "Static shell + dynamic holes"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "Cache Components is an opt-in mode (`cacheComponents: true`) where every route is dynamic unless you mark code with `\"use cache\"`. Cached output can be part of the prerendered static shell; uncached, request-specific parts stream in through `<Suspense>`."
+   },
+   {
+    "title": "How to use it",
+    "content": "- Add `\"use cache\"` at the top of a file, an async component, or an async function.\n- Arguments and closed-over values become part of the cache key.\n- Set lifetimes with `cacheLife('minutes' | 'hours' | 'days' | ...)` or custom profiles.\n- Tag entries with `cacheTag('product-42')` for on-demand invalidation."
+   },
+   {
+    "title": "Rules",
+    "content": "Don't read request-specific APIs (`cookies()`, `headers()`, `searchParams`) inside a cached scope — read them outside and pass values in. Uncached dynamic access must be wrapped in Suspense so the static shell can still be produced."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Caching a product component",
+    "language": "tsx",
+    "code": "import { cacheLife, cacheTag } from 'next/cache';\n\nasync function ProductDetails({ id }: { id: string }) {\n  'use cache';\n  cacheLife('hours');\n  cacheTag(`product-${id}`);\n  const product = await db.product.findUnique({ where: { id } });\n  return <h1>{product?.name}</h1>;\n}\n\nexport default async function Page({ params }: { params: Promise<{ id: string }> }) {\n  const { id } = await params;\n  return (\n    <>\n      <ProductDetails id={id} />\n      <Suspense fallback={<CartSkeleton />}>\n        <Cart /> {/* reads cookies(): dynamic, streamed */}\n      </Suspense>\n    </>\n  );\n}",
+    "explanation": "Product details are cached for hours and tagged for invalidation. The cart reads cookies, so it stays dynamic and streams inside Suspense."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Reading cookies() inside a 'use cache' function.",
+   "Assuming route segment config like `export const dynamic` still applies with Cache Components (it's replaced)."
+  ],
+  "realWorldExample": "E-commerce pages cache product data but keep the cart and personalized recommendations dynamic.",
+  "interviewTip": "Explain the mental model flip: in Next 16 with Cache Components, dynamic is the default and caching is explicit.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "You can call cookies() inside a function marked 'use cache'.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Request-specific data must be read outside the cached scope and passed in."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "What becomes part of a 'use cache' key?",
+    "back": "Its arguments and any closed-over values (plus build id)."
+   }
+  ],
+  "track": "next",
+  "order": 29
+ },
+ {
+  "id": "next_static_rendering",
+  "category": "Rendering",
+  "title": "Static Rendering",
+  "difficulty": "Medium",
+  "estimatedMinutes": 5,
+  "description": "Render routes at build time (or during revalidation) and serve them from cache/CDN.",
+  "keyConcepts": [
+   "Build-time HTML",
+   "CDN cacheable",
+   "Default when possible",
+   "Revalidation",
+   "generateStaticParams"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "With static rendering, a route's HTML and RSC payload are generated at build time or in the background after revalidation, then served to every user from cache."
+   },
+   {
+    "title": "When is a route static?",
+    "content": "When it doesn't use request-time information: no `cookies()`, `headers()`, `searchParams`, uncached fetches, or `connection()`. Next.js decides automatically per route."
+   },
+   {
+    "title": "Benefits",
+    "content": "Fastest possible responses (served from the edge), cheap to run, resilient under traffic spikes."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "A static marketing page",
+    "language": "tsx",
+    "code": "// app/pricing/page.tsx\nexport default async function Pricing() {\n  const plans = await fetch('https://cms.example.com/plans', {\n    cache: 'force-cache',\n  }).then(r => r.json());\n  return <PlanTable plans={plans} />;\n}",
+    "explanation": "The fetch is cached and nothing request-specific is read, so the page is rendered at build time."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Accidentally making a static page dynamic by reading searchParams in a deeply nested component.",
+   "Statically rendering user-specific content."
+  ],
+  "realWorldExample": "Marketing pages, docs and blogs are statically rendered and served from CDNs.",
+  "interviewTip": "Explain what opts a route out of static rendering.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "Which makes a route dynamic?",
+    "options": [
+     "Calling cookies()",
+     "Using next/image",
+     "Using a layout",
+     "Importing CSS"
+    ],
+    "correctAnswer": 0,
+    "explanation": "cookies() depends on the incoming request."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Where are static pages typically served from?",
+    "back": "A CDN / edge cache."
+   }
+  ],
+  "interviewQuestion": {
+   "question": "What is static rendering?",
+   "answer": "Generating a route's output ahead of time (at build or revalidation) and serving the same cached result to all users. It's the fastest option and works for any content that isn't personalized per request."
+  },
+  "track": "next",
+  "order": 30
+ },
+ {
+  "id": "next_dynamic_rendering",
+  "category": "Rendering",
+  "title": "Dynamic Rendering",
+  "difficulty": "Medium",
+  "estimatedMinutes": 5,
+  "description": "Render per request when output depends on the user or the request.",
+  "keyConcepts": [
+   "Request-time rendering",
+   "cookies() / headers()",
+   "searchParams",
+   "connection()",
+   "Personalization"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "Dynamic rendering produces the route on each request. It's needed when output depends on who is asking or on per-request data."
+   },
+   {
+    "title": "What triggers it",
+    "content": "- Dynamic APIs: `cookies()`, `headers()`, `draftMode()`, `searchParams`, `connection()`.\n- Uncached data (`cache: 'no-store'`, or simply not cached in Next 15+).\n- `export const dynamic = 'force-dynamic'` (classic model)."
+   },
+   {
+    "title": "Mixing static and dynamic",
+    "content": "You don't have to choose for the whole page: with Suspense (and Cache Components in Next 16) the static shell is served instantly and dynamic parts stream in."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Personalized greeting",
+    "language": "tsx",
+    "code": "import { cookies } from 'next/headers';\n\nexport default async function Home() {\n  const cookieStore = await cookies();\n  const name = cookieStore.get('name')?.value ?? 'there';\n  return <h1>Welcome back, {name}!</h1>;\n}",
+    "explanation": "Reading cookies makes this route dynamic: it renders on every request with the visitor's own name."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Making a whole page dynamic for one small personalized widget — isolate it in Suspense.",
+   "Forgetting to await cookies() (async since Next 15)."
+  ],
+  "realWorldExample": "Dashboards, carts and account pages render dynamically.",
+  "interviewTip": "Compare static vs dynamic with examples and mention streaming as the middle ground.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "cookies() must be awaited in Next.js 15+.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Dynamic APIs are async."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "API to explicitly opt into dynamic rendering without reading data?",
+    "back": "await connection() from next/server."
+   }
+  ],
+  "interviewQuestion": {
+   "question": "What is dynamic rendering?",
+   "answer": "Rendering a route at request time because it depends on request data such as cookies, headers or search params, or on uncached data. It enables personalization at the cost of per-request work."
+  },
+  "track": "next",
+  "order": 31
+ },
+ {
+  "id": "next_streaming",
+  "category": "Rendering",
+  "title": "Streaming in Next.js",
+  "difficulty": "Medium",
+  "estimatedMinutes": 5,
+  "description": "Progressively send UI from the server with loading.tsx and Suspense.",
+  "keyConcepts": [
+   "loading.tsx",
+   "<Suspense>",
+   "Progressive rendering",
+   "Better TTFB/FCP",
+   "SEO-safe"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "Streaming breaks a page into chunks. The server sends the shell and ready content first, then streams each Suspense boundary's content as its data resolves."
+   },
+   {
+    "title": "How to use it",
+    "content": "- Route level: add `loading.tsx`.\n- Component level: wrap slow components in `<Suspense fallback>`.\n- Make slow components fetch their own data so they don't block siblings."
+   },
+   {
+    "title": "SEO and status codes",
+    "content": "Streamed content is still in the HTML response that crawlers receive. Once streaming starts, the status code is already 200, so redirects/notFound inside streamed parts are handled with client-side instructions."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Independent streaming sections",
+    "language": "tsx",
+    "code": "export default function Dashboard() {\n  return (\n    <>\n      <h1>Dashboard</h1>\n      <Suspense fallback={<CardSkeleton />}>\n        <RevenueCard />   {/* 200ms query */}\n      </Suspense>\n      <Suspense fallback={<TableSkeleton />}>\n        <LatestInvoices /> {/* 2s query */}\n      </Suspense>\n    </>\n  );\n}",
+    "explanation": "The revenue card appears after ~200ms; invoices stream in later without blocking it."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Fetching all data in the page component, which blocks every boundary.",
+   "Too many tiny boundaries causing layout shift."
+  ],
+  "realWorldExample": "Analytics dashboards stream fast KPIs first and slow tables later.",
+  "interviewTip": "Connect streaming with Suspense and component-level data fetching.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "Streamed content is invisible to search engine crawlers.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "It's part of the HTML response."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Two ways to stream in Next.js?",
+    "back": "loading.tsx and <Suspense> boundaries."
+   }
+  ],
+  "track": "next",
+  "order": 32
+ },
+ {
+  "id": "next_generate_static_params",
+  "category": "Rendering",
+  "title": "generateStaticParams",
+  "difficulty": "Medium",
+  "estimatedMinutes": 5,
+  "description": "Pre-render dynamic routes at build time.",
+  "keyConcepts": [
+   "Build-time params",
+   "dynamicParams",
+   "Partial pre-rendering of paths",
+   "Replaces getStaticPaths"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "`generateStaticParams` returns a list of params for a dynamic segment. Next.js statically generates those paths at build time. It's the App Router replacement for `getStaticPaths`."
+   },
+   {
+    "title": "Unlisted params",
+    "content": "By default, params not returned are rendered on demand at request time and then cached. Set `export const dynamicParams = false` to return 404 for them instead."
+   },
+   {
+    "title": "Strategy",
+    "content": "For large sites, pre-render the most popular pages and let the rest render on demand. Return an empty array to render all on first visit."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Pre-render blog posts",
+    "language": "tsx",
+    "code": "// app/blog/[slug]/page.tsx\nexport async function generateStaticParams() {\n  const posts = await getAllPosts();\n  return posts.map(post => ({ slug: post.slug }));\n}\n\nexport default async function Post({ params }: { params: Promise<{ slug: string }> }) {\n  const { slug } = await params;\n  const post = await getPost(slug);\n  return <article>{post.title}</article>;\n}",
+    "explanation": "Every post returned is built ahead of time; new posts published later render on first request."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Generating hundreds of thousands of pages at build time, causing very slow builds.",
+   "Returning params with the wrong key names."
+  ],
+  "realWorldExample": "Docs sites generate every page at build; e-commerce pre-renders top products.",
+  "interviewTip": "Mention it replaces getStaticPaths and explain dynamicParams.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "What does `export const dynamicParams = false` do?",
+    "options": [
+     "Disables all dynamic routes",
+     "Returns 404 for params not returned by generateStaticParams",
+     "Makes the page dynamic",
+     "Disables caching"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Only pre-generated params are allowed."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Pages Router equivalent?",
+    "back": "getStaticPaths."
+   }
+  ],
+  "track": "next",
+  "order": 33
+ },
+ {
+  "id": "next_server_actions",
+  "category": "Server Actions",
+  "title": "Server Actions in Next.js",
+  "difficulty": "Medium",
+  "estimatedMinutes": 7,
+  "description": "Mutate data from forms and buttons with server functions — no API route needed.",
+  "keyConcepts": [
+   "'use server'",
+   "<form action>",
+   "revalidate after mutation",
+   "Progressive enhancement",
+   "Security checks"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "Server Actions are async functions marked with `'use server'` that run on the server. Pass them to `<form action>` or call them from Client Components (usually inside `startTransition`)."
+   },
+   {
+    "title": "Why use them?",
+    "content": "- No hand-written API route or fetch call for mutations.\n- Forms work before JavaScript loads (progressive enhancement).\n- After a mutation you can revalidate or redirect, and Next.js returns the updated UI in the same round-trip."
+   },
+   {
+    "title": "Security",
+    "content": "Each action is a public POST endpoint. Validate input, check authentication and authorization inside the action. Next.js adds protections (encrypted action ids, origin checks, dead-code elimination of unused actions), but authorization is your job."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Add a comment",
+    "language": "tsx",
+    "code": "// app/posts/[id]/actions.ts\n'use server';\nimport { revalidatePath } from 'next/cache';\nimport { verifySession } from '@/lib/auth';\n\nexport async function addComment(postId: string, formData: FormData) {\n  const session = await verifySession();\n  const text = String(formData.get('text') ?? '').trim();\n  if (!text) return { error: 'Comment cannot be empty' };\n  await db.comment.create({ data: { postId, text, authorId: session.userId } });\n  revalidatePath(`/posts/${postId}`);\n  return { error: null };\n}\n\n// app/posts/[id]/page.tsx (Server Component)\n<form action={addComment.bind(null, post.id)}>\n  <textarea name=\"text\" />\n  <button>Post</button>\n</form>",
+    "explanation": "`bind` pre-fills the post id (bound arguments are encrypted). The action verifies the session, validates, writes and revalidates the page."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Skipping authorization because the form is only shown to admins.",
+   "Using Server Actions for data fetching — they're designed for mutations and run sequentially."
+  ],
+  "realWorldExample": "Todo apps, comment boxes, settings forms and 'like' buttons use Server Actions.",
+  "interviewTip": "Highlight both DX (no API boilerplate) and the security model.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "Server Actions are good for fetching data in Client Components.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "They're intended for mutations; fetch data in Server Components."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "How to pass extra args to a form action?",
+    "back": "Use .bind(null, arg)."
+   }
+  ],
+  "interviewQuestion": {
+   "question": "What are Server Actions?",
+   "answer": "Async server functions marked with 'use server' that the client can invoke, typically from forms. They handle mutations, can revalidate caches and redirect, and work without client JavaScript when used as a form action. They must validate input and check auth because they are callable endpoints."
+  },
+  "track": "next",
+  "order": 34
+ },
+ {
+  "id": "next_forms",
+  "category": "Server Actions",
+  "title": "Forms, Validation & Pending States",
+  "difficulty": "Medium",
+  "estimatedMinutes": 6,
+  "description": "Build robust forms with Server Actions, useActionState and useFormStatus.",
+  "keyConcepts": [
+   "useActionState",
+   "useFormStatus",
+   "Zod validation",
+   "Field errors",
+   "Optimistic updates"
+  ],
+  "sections": [
+   {
+    "title": "The pattern",
+    "content": "1. Server Action validates with a schema and returns `{ errors }` or `{ success }`.\n2. Client form uses `useActionState(action, initialState)` to display errors and pending state.\n3. A submit button uses `useFormStatus()` (or `isPending`) to disable itself.\n4. Optionally `useOptimistic` for instant feedback."
+   },
+   {
+    "title": "Why return errors instead of throwing?",
+    "content": "Validation failures are expected. Returning them keeps the form state, while thrown errors hit the error boundary."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Validated sign-up form",
+    "language": "tsx",
+    "code": "// actions.ts\n'use server';\nimport { z } from 'zod';\n\nconst Schema = z.object({ email: z.string().email(), password: z.string().min(8) });\n\nexport async function signUp(_: unknown, formData: FormData) {\n  const parsed = Schema.safeParse(Object.fromEntries(formData));\n  if (!parsed.success) return { errors: parsed.error.flatten().fieldErrors };\n  await createUser(parsed.data);\n  return { errors: {} };\n}\n\n// SignUpForm.tsx\n'use client';\nimport { useActionState } from 'react';\nimport { signUp } from './actions';\n\nexport function SignUpForm() {\n  const [state, action, pending] = useActionState(signUp, { errors: {} });\n  return (\n    <form action={action}>\n      <input name=\"email\" aria-describedby=\"email-error\" />\n      <p id=\"email-error\">{state.errors.email?.[0]}</p>\n      <input name=\"password\" type=\"password\" />\n      <button disabled={pending}>{pending ? 'Creating…' : 'Create account'}</button>\n    </form>\n  );\n}",
+    "explanation": "The server validates and returns field errors; the client shows them and disables the button while pending."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Only validating on the client.",
+   "Throwing for validation errors and losing form input."
+  ],
+  "realWorldExample": "Checkout and onboarding forms in Next.js apps commonly use this exact pattern.",
+  "interviewTip": "Show how server validation, useActionState and pending UI fit together.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "Where should validation that protects your database happen?",
+    "options": [
+     "On the server inside the action",
+     "Only in the browser",
+     "In CSS",
+     "In next.config.js"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Client validation is UX; server validation is security."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Hook that returns [state, action, isPending]?",
+    "back": "useActionState."
+   }
+  ],
+  "track": "next",
+  "order": 35
+ },
+ {
+  "id": "next_route_handlers",
+  "category": "Route Handlers",
+  "title": "Route Handlers",
+  "difficulty": "Medium",
+  "estimatedMinutes": 6,
+  "description": "Build HTTP endpoints with route.ts using the Web Request/Response APIs.",
+  "keyConcepts": [
+   "route.ts",
+   "GET/POST/PUT/DELETE",
+   "NextRequest / NextResponse",
+   "Not cached by default",
+   "Webhooks"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "A `route.ts` file exports functions named after HTTP methods. It's the App Router's equivalent of API routes and uses standard `Request` and `Response` objects."
+   },
+   {
+    "title": "When to use them",
+    "content": "- Webhooks (Stripe, CMS) and public APIs for other clients (mobile apps).\n- Non-HTML responses: RSS, files, JSON for third parties.\n- OAuth callbacks.\n\nFor your own UI's mutations, Server Actions are usually simpler; for data reads, use Server Components directly."
+   },
+   {
+    "title": "Caching",
+    "content": "Since Next.js 15, GET handlers are dynamic by default. Opt into static with `export const dynamic = 'force-static'` (classic model) or `\"use cache\"` helpers with Cache Components."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "A webhook handler",
+    "language": "ts",
+    "code": "// app/api/webhooks/cms/route.ts\nimport { revalidateTag } from 'next/cache';\n\nexport async function POST(request: Request) {\n  const secret = request.headers.get('x-webhook-secret');\n  if (secret !== process.env.CMS_WEBHOOK_SECRET) {\n    return new Response('Unauthorized', { status: 401 });\n  }\n  const { model } = await request.json();\n  revalidateTag(model, 'max');\n  return Response.json({ revalidated: true });\n}",
+    "explanation": "The handler authenticates the webhook, invalidates the matching cache tag and returns JSON."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Placing route.ts and page.tsx in the same folder.",
+   "Calling your own route handlers from Server Components instead of calling the logic directly."
+  ],
+  "realWorldExample": "Stripe payment webhooks and RSS feeds are implemented as Route Handlers.",
+  "interviewTip": "Explain when to choose Route Handlers vs Server Actions.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "Which file defines an API endpoint in the App Router?",
+    "options": [
+     "endpoint.ts",
+     "handler.ts",
+     "api.ts",
+     "route.ts"
+    ],
+    "correctAnswer": 3,
+    "explanation": "route.ts exports HTTP method handlers."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Are GET route handlers cached by default in Next 15+?",
+    "back": "No."
+   }
+  ],
+  "track": "next",
+  "order": 36
+ },
+ {
+  "id": "next_proxy",
+  "category": "Route Handlers",
+  "title": "Proxy (formerly Middleware)",
+  "difficulty": "Hard",
+  "estimatedMinutes": 6,
+  "description": "Run code before a request is completed: redirects, rewrites, headers — renamed to proxy.ts in Next.js 16.",
+  "keyConcepts": [
+   "proxy.ts",
+   "matcher config",
+   "NextResponse.redirect / rewrite",
+   "Node.js runtime",
+   "Not for full auth"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "Code that runs before routes render, for every matching request. In Next.js 16 the convention was renamed from `middleware.ts` to **`proxy.ts`** (export a `proxy` function) to clarify its role at the network boundary. `middleware.ts` still works but is deprecated; proxy runs on the Node.js runtime."
+   },
+   {
+    "title": "Good uses",
+    "content": "- Redirects and rewrites (A/B tests, locale routing, legacy URLs).\n- Setting headers and cookies.\n- Optimistic auth checks: redirect if there's no session cookie at all."
+   },
+   {
+    "title": "What not to do",
+    "content": "Don't rely on it as your only authorization layer or do slow database work there. A 2025 vulnerability (CVE-2025-29927) allowed middleware to be bypassed with a crafted header; authorize again where data is accessed."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Redirect unauthenticated users",
+    "language": "ts",
+    "code": "// proxy.ts (project root or src/)\nimport { NextResponse, type NextRequest } from 'next/server';\n\nexport function proxy(request: NextRequest) {\n  const hasSession = request.cookies.has('session');\n  if (!hasSession) {\n    return NextResponse.redirect(new URL('/login', request.url));\n  }\n  return NextResponse.next();\n}\n\nexport const config = {\n  matcher: ['/dashboard/:path*', '/settings/:path*'],\n};",
+    "explanation": "Only matching paths run the proxy. It performs a cheap cookie check; real authorization still happens in the data layer."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Doing heavy DB queries in proxy, adding latency to every request.",
+   "Treating proxy checks as sufficient authorization."
+  ],
+  "realWorldExample": "International sites redirect `/` to `/en` or `/de` based on the Accept-Language header.",
+  "interviewTip": "Mentioning the Next 16 rename and the 2025 bypass CVE shows up-to-date knowledge.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "In Next.js 16, middleware.ts was renamed to proxy.ts.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 0,
+    "explanation": "middleware.ts is deprecated in favour of proxy.ts."
+   },
+   {
+    "type": "mcq",
+    "prompt": "Which is the best use of proxy?",
+    "options": [
+     "Long database transactions",
+     "Lightweight redirects/rewrites and header logic",
+     "Rendering React components",
+     "Replacing all authorization checks"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Keep it fast and lightweight."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Config option to limit where proxy runs?",
+    "back": "matcher."
+   }
+  ],
+  "track": "next",
+  "order": 37
+ },
+ {
+  "id": "next_cookies",
+  "category": "Route Handlers",
+  "title": "Cookies",
+  "difficulty": "Medium",
+  "estimatedMinutes": 5,
+  "description": "Read and write cookies with the async cookies() API.",
+  "keyConcepts": [
+   "cookies() from next/headers",
+   "Async API",
+   "Set only in Actions/Route Handlers",
+   "httpOnly / secure / sameSite"
+  ],
+  "sections": [
+   {
+    "title": "Reading",
+    "content": "`const cookieStore = await cookies()` then `cookieStore.get('theme')?.value`. Reading cookies makes a route dynamic."
+   },
+   {
+    "title": "Writing",
+    "content": "You can only **set** or **delete** cookies in Server Actions, Route Handlers or proxy — not while rendering a Server Component, because headers are already being streamed."
+   },
+   {
+    "title": "Secure session cookies",
+    "content": "Use `httpOnly: true` (no JavaScript access), `secure: true` (HTTPS only), `sameSite: 'lax'` and an expiry."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Set a theme cookie in an action",
+    "language": "ts",
+    "code": "'use server';\nimport { cookies } from 'next/headers';\n\nexport async function setTheme(theme: 'light' | 'dark') {\n  const cookieStore = await cookies();\n  cookieStore.set('theme', theme, {\n    httpOnly: true,\n    secure: true,\n    sameSite: 'lax',\n    maxAge: 60 * 60 * 24 * 365,\n    path: '/',\n  });\n}",
+    "explanation": "The action sets a long-lived, secure cookie. The layout can read it with `await cookies()` to render the right theme on the server."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Trying to set cookies inside a Server Component render.",
+   "Storing sensitive data in non-httpOnly cookies."
+  ],
+  "realWorldExample": "Theme, locale and session tokens are commonly stored in cookies.",
+  "interviewTip": "Mention async cookies() and where writes are allowed.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "You can call cookieStore.set() while rendering a Server Component.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Set cookies in Server Actions, Route Handlers or proxy."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Cookie flag that blocks JS access?",
+    "back": "httpOnly."
+   }
+  ],
+  "track": "next",
+  "order": 38
+ },
+ {
+  "id": "next_headers",
+  "category": "Route Handlers",
+  "title": "Headers",
+  "difficulty": "Medium",
+  "estimatedMinutes": 4,
+  "description": "Read request headers and set response headers.",
+  "keyConcepts": [
+   "headers() from next/headers",
+   "Read-only",
+   "Response headers in Route Handlers",
+   "next.config headers()",
+   "Security headers"
+  ],
+  "sections": [
+   {
+    "title": "Reading request headers",
+    "content": "`const h = await headers(); h.get('user-agent')`. The returned object is read-only, and using it makes the route dynamic."
+   },
+   {
+    "title": "Setting response headers",
+    "content": "- Route Handlers: `new Response(body, { headers: {...} })`.\n- proxy: `NextResponse.next({ headers })` or `response.headers.set()`.\n- Static headers for many routes: the `headers()` function in `next.config`."
+   },
+   {
+    "title": "Security headers",
+    "content": "Set Content-Security-Policy, Strict-Transport-Security, X-Content-Type-Options and Referrer-Policy for production apps."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Security headers in config",
+    "language": "ts",
+    "code": "// next.config.ts\nconst nextConfig = {\n  async headers() {\n    return [\n      {\n        source: '/(.*)',\n        headers: [\n          { key: 'X-Content-Type-Options', value: 'nosniff' },\n          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },\n          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },\n        ],\n      },\n    ];\n  },\n};\nexport default nextConfig;",
+    "explanation": "These headers apply to every route and harden the app against common attacks."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Trying to mutate the object returned by headers().",
+   "Forgetting headers() is async."
+  ],
+  "realWorldExample": "Apps read `x-forwarded-for` for rate limiting and set CSP headers for security audits.",
+  "interviewTip": "Mention read-only request headers and where response headers are set.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "Where do you configure static response headers for many routes?",
+    "options": [
+     "next.config headers()",
+     "In a Client Component",
+     "In page metadata",
+     "In package.json"
+    ],
+    "correctAnswer": 0,
+    "explanation": "next.config supports a headers() function."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Is headers() mutable?",
+    "back": "No, it's read-only."
+   }
+  ],
+  "track": "next",
+  "order": 39
+ },
+ {
+  "id": "next_authentication",
+  "category": "Authentication",
+  "title": "Authentication",
+  "difficulty": "Hard",
+  "estimatedMinutes": 7,
+  "description": "Verify who the user is: sign-in, sessions and libraries.",
+  "keyConcepts": [
+   "Sessions (stateless/database)",
+   "Auth libraries",
+   "httpOnly cookies",
+   "verifySession()",
+   "Data Access Layer"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "Authentication verifies identity — \"who are you?\" In Next.js it typically involves a sign-up/sign-in form, creating a session, and checking the session on each request."
+   },
+   {
+    "title": "Session strategies",
+    "content": "- **Stateless:** a signed/encrypted token (JWT/JWE) in an httpOnly cookie.\n- **Database sessions:** a session id cookie that maps to a row in the database (easy revocation)."
+   },
+   {
+    "title": "Use a library",
+    "content": "Auth.js (NextAuth), Clerk, Better Auth, Supabase Auth, WorkOS and others handle OAuth, password hashing, CSRF and session rotation. Rolling your own is risky."
+   },
+   {
+    "title": "Where to check",
+    "content": "Optimistic checks in proxy for redirects; secure checks in a `verifySession()` helper (wrapped in React `cache()`) called from the Data Access Layer, Server Actions and Route Handlers."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "A cached session check",
+    "language": "ts",
+    "code": "// lib/auth.ts\nimport 'server-only';\nimport { cache } from 'react';\nimport { cookies } from 'next/headers';\nimport { redirect } from 'next/navigation';\nimport { decrypt } from './session';\n\nexport const verifySession = cache(async () => {\n  const token = (await cookies()).get('session')?.value;\n  const session = await decrypt(token);\n  if (!session?.userId) redirect('/login');\n  return { userId: session.userId, role: session.role };\n});",
+    "explanation": "`cache()` deduplicates the check within a request, so layouts, pages and data functions can all call it cheaply."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Checking auth only in a layout — layouts don't re-render on navigation and don't protect data fetched elsewhere.",
+   "Storing session tokens in localStorage."
+  ],
+  "realWorldExample": "Most Next.js SaaS apps use Auth.js or Clerk with httpOnly session cookies.",
+  "interviewTip": "Separate authentication (identity) from authorization (permissions), and mention checking close to data.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "Checking the session only in the root layout is enough to protect all data.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Layouts don't re-run on every navigation and don't guard Server Actions or Route Handlers."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Why wrap verifySession in cache()?",
+    "back": "To deduplicate the check within one request."
+   }
+  ],
+  "track": "next",
+  "order": 40
+ },
+ {
+  "id": "next_authorization",
+  "category": "Authentication",
+  "title": "Authorization",
+  "difficulty": "Hard",
+  "estimatedMinutes": 6,
+  "description": "Decide what an authenticated user may do — and enforce it on the server.",
+  "keyConcepts": [
+   "Roles & permissions",
+   "Check at the data layer",
+   "Server Actions are endpoints",
+   "Resource ownership",
+   "UI hiding ≠ security"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "Authorization answers \"what are you allowed to do?\" — e.g. only admins can delete users, only the author can edit a post."
+   },
+   {
+    "title": "Where to enforce",
+    "content": "- In the Data Access Layer before returning data.\n- In every Server Action and Route Handler before mutating.\n- Hiding buttons in the UI improves UX but is never security."
+   },
+   {
+    "title": "Ownership checks",
+    "content": "Don't trust ids from the client. Query with both the resource id **and** the current user's id (or verify ownership) to prevent IDOR (insecure direct object reference) bugs."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Ownership check in an action",
+    "language": "ts",
+    "code": "'use server';\nimport { verifySession } from '@/lib/auth';\n\nexport async function deletePost(postId: string) {\n  const { userId, role } = await verifySession();\n  const post = await db.post.findUnique({ where: { id: postId } });\n  if (!post) return { error: 'Not found' };\n  if (post.authorId !== userId && role !== 'admin') {\n    return { error: 'Forbidden' };\n  }\n  await db.post.delete({ where: { id: postId } });\n  return { error: null };\n}",
+    "explanation": "The action verifies the session and checks ownership or admin role before deleting."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Relying on hidden UI to protect admin actions.",
+   "Trusting a userId sent from the client."
+  ],
+  "realWorldExample": "Multi-tenant SaaS apps scope every query by organization id from the session.",
+  "interviewTip": "Mention IDOR and enforcing checks at the data layer.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "A user can delete any post by changing the id in a request. What's the bug?",
+    "options": [
+     "CSRF token missing",
+     "XSS",
+     "Hydration mismatch",
+     "Missing ownership/authorization check (IDOR)"
+    ],
+    "correctAnswer": 3,
+    "explanation": "The server must verify the user owns the resource."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Is hiding a button a security measure?",
+    "back": "No — enforce permissions on the server."
+   }
+  ],
+  "track": "next",
+  "order": 41
+ },
+ {
+  "id": "next_env_vars",
+  "category": "Authentication",
+  "title": "Environment Variables",
+  "difficulty": "Easy",
+  "estimatedMinutes": 4,
+  "description": "Configure secrets and settings per environment.",
+  "keyConcepts": [
+   ".env files",
+   "NEXT_PUBLIC_ prefix",
+   "Build-time inlining",
+   "Server-only secrets",
+   "Runtime config"
+  ],
+  "sections": [
+   {
+    "title": "How they work",
+    "content": "Next.js loads `.env`, `.env.local`, `.env.development`, `.env.production`. Variables are available on the server via `process.env`."
+   },
+   {
+    "title": "Client exposure",
+    "content": "Only variables prefixed with `NEXT_PUBLIC_` are exposed to the browser, and they're **inlined at build time** — changing them requires a rebuild. Never put secrets in `NEXT_PUBLIC_` variables."
+   },
+   {
+    "title": "Best practices",
+    "content": "- Keep `.env.local` out of git; commit an `.env.example`.\n- Validate env vars at startup (e.g. with Zod or `@t3-oss/env-nextjs`).\n- Set production values in your hosting dashboard."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Server vs public variables",
+    "language": "bash",
+    "code": "# .env.local\nDATABASE_URL=\"postgres://...\"          # server only\nSTRIPE_SECRET_KEY=\"sk_live_...\"        # server only\nNEXT_PUBLIC_ANALYTICS_ID=\"G-12345\"     # inlined into client JS",
+    "explanation": "Only `NEXT_PUBLIC_ANALYTICS_ID` reaches the browser. The others are undefined in client code."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Prefixing secrets with NEXT_PUBLIC_.",
+   "Expecting NEXT_PUBLIC_ values to change at runtime without rebuilding."
+  ],
+  "realWorldExample": "Teams store Stripe secret keys server-side and only expose publishable keys with NEXT_PUBLIC_.",
+  "interviewTip": "Mention build-time inlining — a frequent gotcha.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "Changing a NEXT_PUBLIC_ variable on the server takes effect without a rebuild.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Public vars are inlined into the bundle at build time."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Prefix that exposes a variable to the browser?",
+    "back": "NEXT_PUBLIC_"
+   }
+  ],
+  "track": "next",
+  "order": 42
+ },
+ {
+  "id": "next_metadata",
+  "category": "SEO",
+  "title": "Metadata API",
+  "difficulty": "Easy",
+  "estimatedMinutes": 5,
+  "description": "Define titles, descriptions and social cards with the metadata export.",
+  "keyConcepts": [
+   "export const metadata",
+   "Title templates",
+   "Open Graph",
+   "metadataBase",
+   "File-based metadata"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "Export a `metadata` object from a layout or page to set `<head>` tags. Next.js merges metadata from layouts down to pages."
+   },
+   {
+    "title": "Features",
+    "content": "- Title templates: `title: { template: '%s | Acme', default: 'Acme' }`.\n- Open Graph and Twitter cards for link previews.\n- `metadataBase` to resolve relative URLs.\n- File conventions: `favicon.ico`, `opengraph-image.png` (or `.tsx` to generate), `robots.ts`, `sitemap.ts`."
+   },
+   {
+    "title": "Rules",
+    "content": "Metadata exports are only supported in Server Components."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Static metadata",
+    "language": "tsx",
+    "code": "// app/about/page.tsx\nimport type { Metadata } from 'next';\n\nexport const metadata: Metadata = {\n  title: 'About',\n  description: 'Learn about our mission.',\n  openGraph: { title: 'About Acme', images: ['/og/about.png'] },\n};\n\nexport default function About() {\n  return <h1>About us</h1>;\n}",
+    "explanation": "With the root layout's template, the page title becomes \"About | Acme\"."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Exporting metadata from a Client Component.",
+   "Using the same title on every page."
+  ],
+  "realWorldExample": "Every marketing page sets unique titles, descriptions and OG images for search and social sharing.",
+  "interviewTip": "Mention merging, templates and file-based metadata.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "You can export metadata from a 'use client' page.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Metadata exports require Server Components."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "What does a title template do?",
+    "back": "Wraps child titles, e.g. '%s | Acme'."
+   }
+  ],
+  "track": "next",
+  "order": 43
+ },
+ {
+  "id": "next_generate_metadata",
+  "category": "SEO",
+  "title": "generateMetadata",
+  "difficulty": "Medium",
+  "estimatedMinutes": 5,
+  "description": "Create metadata from dynamic data such as a product or post.",
+  "keyConcepts": [
+   "async generateMetadata",
+   "params Promise",
+   "Deduped fetches",
+   "parent metadata",
+   "Streaming metadata"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "`export async function generateMetadata({ params, searchParams }, parent)` returns metadata computed from data. Use it when titles depend on route params."
+   },
+   {
+    "title": "Performance",
+    "content": "Data requests used by both `generateMetadata` and the page are memoized (fetch, or functions wrapped in `cache()`), so you don't pay twice. Next.js can stream metadata for regular browsers while ensuring bots receive it in the head."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Product metadata",
+    "language": "tsx",
+    "code": "import type { Metadata } from 'next';\nimport { cache } from 'react';\n\nconst getProduct = cache(async (id: string) => db.product.findUnique({ where: { id } }));\n\nexport async function generateMetadata(\n  { params }: { params: Promise<{ id: string }> }\n): Promise<Metadata> {\n  const { id } = await params;\n  const product = await getProduct(id);\n  return {\n    title: product?.name ?? 'Product not found',\n    description: product?.summary,\n    openGraph: { images: product ? [product.imageUrl] : [] },\n  };\n}\n\nexport default async function Page({ params }: { params: Promise<{ id: string }> }) {\n  const { id } = await params;\n  const product = await getProduct(id); // deduplicated\n  return <h1>{product?.name}</h1>;\n}",
+    "explanation": "`cache()` ensures one database query serves both metadata and page."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Fetching the same data twice without memoization.",
+   "Using both a metadata object and generateMetadata in the same file (not allowed)."
+  ],
+  "realWorldExample": "Blog posts and product pages generate unique titles and share images per item.",
+  "interviewTip": "Mention deduplication via cache()/fetch memoization.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "Can a file export both `metadata` and `generateMetadata`?",
+    "options": [
+     "Only in layouts",
+     "No",
+     "Only in development",
+     "Yes"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Choose one per segment."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "How to avoid duplicate queries in generateMetadata + page?",
+    "back": "Wrap the data function in React cache()."
+   }
+  ],
+  "track": "next",
+  "order": 44
+ },
+ {
+  "id": "next_seo",
+  "category": "SEO",
+  "title": "SEO in Next.js",
+  "difficulty": "Medium",
+  "estimatedMinutes": 6,
+  "description": "Rendering, metadata, sitemaps and performance — everything search engines care about.",
+  "keyConcepts": [
+   "Server-rendered HTML",
+   "sitemap.ts / robots.ts",
+   "Canonical URLs",
+   "Structured data (JSON-LD)",
+   "Core Web Vitals"
+  ],
+  "sections": [
+   {
+    "title": "Foundations",
+    "content": "- Pre-rendered HTML (static or dynamic) so crawlers see content.\n- Unique titles and descriptions; canonical URLs (`alternates.canonical`).\n- Semantic headings and descriptive links.\n- Correct status codes (`notFound()`, `permanentRedirect()`)."
+   },
+   {
+    "title": "Discovery files",
+    "content": "`app/sitemap.ts` and `app/robots.ts` generate `sitemap.xml` and `robots.txt` from code."
+   },
+   {
+    "title": "Rich results",
+    "content": "Add JSON-LD structured data with a `<script type=\"application/ld+json\">` in your page."
+   },
+   {
+    "title": "Performance is SEO",
+    "content": "Google uses Core Web Vitals as a ranking signal: optimize images, fonts and JavaScript."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Generated sitemap",
+    "language": "ts",
+    "code": "// app/sitemap.ts\nimport type { MetadataRoute } from 'next';\n\nexport default async function sitemap(): Promise<MetadataRoute.Sitemap> {\n  const posts = await getAllPosts();\n  return [\n    { url: 'https://acme.com', lastModified: new Date() },\n    ...posts.map(p => ({\n      url: `https://acme.com/blog/${p.slug}`,\n      lastModified: p.updatedAt,\n    })),\n  ];\n}",
+    "explanation": "The sitemap updates automatically as posts are added."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Client-only rendering of important content.",
+   "Soft 404s: rendering 'not found' with a 200 status."
+  ],
+  "realWorldExample": "E-commerce sites generate sitemaps with tens of thousands of product URLs and Product JSON-LD.",
+  "interviewTip": "Cover rendering, metadata, sitemaps, structured data and performance.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "Which file generates robots.txt in the App Router?",
+    "options": [
+     "next.config.js",
+     "robots.json",
+     "public/robots.tsx",
+     "app/robots.ts"
+    ],
+    "correctAnswer": 3,
+    "explanation": "app/robots.ts returns robots rules."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Format for structured data?",
+    "back": "JSON-LD."
+   }
+  ],
+  "track": "next",
+  "order": 45
+ },
+ {
+  "id": "next_image",
+  "category": "Performance",
+  "title": "Image Optimization with next/image",
+  "difficulty": "Medium",
+  "estimatedMinutes": 6,
+  "description": "Automatically resize, lazy-load and serve modern image formats.",
+  "keyConcepts": [
+   "<Image />",
+   "width/height or fill",
+   "sizes",
+   "priority / preload",
+   "remotePatterns"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "The `<Image>` component from `next/image` extends `<img>` with automatic optimization: responsive sizes, modern formats (WebP/AVIF), lazy loading, and layout-shift prevention."
+   },
+   {
+    "title": "Key props",
+    "content": "- `width` and `height` (or `fill` with a sized parent) to reserve space and avoid CLS.\n- `sizes` to tell the browser how wide the image displays, so it picks the right file.\n- `priority` (or `preload` in newer versions) for the LCP image above the fold.\n- `placeholder=\"blur\"` for a blurred preview."
+   },
+   {
+    "title": "Remote images",
+    "content": "Allow external hosts with `images.remotePatterns` in `next.config` (the old `domains` option is deprecated)."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Responsive hero image",
+    "language": "tsx",
+    "code": "import Image from 'next/image';\nimport hero from './hero.jpg'; // static import gives width/height/blur\n\nexport function Hero() {\n  return (\n    <Image\n      src={hero}\n      alt=\"Team collaborating in an office\"\n      priority\n      placeholder=\"blur\"\n      sizes=\"100vw\"\n      style={{ width: '100%', height: 'auto' }}\n    />\n  );\n}",
+    "explanation": "The static import supplies dimensions and a blur placeholder; `priority` loads it eagerly because it's the LCP element."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Missing alt text.",
+   "Lazy-loading the LCP hero image (no priority).",
+   "Forgetting `sizes` with `fill`, making the browser download huge images."
+  ],
+  "realWorldExample": "E-commerce product grids cut image bytes dramatically by serving correctly sized AVIF/WebP.",
+  "interviewTip": "Mention CLS prevention, sizes, and prioritizing the LCP image.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "Which prop should you set on the above-the-fold hero image?",
+    "options": [
+     "quality={1}",
+     "loading=\"lazy\"",
+     "priority (preload)",
+     "unoptimized"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Prioritize the LCP image so it loads early."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Config for allowed remote image hosts?",
+    "back": "images.remotePatterns."
+   }
+  ],
+  "track": "next",
+  "order": 46
+ },
+ {
+  "id": "next_font",
+  "category": "Performance",
+  "title": "Font Optimization with next/font",
+  "difficulty": "Easy",
+  "estimatedMinutes": 4,
+  "description": "Self-host fonts with zero layout shift and no extra network requests to Google.",
+  "keyConcepts": [
+   "next/font/google",
+   "next/font/local",
+   "Self-hosted at build",
+   "CSS variables",
+   "No layout shift"
+  ],
+  "sections": [
+   {
+    "title": "What is it?",
+    "content": "`next/font` downloads font files at build time and serves them from your own domain. It applies `size-adjust` fallbacks to prevent layout shift, and the browser never contacts Google Fonts at runtime (good for privacy and speed)."
+   },
+   {
+    "title": "Usage",
+    "content": "Call the font function at module scope, then use `className` or a CSS `variable`. Variable fonts are recommended. Use `next/font/local` for custom font files."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Two fonts as CSS variables",
+    "language": "tsx",
+    "code": "// app/layout.tsx\nimport { Inter, JetBrains_Mono } from 'next/font/google';\n\nconst inter = Inter({ subsets: ['latin'], variable: '--font-sans' });\nconst mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });\n\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang=\"en\" className={`${inter.variable} ${mono.variable}`}>\n      <body>{children}</body>\n    </html>\n  );\n}",
+    "explanation": "CSS can use `var(--font-sans)` and `var(--font-mono)`. Fonts are self-hosted and preloaded."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Calling the font loader inside a component (must be module scope).",
+   "Linking Google Fonts CSS manually alongside next/font."
+  ],
+  "realWorldExample": "Marketing sites remove font-related layout shift by switching to next/font.",
+  "interviewTip": "Mention self-hosting, privacy, and CLS prevention.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "next/font makes the browser request fonts from fonts.googleapis.com at runtime.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Fonts are downloaded at build time and self-hosted."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Package for custom font files?",
+    "back": "next/font/local."
+   }
+  ],
+  "track": "next",
+  "order": 47
+ },
+ {
+  "id": "next_performance",
+  "category": "Performance",
+  "title": "Next.js Performance Checklist",
+  "difficulty": "Hard",
+  "estimatedMinutes": 6,
+  "description": "Practical steps to make Next.js apps fast.",
+  "keyConcepts": [
+   "Server Components first",
+   "Static/cached where possible",
+   "Streaming",
+   "Bundle analysis",
+   "Third-party scripts"
+  ],
+  "sections": [
+   {
+    "title": "Rendering",
+    "content": "- Keep most UI in Server Components; push 'use client' to leaves.\n- Cache what you can (static rendering, `\"use cache\"`, revalidation).\n- Stream slow sections with Suspense instead of blocking the page.\n- Avoid request waterfalls (parallel fetches)."
+   },
+   {
+    "title": "Assets",
+    "content": "- `next/image` with correct `sizes`, prioritize LCP image.\n- `next/font` for fonts.\n- `next/script` with `strategy=\"lazyOnload\"` or `afterInteractive` for third-party scripts."
+   },
+   {
+    "title": "JavaScript",
+    "content": "- Analyze bundles (`@next/bundle-analyzer` or Turbopack's analyzer).\n- Lazy-load heavy client components with `next/dynamic`.\n- Enable the React Compiler.\n- Use `optimizePackageImports` for icon/utility libraries."
+   },
+   {
+    "title": "Measure",
+    "content": "Lighthouse, Vercel Speed Insights or `useReportWebVitals` for real-user metrics (LCP, INP, CLS)."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Deferring a chat widget",
+    "language": "tsx",
+    "code": "import Script from 'next/script';\n\nexport default function Layout({ children }: { children: React.ReactNode }) {\n  return (\n    <>\n      {children}\n      <Script src=\"https://widget.example.com/chat.js\" strategy=\"lazyOnload\" />\n    </>\n  );\n}",
+    "explanation": "The chat script loads during browser idle time, so it doesn't delay the page's main content or interactivity."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Marking big layouts as client components.",
+   "Loading third-party scripts synchronously in the head."
+  ],
+  "realWorldExample": "Teams improve INP by deferring analytics and chat scripts.",
+  "interviewTip": "Structure the answer: rendering, assets, JavaScript, measurement.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "Which next/script strategy loads a script during idle time?",
+    "options": [
+     "beforeInteractive",
+     "afterInteractive",
+     "lazyOnload",
+     "eager"
+    ],
+    "correctAnswer": 2,
+    "explanation": "lazyOnload waits for browser idle time."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Hook for real-user Web Vitals?",
+    "back": "useReportWebVitals."
+   }
+  ],
+  "track": "next",
+  "order": 48
+ },
+ {
+  "id": "next_deployment",
+  "category": "Deployment",
+  "title": "Deploying Next.js",
+  "difficulty": "Medium",
+  "estimatedMinutes": 6,
+  "description": "Options for running Next.js in production: managed platforms, Node servers, Docker and static export.",
+  "keyConcepts": [
+   "Vercel / managed hosts",
+   "next start (Node)",
+   "output: 'standalone'",
+   "output: 'export'",
+   "Adapters"
+  ],
+  "sections": [
+   {
+    "title": "Options",
+    "content": "- **Managed platforms** (Vercel, Netlify, Cloudflare via OpenNext, AWS Amplify): zero-config, all features.\n- **Node.js server:** `next build` then `next start` — supports all features.\n- **Docker:** `output: 'standalone'` creates a minimal server bundle for containers.\n- **Static export:** `output: 'export'` generates HTML files for any static host, but disables server features (Server Actions, dynamic rendering, cookies, image optimization defaults)."
+   },
+   {
+    "title": "Self-hosting considerations",
+    "content": "Configure a shared cache handler if you run multiple instances, put a CDN in front, and set `NEXT_SERVER_ACTIONS_ENCRYPTION_KEY` consistently across instances."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Standalone Docker build",
+    "language": "js",
+    "code": "// next.config.js\nmodule.exports = { output: 'standalone' };\n\n// Dockerfile (simplified)\n// FROM node:22-alpine\n// WORKDIR /app\n// COPY .next/standalone ./\n// COPY .next/static ./.next/static\n// COPY public ./public\n// CMD [\"node\", \"server.js\"]",
+    "explanation": "The standalone output includes only the files needed to run, producing small container images."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Using static export and then expecting Server Actions to work.",
+   "Running multiple instances without a shared cache."
+  ],
+  "realWorldExample": "Companies run Next.js on Kubernetes with standalone output, or on Vercel with preview deployments per pull request.",
+  "interviewTip": "Compare managed vs self-hosted trade-offs.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "Server Actions work with output: 'export'.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Static export has no server runtime."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Config for Docker-friendly builds?",
+    "back": "output: 'standalone'."
+   }
+  ],
+  "track": "next",
+  "order": 49
+ },
+ {
+  "id": "next_runtimes",
+  "category": "Deployment",
+  "title": "Runtimes: Node.js and Edge",
+  "difficulty": "Hard",
+  "estimatedMinutes": 5,
+  "description": "Understand where your code runs and the trade-offs between runtimes.",
+  "keyConcepts": [
+   "Node.js runtime (default)",
+   "Edge runtime",
+   "export const runtime",
+   "API limitations",
+   "Latency vs capability"
+  ],
+  "sections": [
+   {
+    "title": "Node.js runtime",
+    "content": "The default for pages, Route Handlers and (in Next 16) proxy. Full Node.js APIs and npm compatibility."
+   },
+   {
+    "title": "Edge runtime",
+    "content": "A lightweight runtime built on Web APIs that can start quickly close to users. It doesn't support all Node.js APIs (e.g. `fs`, many native modules), and some libraries won't work. Opt in per route with `export const runtime = 'edge'`."
+   },
+   {
+    "title": "Choosing",
+    "content": "Default to Node.js. Consider edge for simple, latency-sensitive logic without heavy dependencies. Remember your database location often matters more than where the function runs."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Opting a route into the edge",
+    "language": "ts",
+    "code": "// app/api/geo/route.ts\nexport const runtime = 'edge';\n\nexport function GET(request: Request) {\n  const country = request.headers.get('x-vercel-ip-country') ?? 'unknown';\n  return Response.json({ country });\n}",
+    "explanation": "A tiny, dependency-free handler is a good edge candidate. Heavy ORM queries are not."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Running database-heavy code on the edge far from the database, increasing latency.",
+   "Using Node-only libraries on the edge runtime."
+  ],
+  "realWorldExample": "Geolocation-based redirects and A/B bucketing are common edge workloads.",
+  "interviewTip": "Mention that the database location usually dominates latency.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "Which is the default runtime for Next.js route handlers?",
+    "options": [
+     "Bun only",
+     "Edge",
+     "Deno",
+     "Node.js"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Node.js is the default."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "How to opt a route into edge?",
+    "back": "export const runtime = 'edge'."
+   }
+  ],
+  "track": "next",
+  "order": 50
+ },
+ {
+  "id": "next_security",
+  "category": "Deployment",
+  "title": "Security Best Practices",
+  "difficulty": "Hard",
+  "estimatedMinutes": 6,
+  "description": "Protect data across Server Components, Actions and Route Handlers.",
+  "keyConcepts": [
+   "Data Access Layer",
+   "Validate all input",
+   "Auth in every action",
+   "CSP headers",
+   "Keep Next.js updated"
+  ],
+  "sections": [
+   {
+    "title": "Checklist",
+    "content": "- Treat Server Actions and Route Handlers as public endpoints: authenticate, authorize, validate.\n- Use a server-only Data Access Layer that returns DTOs.\n- Never expose secrets via `NEXT_PUBLIC_`.\n- Sanitize any HTML rendered with `dangerouslySetInnerHTML`.\n- Set security headers (CSP, HSTS) and secure cookies.\n- Rate-limit sensitive endpoints (login, sign-up).\n- Keep Next.js and React updated — security patches ship regularly."
+   },
+   {
+    "title": "Built-in protections",
+    "content": "Server Action ids are encrypted and unused actions are removed from the build; actions only accept POST with origin checks. React escapes rendered strings. These help, but don't replace your own checks."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Rate limiting a login action",
+    "language": "ts",
+    "code": "'use server';\nimport { headers } from 'next/headers';\nimport { ratelimit } from '@/lib/ratelimit';\n\nexport async function login(_: unknown, formData: FormData) {\n  const ip = (await headers()).get('x-forwarded-for') ?? 'anonymous';\n  const { success } = await ratelimit.limit(`login:${ip}`);\n  if (!success) return { error: 'Too many attempts. Try again later.' };\n  // ...verify credentials, create session\n  return { error: null };\n}",
+    "explanation": "Throttling by IP protects against brute-force attacks."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Assuming page-level protection secures Server Actions on that page.",
+   "Logging sensitive data."
+  ],
+  "realWorldExample": "After the 2025 middleware bypass advisory, teams audited apps that relied solely on middleware for auth.",
+  "interviewTip": "Structure the answer around the DAL, validation, auth checks and headers.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "If a page is protected, Server Actions defined in it are automatically protected.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Actions are separately callable endpoints."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "What should the DAL return?",
+    "back": "Minimal DTOs, never full records."
+   }
+  ],
+  "track": "next",
+  "order": 51
+ },
+ {
+  "id": "next_error_handling",
+  "category": "Deployment",
+  "title": "Error Handling Strategy",
+  "difficulty": "Medium",
+  "estimatedMinutes": 5,
+  "description": "Handle expected and unexpected errors consistently across the App Router.",
+  "keyConcepts": [
+   "Expected errors as return values",
+   "error.tsx boundaries",
+   "global-error.tsx",
+   "notFound()",
+   "onRequestError"
+  ],
+  "sections": [
+   {
+    "title": "Expected errors",
+    "content": "Validation failures, 'not found', permission denied: return them from Server Actions (`{ error }`), call `notFound()`, or render a message. Don't throw."
+   },
+   {
+    "title": "Unexpected errors",
+    "content": "Bugs and outages: let them throw and be caught by the nearest `error.tsx`. `global-error.tsx` covers the root layout."
+   },
+   {
+    "title": "Reporting",
+    "content": "Export `onRequestError` from `instrumentation.ts` to report server errors (with request context) to your monitoring service."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Reporting server errors",
+    "language": "ts",
+    "code": "// instrumentation.ts\nexport async function onRequestError(error: unknown, request: { path: string; method: string }) {\n  await fetch('https://monitoring.example.com/errors', {\n    method: 'POST',\n    body: JSON.stringify({\n      message: (error as Error).message,\n      path: request.path,\n      method: request.method,\n    }),\n  });\n}",
+    "explanation": "Next.js calls `onRequestError` for errors during rendering, Route Handlers and Server Actions."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Using try/catch around redirect() or notFound().",
+   "Throwing for user validation errors."
+  ],
+  "realWorldExample": "Production apps combine error.tsx boundaries with Sentry via instrumentation.",
+  "interviewTip": "Clearly separate expected vs unexpected errors.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "How should a Server Action report a validation error?",
+    "options": [
+     "Throw an Error",
+     "Use console.log only",
+     "Return an error value in its result",
+     "Call process.exit()"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Return expected errors so the form can show them."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Hook to report server errors?",
+    "back": "onRequestError in instrumentation.ts."
+   }
+  ],
+  "track": "next",
+  "order": 52
+ },
+ {
+  "id": "next_architecture",
+  "category": "Deployment",
+  "title": "Production Architecture",
+  "difficulty": "Hard",
+  "estimatedMinutes": 7,
+  "description": "Organize a large Next.js codebase for teams, performance and security.",
+  "keyConcepts": [
+   "Feature folders",
+   "Data Access Layer",
+   "Server-first UI",
+   "Caching strategy",
+   "Monorepos"
+  ],
+  "sections": [
+   {
+    "title": "Layers",
+    "content": "- **Routes (`app/`):** thin pages and layouts composing features.\n- **Features:** UI + Server Actions per domain (`features/billing`).\n- **Data Access Layer:** server-only functions with auth checks, caching and DTOs.\n- **Shared UI:** design system components.\n- **Infrastructure:** db client, auth, logging, config validation."
+   },
+   {
+    "title": "Decisions to document",
+    "content": "- Which data is cached, for how long, and how it's invalidated (tags).\n- Where auth is checked.\n- When to use Server Actions vs Route Handlers.\n- Client state approach for complex interactions."
+   },
+   {
+    "title": "Scaling teams",
+    "content": "Monorepos (Turborepo, Nx) share packages across apps; Multi-Zones can split one domain across several Next.js apps."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Feature-oriented layout",
+    "language": "bash",
+    "code": "src/\n  app/\n    (marketing)/...\n    (app)/dashboard/page.tsx      # composes features\n  features/\n    billing/\n      components/InvoiceTable.tsx\n      actions.ts                  # 'use server'\n      queries.ts                  # server-only, cached\n  lib/\n    db.ts  auth.ts  env.ts\n  components/ui/",
+    "explanation": "Pages stay thin, features own their logic, and data access is centralized and secured."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Business logic inside page components.",
+   "No documented caching strategy, causing stale data bugs."
+  ],
+  "realWorldExample": "Large e-commerce teams use monorepos with shared UI packages and multiple Next.js apps.",
+  "interviewTip": "For architecture questions, talk in layers and trade-offs.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "Where should authorization checks for data reads live?",
+    "options": [
+     "Only in proxy",
+     "In the Data Access Layer",
+     "In CSS",
+     "In Client Components"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Check close to the data."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Tool to split one domain across several Next.js apps?",
+    "back": "Multi-Zones."
+   }
+  ],
+  "track": "next",
+  "order": 53
+ },
+ {
+  "id": "next_testing",
+  "category": "Deployment",
+  "title": "Testing Next.js Apps",
+  "difficulty": "Medium",
+  "estimatedMinutes": 5,
+  "description": "Combine unit, component and end-to-end tests for App Router projects.",
+  "keyConcepts": [
+   "Vitest/Jest",
+   "React Testing Library",
+   "Playwright",
+   "Testing Server Actions",
+   "Async Server Components → E2E"
+  ],
+  "sections": [
+   {
+    "title": "What to use",
+    "content": "- **Unit tests (Vitest/Jest):** utilities, validation schemas, data functions, Server Action logic (call them like functions with mocked dependencies).\n- **Component tests (RTL):** Client Components and synchronous Server Components.\n- **E2E (Playwright/Cypress):** async Server Components, routing, auth flows, caching behaviour against a production build."
+   },
+   {
+    "title": "Tips",
+    "content": "Run E2E against `next build && next start` for realistic behaviour. Mock network with MSW in unit and component tests."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "A Playwright test",
+    "language": "ts",
+    "code": "import { test, expect } from '@playwright/test';\n\ntest('user can add a todo', async ({ page }) => {\n  await page.goto('/todos');\n  await page.getByLabel('New todo').fill('Write tests');\n  await page.getByRole('button', { name: 'Add' }).click();\n  await expect(page.getByText('Write tests')).toBeVisible();\n});",
+    "explanation": "The test exercises the full stack: Server Component rendering, Server Action mutation and revalidation."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Trying to unit test async Server Components with RTL.",
+   "Running E2E only against the dev server."
+  ],
+  "realWorldExample": "CI pipelines run Vitest on every push and Playwright on preview deployments.",
+  "interviewTip": "Explain why async Server Components are covered by E2E tests.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "End-to-end tests are the recommended way to test async Server Components today.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Unit testing tools don't fully support them yet."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Run E2E against which build?",
+    "back": "A production build (next build && next start)."
+   }
+  ],
+  "track": "next",
+  "order": 54
+ },
+ {
+  "id": "next_monitoring",
+  "category": "Deployment",
+  "title": "Monitoring & Observability",
+  "difficulty": "Medium",
+  "estimatedMinutes": 5,
+  "description": "Know what's happening in production with instrumentation, logs and Web Vitals.",
+  "keyConcepts": [
+   "instrumentation.ts",
+   "OpenTelemetry",
+   "Web Vitals",
+   "after()",
+   "Error tracking"
+  ],
+  "sections": [
+   {
+    "title": "Tools",
+    "content": "- `instrumentation.ts` with `register()` to initialize tracing (OpenTelemetry via `@vercel/otel`) and `onRequestError` to capture errors.\n- `instrumentation-client.ts` for client-side monitoring setup.\n- `useReportWebVitals` to send LCP, INP and CLS from real users.\n- `after()` from `next/server` to run logging or analytics after the response is sent."
+   },
+   {
+    "title": "What to watch",
+    "content": "Error rates, slow routes, cache hit rates, Web Vitals by page, and failed Server Actions."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Logging after the response",
+    "language": "ts",
+    "code": "import { after } from 'next/server';\n\nexport async function POST(request: Request) {\n  const order = await createOrder(await request.json());\n  after(async () => {\n    await analytics.track('order_created', { id: order.id });\n  });\n  return Response.json(order);\n}",
+    "explanation": "The client gets the response immediately; analytics runs afterwards without slowing the request."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Blocking responses on analytics calls.",
+   "No visibility into server errors in production."
+  ],
+  "realWorldExample": "Teams export OpenTelemetry traces to Datadog or Honeycomb to find slow data fetches.",
+  "interviewTip": "Mention instrumentation, after(), and real-user metrics.",
+  "quiz": [
+   {
+    "type": "mcq",
+    "prompt": "What does after() do?",
+    "options": [
+     "Schedules work after the response is sent",
+     "Runs code before rendering",
+     "Delays navigation",
+     "Caches a response"
+    ],
+    "correctAnswer": 0,
+    "explanation": "after() runs once the response has finished."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "File for OpenTelemetry setup?",
+    "back": "instrumentation.ts (register function)."
+   }
+  ],
+  "track": "next",
+  "order": 55
+ },
+ {
+  "id": "next_best_practices",
+  "category": "Deployment",
+  "title": "Next.js Best Practices",
+  "difficulty": "Medium",
+  "estimatedMinutes": 5,
+  "description": "A compact summary of modern App Router best practices.",
+  "keyConcepts": [
+   "Server-first",
+   "Explicit caching",
+   "Secure data access",
+   "Stream with Suspense",
+   "Stay current"
+  ],
+  "sections": [
+   {
+    "title": "Rendering & data",
+    "content": "- Default to Server Components; add 'use client' at the leaves.\n- Fetch data where it's used; run requests in parallel.\n- Be explicit about caching; tag and revalidate after mutations.\n- Stream slow UI with Suspense and `loading.tsx`."
+   },
+   {
+    "title": "Mutations & security",
+    "content": "- Use Server Actions for UI mutations; validate input and authorize inside every action.\n- Keep a server-only Data Access Layer returning DTOs.\n- Don't depend on proxy alone for auth."
+   },
+   {
+    "title": "Performance & quality",
+    "content": "- `next/image`, `next/font`, `next/script` with lazy strategies.\n- Enable the React Compiler; analyze bundles.\n- TypeScript strict, ESLint, tests in CI, monitoring with instrumentation.\n- Follow release notes: Next.js 15 made APIs async and caching opt-in; Next.js 16 introduced Cache Components, Turbopack by default and proxy.ts."
+   }
+  ],
+  "codeExamples": [
+   {
+    "title": "Typed page with async params",
+    "language": "tsx",
+    "code": "// Next.js 15.5+ provides global PageProps helpers\nexport default async function Page(props: PageProps<'/blog/[slug]'>) {\n  const { slug } = await props.params;\n  const post = await getPost(slug);\n  if (!post) notFound();\n  return <Article post={post} />;\n}",
+    "explanation": "Generated route types catch typos in params at compile time."
+   }
+  ],
+  "whenNotToUse": [],
+  "commonMistakes": [
+   "Following Next.js 13/14 tutorials that assume cached fetch and synchronous params.",
+   "Turning everything into Client Components to avoid learning boundaries."
+  ],
+  "realWorldExample": "High-performing teams keep a living checklist like this in their engineering handbook.",
+  "interviewTip": "When asked for best practices, group them: rendering, data, security, performance, tooling.",
+  "quiz": [
+   {
+    "type": "trueFalse",
+    "prompt": "Following a Next.js 13 tutorial exactly guarantees correct behaviour in Next.js 16.",
+    "options": [
+     "True",
+     "False"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Caching defaults, async APIs and middleware naming have changed."
+   }
+  ],
+  "flashcards": [
+   {
+    "front": "Two big Next.js 15 changes?",
+    "back": "Async request APIs (params, cookies) and caching opt-in by default."
+   }
+  ],
+  "track": "next",
+  "order": 56
+ }
+]

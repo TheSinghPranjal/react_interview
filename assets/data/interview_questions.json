@@ -1,0 +1,2586 @@
+[
+ {
+  "id": "react_easy_001",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "React Basics",
+  "question": "What is React?",
+  "shortAnswer": "React is a JavaScript library for building user interfaces from reusable components.",
+  "detailedAnswer": "React lets you describe UI declaratively as a function of state. You build components that return JSX; when state changes React re-renders the affected components and efficiently updates the DOM. It focuses on the view layer, while frameworks like Next.js add routing, data fetching and server rendering.",
+  "keyPoints": [
+   "Declarative, component-based UI library",
+   "UI is a function of state",
+   "Maintained by Meta and the community",
+   "Frameworks build on top of it"
+  ],
+  "commonMistake": "Calling React a full framework that includes routing and data fetching.",
+  "interviewTip": "Give the one-line definition, then mention components, declarative rendering and the ecosystem."
+ },
+ {
+  "id": "react_easy_002",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "JSX",
+  "question": "What is JSX?",
+  "shortAnswer": "JSX is a syntax extension that lets you write HTML-like markup inside JavaScript; it compiles to function calls.",
+  "detailedAnswer": "JSX is not HTML and not required by React. A compiler such as Babel or SWC transforms it into `jsx()` calls from `react/jsx-runtime` (or `React.createElement` in older setups) that create React elements. You can embed any JavaScript expression in curly braces, and attributes use camelCase like `className` and `onClick`.",
+  "keyPoints": [
+   "Syntactic sugar compiled to jsx()/createElement",
+   "Expressions go in {}",
+   "camelCase attributes (className, htmlFor)",
+   "Must return a single root (use Fragments)"
+  ],
+  "commonMistake": "Thinking browsers understand JSX directly.",
+  "interviewTip": "Mention the modern automatic JSX runtime, which removed the need to import React in every file."
+ },
+ {
+  "id": "react_easy_003",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Components",
+  "question": "What is a component in React?",
+  "shortAnswer": "A component is a reusable function that takes props and returns JSX describing part of the UI.",
+  "detailedAnswer": "Components are the building blocks of React apps. Modern React uses function components with Hooks; class components still work but are legacy for new code. Component names must start with a capital letter so JSX can distinguish them from HTML elements.",
+  "keyPoints": [
+   "Function that returns JSX",
+   "Receives props as input",
+   "Capitalized names",
+   "Composable and reusable"
+  ],
+  "commonMistake": "Declaring components inside other components, which resets their state every render.",
+  "interviewTip": "Explain composition: complex screens are trees of small components."
+ },
+ {
+  "id": "react_easy_004",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Props & State",
+  "question": "What is the difference between state and props?",
+  "shortAnswer": "Props are inputs passed from a parent and are read-only; state is data a component owns and can update over time.",
+  "detailedAnswer": "Props flow down from parent to child and configure a component. State lives inside a component, changes through its setter, and triggers a re-render. A parent's state is often passed to children as props, creating one-way data flow.",
+  "keyPoints": [
+   "Props: external, read-only",
+   "State: internal, mutable via setter",
+   "Changing state triggers re-render",
+   "One-way data flow"
+  ],
+  "commonMistake": "Mutating props inside a child component.",
+  "interviewTip": "Use an example: a parent holds `count` in state and passes it as a prop to a display component."
+ },
+ {
+  "id": "react_easy_005",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Lists & Keys",
+  "question": "Why are keys important in React lists?",
+  "shortAnswer": "Keys give list items a stable identity so React can match them between renders and preserve the right state.",
+  "detailedAnswer": "During reconciliation React uses keys to know which items were added, removed or moved. Without stable keys it matches by position, which can attach state (like input text) to the wrong item and cause unnecessary DOM work. Use unique ids from your data; avoid array indexes for lists that change order.",
+  "keyPoints": [
+   "Identify items among siblings",
+   "Preserve component state correctly",
+   "Use stable unique ids",
+   "Index keys are risky for dynamic lists"
+  ],
+  "commonMistake": "Using Math.random() or the index as key in a reorderable list.",
+  "interviewTip": "Mention that changing a key forces a remount — a useful trick to reset state."
+ },
+ {
+  "id": "react_easy_006",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Hooks",
+  "question": "What does useEffect do?",
+  "shortAnswer": "useEffect runs code after render to synchronize a component with an external system, with optional cleanup.",
+  "detailedAnswer": "Effects run after React commits changes to the DOM. You list dependencies so the effect re-runs only when they change, and you return a cleanup function to undo the previous run (unsubscribe, clear timers). Effects are for external systems — network connections, browser APIs, third-party widgets — not for computing derived data.",
+  "keyPoints": [
+   "Runs after commit/paint",
+   "Dependency array controls re-runs",
+   "Cleanup before re-run and on unmount",
+   "For external synchronization only"
+  ],
+  "commonMistake": "Using useEffect to transform data for rendering or to respond to user events.",
+  "interviewTip": "Quote the principle: 'Effects are an escape hatch to synchronize with external systems.'"
+ },
+ {
+  "id": "react_easy_007",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Hooks",
+  "question": "What is useState?",
+  "shortAnswer": "useState is a Hook that adds state to a function component, returning the current value and a setter.",
+  "detailedAnswer": "`const [value, setValue] = useState(initial)` stores a value between renders. Calling the setter schedules a re-render with the new value. Use the updater form `setValue(prev => ...)` when the next value depends on the previous one, and a lazy initializer `useState(() => compute())` for expensive initial values.",
+  "keyPoints": [
+   "Returns [state, setState]",
+   "Setter triggers re-render",
+   "Updater function for previous state",
+   "Lazy initialization"
+  ],
+  "commonMistake": "Expecting the state variable to change immediately after calling the setter.",
+  "interviewTip": "Explain that state is a snapshot for each render."
+ },
+ {
+  "id": "react_easy_008",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Hooks",
+  "question": "What are Hooks?",
+  "shortAnswer": "Hooks are functions like useState and useEffect that let function components use state and other React features.",
+  "detailedAnswer": "Introduced in React 16.8, Hooks replaced most class component patterns. Built-in Hooks include useState, useEffect, useContext, useRef, useMemo, useCallback, useReducer, useTransition and more. You can also write custom Hooks to reuse stateful logic.",
+  "keyPoints": [
+   "Introduced in React 16.8",
+   "Bring state and lifecycle to functions",
+   "Must follow the Rules of Hooks",
+   "Custom Hooks reuse logic"
+  ],
+  "commonMistake": "Calling Hooks conditionally.",
+  "interviewTip": "Mention why Hooks were introduced: reusing logic without wrappers and simpler components."
+ },
+ {
+  "id": "react_easy_009",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Hooks",
+  "question": "What are the Rules of Hooks?",
+  "shortAnswer": "Call Hooks only at the top level of components or custom Hooks — never in conditions, loops or nested functions.",
+  "detailedAnswer": "React tracks Hooks by call order. If a Hook is skipped on one render, every later Hook would read the wrong state. The eslint-plugin-react-hooks rules enforce this. The `use()` API is the exception: it can be called conditionally.",
+  "keyPoints": [
+   "Top level only",
+   "Only in function components or custom Hooks",
+   "Order must be the same every render",
+   "Enforced by ESLint plugin"
+  ],
+  "commonMistake": "Placing a Hook after an early return.",
+  "interviewTip": "Explain why the rule exists (call order), not just the rule."
+ },
+ {
+  "id": "react_easy_010",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Events & Forms",
+  "question": "How do you handle events in React?",
+  "shortAnswer": "Pass a function to an event prop like onClick or onChange; React calls it with a SyntheticEvent.",
+  "detailedAnswer": "Event props use camelCase and receive a function reference, not a call: `onClick={handleClick}`. To pass arguments, wrap in an arrow function. The SyntheticEvent wraps the native event with a consistent API including preventDefault and stopPropagation.",
+  "keyPoints": [
+   "camelCase event props",
+   "Pass a function, don't call it",
+   "SyntheticEvent wrapper",
+   "Handlers are the place for side effects"
+  ],
+  "commonMistake": "Writing onClick={handleClick()}, which runs during render.",
+  "interviewTip": "Mention that event handlers, not Effects, should handle user-triggered side effects."
+ },
+ {
+  "id": "react_easy_011",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Events & Forms",
+  "question": "What is a controlled component?",
+  "shortAnswer": "A form input whose value is driven by React state through value and onChange.",
+  "detailedAnswer": "In a controlled component, React state is the single source of truth: the input shows `value={state}` and updates via `onChange`. This enables instant validation, formatting and dependent fields. Uncontrolled components let the DOM hold the value, read via refs or FormData.",
+  "keyPoints": [
+   "value + onChange",
+   "State is the source of truth",
+   "Enables live validation",
+   "Contrast with uncontrolled (defaultValue)"
+  ],
+  "commonMistake": "Setting value without onChange, making the input read-only.",
+  "interviewTip": "Compare controlled vs uncontrolled and when you'd choose each."
+ },
+ {
+  "id": "react_easy_012",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Rendering",
+  "question": "What is conditional rendering?",
+  "shortAnswer": "Showing different UI based on conditions using JavaScript: if statements, ternaries and &&.",
+  "detailedAnswer": "React has no special directive; you use JavaScript. Early returns handle whole-component branches, ternaries choose between two elements, and `&&` shows or hides content. Returning null renders nothing.",
+  "keyPoints": [
+   "if / early return",
+   "Ternary for either-or",
+   "&& for show/hide",
+   "null renders nothing"
+  ],
+  "commonMistake": "Rendering `0` with `count && <Badge />`.",
+  "interviewTip": "Mention the `0 &&` pitfall to show attention to detail."
+ },
+ {
+  "id": "react_easy_013",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Components",
+  "question": "What is a Fragment?",
+  "shortAnswer": "A Fragment groups multiple elements without adding an extra DOM node.",
+  "detailedAnswer": "JSX must return one root. Wrapping siblings in `<>...</>` (or `<Fragment key=...>` when you need a key in a list) satisfies that without polluting the DOM, which matters for layouts like CSS grid or tables.",
+  "keyPoints": [
+   "<>...</> short syntax",
+   "No extra DOM element",
+   "Use <Fragment key> in lists",
+   "Keeps markup semantic"
+  ],
+  "commonMistake": "Wrapping everything in unnecessary divs.",
+  "interviewTip": "Mention the keyed Fragment variant for lists."
+ },
+ {
+  "id": "react_easy_014",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Virtual DOM",
+  "question": "What is the virtual DOM?",
+  "shortAnswer": "A lightweight in-memory tree of React elements that React compares between renders to compute DOM updates.",
+  "detailedAnswer": "Instead of touching the real DOM directly, components produce element trees. React diffs the new tree with the previous one (reconciliation) and applies only the needed changes. The benefit is a simple declarative model with good performance, not that it's always faster than hand-written DOM code.",
+  "keyPoints": [
+   "In-memory element tree",
+   "Diffed via reconciliation",
+   "Minimal DOM updates",
+   "Enables declarative programming"
+  ],
+  "commonMistake": "Claiming the virtual DOM is always faster than direct DOM manipulation.",
+  "interviewTip": "Connect it to reconciliation and keys."
+ },
+ {
+  "id": "react_easy_015",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Hooks",
+  "question": "What is useRef used for?",
+  "shortAnswer": "useRef stores a mutable value that persists across renders without causing re-renders, often a DOM node reference.",
+  "detailedAnswer": "`useRef(initial)` returns an object whose `.current` you can read and write. Common uses: focusing inputs, measuring elements, storing timer ids or previous values. In React 19, function components can accept `ref` as a regular prop.",
+  "keyPoints": [
+   "Mutable .current",
+   "No re-render on change",
+   "Access DOM nodes",
+   "ref is a prop in React 19"
+  ],
+  "commonMistake": "Using refs for values that should update the UI.",
+  "interviewTip": "Contrast useRef with useState."
+ },
+ {
+  "id": "react_easy_016",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Hooks",
+  "question": "What is useContext?",
+  "shortAnswer": "useContext reads a value from the nearest Context provider above the component.",
+  "detailedAnswer": "Context avoids passing props through many layers. Create it with createContext, provide it (React 19: `<MyContext value={...}>`), and read it with useContext or use(). Components reading a context re-render when its value changes.",
+  "keyPoints": [
+   "Avoids prop drilling",
+   "Reads nearest provider",
+   "Re-renders consumers on change",
+   "Good for theme, auth, locale"
+  ],
+  "commonMistake": "Putting fast-changing state into one huge context consumed everywhere.",
+  "interviewTip": "Mention context is a transport mechanism, not a state manager."
+ },
+ {
+  "id": "react_easy_017",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Components",
+  "question": "What are the children props?",
+  "shortAnswer": "children is a special prop containing the JSX placed between a component's opening and closing tags.",
+  "detailedAnswer": "It enables composition: generic wrappers like Card, Modal or Layout render `{children}` without knowing what's inside. You can also pass other JSX through named props as 'slots'.",
+  "keyPoints": [
+   "Content between tags",
+   "Enables composition",
+   "Named props as slots",
+   "Helps avoid prop drilling"
+  ],
+  "commonMistake": "Treating children as always an array — it can be a single element, string or undefined.",
+  "interviewTip": "Show how composition can replace context for some prop-drilling cases."
+ },
+ {
+  "id": "react_easy_018",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Rendering",
+  "question": "What is prop drilling?",
+  "shortAnswer": "Passing props through intermediate components that don't use them, just to reach a deep child.",
+  "detailedAnswer": "It makes code verbose and brittle. Solutions include composition (pass the deep element as children), Context for widely needed values, or a state library for complex global state.",
+  "keyPoints": [
+   "Props passed through many layers",
+   "Intermediate components don't need them",
+   "Fix with composition or Context",
+   "Stores for complex global state"
+  ],
+  "commonMistake": "Jumping straight to Context for a two-level pass.",
+  "interviewTip": "Mention composition first — it's often the simplest fix."
+ },
+ {
+  "id": "react_easy_019",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Components",
+  "question": "What is the difference between function and class components?",
+  "shortAnswer": "Function components are plain functions using Hooks; class components extend React.Component with lifecycle methods. Function components are the modern standard.",
+  "detailedAnswer": "Class components use this.state, setState and lifecycle methods like componentDidMount. Function components achieve the same with Hooks, are simpler and work with modern features. Error boundaries are the main remaining case that requires a class.",
+  "keyPoints": [
+   "Functions + Hooks are modern default",
+   "Classes use lifecycle methods",
+   "Hooks replace most class patterns",
+   "Error boundaries still need classes"
+  ],
+  "commonMistake": "Saying class components are deprecated — they still work but aren't recommended for new code.",
+  "interviewTip": "Mention error boundaries as the notable exception."
+ },
+ {
+  "id": "react_easy_020",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Performance",
+  "question": "What is React.memo?",
+  "shortAnswer": "memo wraps a component so it skips re-rendering when its props are shallowly equal to the previous props.",
+  "detailedAnswer": "By default children re-render when the parent does. memo prevents that if props haven't changed by Object.is comparison. It only helps when props are stable, so it's often paired with useMemo/useCallback — or replaced by the React Compiler.",
+  "keyPoints": [
+   "Memoizes component output",
+   "Shallow prop comparison",
+   "Needs stable props",
+   "Use for expensive components"
+  ],
+  "commonMistake": "Wrapping every component in memo without measuring.",
+  "interviewTip": "Explain why inline objects/functions defeat memo."
+ },
+ {
+  "id": "react_easy_021",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Rendering",
+  "question": "What is Strict Mode?",
+  "shortAnswer": "A development-only wrapper that double-invokes renders and Effects to surface bugs.",
+  "detailedAnswer": "StrictMode helps find impure rendering and missing Effect cleanup by rendering components twice and mounting-unmounting-remounting them in development. It also warns about deprecated APIs. It has no effect in production.",
+  "keyPoints": [
+   "Development only",
+   "Double render",
+   "Effect setup→cleanup→setup",
+   "Warns about deprecated APIs"
+  ],
+  "commonMistake": "Removing StrictMode to stop double effects instead of fixing cleanup.",
+  "interviewTip": "Connect it to 'why does my effect run twice?'"
+ },
+ {
+  "id": "react_easy_022",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Hooks",
+  "question": "Why does useEffect run twice in development?",
+  "shortAnswer": "Because React Strict Mode mounts, unmounts and remounts components in development to verify that Effects clean up correctly.",
+  "detailedAnswer": "This dev-only behaviour simulates a component being removed and re-added. If your effect works correctly with cleanup (unsubscribe, abort fetch, clear timer), running twice is harmless. Production runs it once.",
+  "keyPoints": [
+   "Caused by Strict Mode",
+   "Development only",
+   "Tests cleanup logic",
+   "Fix with proper cleanup, not by removing StrictMode"
+  ],
+  "commonMistake": "Using a ref flag to skip the second run instead of adding cleanup.",
+  "interviewTip": "Show a fetch with an ignore flag or AbortController as the fix."
+ },
+ {
+  "id": "react_easy_023",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Forms",
+  "question": "What is the difference between controlled and uncontrolled inputs?",
+  "shortAnswer": "Controlled inputs store their value in React state; uncontrolled inputs keep it in the DOM and you read it when needed.",
+  "detailedAnswer": "Controlled: `value` + `onChange`, ideal for live validation. Uncontrolled: `defaultValue` and refs or FormData on submit, less code and fewer re-renders. React 19 form Actions work naturally with uncontrolled inputs.",
+  "keyPoints": [
+   "Controlled = state-driven",
+   "Uncontrolled = DOM-driven",
+   "FormData pairs with uncontrolled",
+   "File inputs are always uncontrolled"
+  ],
+  "commonMistake": "Switching between controlled and uncontrolled by starting with undefined.",
+  "interviewTip": "Mention React 19 form actions."
+ },
+ {
+  "id": "react_easy_024",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Hooks",
+  "question": "What is a custom Hook?",
+  "shortAnswer": "A function starting with 'use' that calls other Hooks to share stateful logic between components.",
+  "detailedAnswer": "Custom Hooks extract logic like subscriptions, debouncing or media queries into reusable functions. Each component using a custom Hook gets its own independent state — they share logic, not state.",
+  "keyPoints": [
+   "Name starts with use",
+   "Composes built-in Hooks",
+   "Shares logic, not state",
+   "Follows Rules of Hooks"
+  ],
+  "commonMistake": "Assuming two components using the same Hook share state.",
+  "interviewTip": "Give a concrete example like useDebouncedValue."
+ },
+ {
+  "id": "react_easy_025",
+  "category": "React",
+  "difficulty": "Easy",
+  "topic": "Rendering",
+  "question": "What is lifting state up?",
+  "shortAnswer": "Moving shared state to the closest common parent so multiple children use a single source of truth.",
+  "detailedAnswer": "When siblings need the same data, keep it in their parent and pass the value and an updater down as props. This avoids duplicated state that can drift out of sync.",
+  "keyPoints": [
+   "Single source of truth",
+   "Closest common parent",
+   "Pass value + callback",
+   "Prevents sync bugs"
+  ],
+  "commonMistake": "Lifting state higher than necessary, causing broad re-renders.",
+  "interviewTip": "Use the accordion or filter-and-list example."
+ },
+ {
+  "id": "next_easy_001",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Next.js Basics",
+  "question": "What is Next.js?",
+  "shortAnswer": "Next.js is a React framework for building full-stack web applications with routing, server rendering and data fetching built in.",
+  "detailedAnswer": "Maintained by Vercel, Next.js adds file-system routing, React Server Components, multiple rendering strategies (static, dynamic, streaming), caching, Server Actions, Route Handlers, and image/font optimization. The App Router is the recommended router.",
+  "keyPoints": [
+   "React framework",
+   "File-based routing",
+   "Server rendering and caching",
+   "Full-stack features"
+  ],
+  "commonMistake": "Saying Next.js replaces React.",
+  "interviewTip": "Name three concrete features and one trade-off."
+ },
+ {
+  "id": "next_easy_002",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Next.js Basics",
+  "question": "What are the benefits of Next.js over a plain React SPA?",
+  "shortAnswer": "Pre-rendered HTML for SEO and fast loads, less client JavaScript via Server Components, built-in routing, caching and optimizations.",
+  "detailedAnswer": "A client-only SPA ships an empty HTML shell and renders in the browser. Next.js renders on the server or at build time, splits code per route, prefetches links, optimizes images and fonts, and lets you write backend logic alongside the UI.",
+  "keyPoints": [
+   "SEO-friendly HTML",
+   "Faster first paint",
+   "Less JavaScript with Server Components",
+   "Built-in optimizations"
+  ],
+  "commonMistake": "Ignoring the operational cost of running a server.",
+  "interviewTip": "Balance benefits with trade-offs."
+ },
+ {
+  "id": "next_easy_003",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "App Router",
+  "question": "What is the App Router?",
+  "shortAnswer": "The App Router is Next.js's router in the app/ directory, built on React Server Components, nested layouts and streaming.",
+  "detailedAnswer": "Folders define route segments and special files define UI: page, layout, loading, error, not-found, route. Components are Server Components by default. It replaces the Pages Router as the recommended approach.",
+  "keyPoints": [
+   "app/ directory",
+   "Server Components by default",
+   "Nested layouts",
+   "Special files per segment"
+  ],
+  "commonMistake": "Mixing Pages Router APIs like getServerSideProps into app/.",
+  "interviewTip": "List the special files and their purposes."
+ },
+ {
+  "id": "next_easy_004",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Routing",
+  "question": "How does file-based routing work in Next.js?",
+  "shortAnswer": "Folders in app/ map to URL segments, and a page.tsx file makes a segment publicly accessible.",
+  "detailedAnswer": "`app/blog/page.tsx` serves `/blog`; `app/blog/[slug]/page.tsx` serves `/blog/:slug`. Only page and route files are routable, so you can colocate components. Route groups `(name)` and private folders `_name` organize code without affecting URLs.",
+  "keyPoints": [
+   "Folders = segments",
+   "page.tsx makes it public",
+   "Dynamic segments in []",
+   "Groups and private folders"
+  ],
+  "commonMistake": "Expecting a component file in a route folder to be a route.",
+  "interviewTip": "Mention colocation as a benefit."
+ },
+ {
+  "id": "next_easy_005",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Routing",
+  "question": "What is a dynamic route?",
+  "shortAnswer": "A route with a bracketed segment like [id] that captures part of the URL as a parameter.",
+  "detailedAnswer": "`[id]` matches one segment, `[...slug]` matches one or more, `[[...slug]]` matches zero or more. The page receives `params` — a Promise since Next.js 15 — and can use generateStaticParams to pre-render known values.",
+  "keyPoints": [
+   "[param] syntax",
+   "Catch-all and optional catch-all",
+   "params is async in Next 15+",
+   "Pre-render with generateStaticParams"
+  ],
+  "commonMistake": "Accessing params synchronously in Next.js 15+.",
+  "interviewTip": "Mention async params — a recent breaking change."
+ },
+ {
+  "id": "next_easy_006",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Layouts",
+  "question": "What is a layout in Next.js?",
+  "shortAnswer": "A layout is UI shared by multiple routes that wraps children and stays mounted during navigation.",
+  "detailedAnswer": "Defined in layout.tsx, a layout receives children and persists state across navigation between its child routes. The root layout is required and renders html and body. Layouts don't receive searchParams.",
+  "keyPoints": [
+   "Shared UI",
+   "Persists across navigation",
+   "Root layout required",
+   "No searchParams"
+  ],
+  "commonMistake": "Expecting a layout to re-render on every navigation.",
+  "interviewTip": "Contrast layout with template."
+ },
+ {
+  "id": "next_easy_007",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Navigation",
+  "question": "What does the Link component do?",
+  "shortAnswer": "Link enables client-side navigation between routes with automatic prefetching.",
+  "detailedAnswer": "next/link renders an anchor tag but intercepts clicks to fetch only the changed route segments. In production, links in the viewport are prefetched. Shared layouts and client state persist.",
+  "keyPoints": [
+   "Client-side navigation",
+   "Prefetching in viewport",
+   "Partial rendering",
+   "Use <a> for external links"
+  ],
+  "commonMistake": "Using plain <a> tags for internal navigation.",
+  "interviewTip": "Mention prefetching behaviour differences between static and dynamic routes."
+ },
+ {
+  "id": "next_easy_008",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Server Components",
+  "question": "What are Server Components in Next.js?",
+  "shortAnswer": "Components that render on the server only; their code never ships to the browser. They are the default in the App Router.",
+  "detailedAnswer": "Server Components can be async, fetch data directly, access secrets and use server-only libraries. They can't use state, effects or browser APIs. They render into an RSC payload and HTML, reducing client JavaScript.",
+  "keyPoints": [
+   "Default in app/",
+   "Can be async",
+   "No state or effects",
+   "Zero client JS for their code"
+  ],
+  "commonMistake": "Trying to use useState in a Server Component.",
+  "interviewTip": "Explain why the default reduces bundle size."
+ },
+ {
+  "id": "next_easy_009",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Client Components",
+  "question": "What does 'use client' do?",
+  "shortAnswer": "It marks a file as a client boundary so it and its imports are bundled for and hydrated in the browser.",
+  "detailedAnswer": "Client Components support state, effects, event handlers and browser APIs. They still pre-render on the server. You only need the directive at the boundary — files imported from it automatically become client code.",
+  "keyPoints": [
+   "Marks a client boundary",
+   "Enables hooks and events",
+   "Still pre-rendered on the server",
+   "Only needed at entry points"
+  ],
+  "commonMistake": "Thinking Client Components never render on the server.",
+  "interviewTip": "Advise pushing client boundaries down to leaves."
+ },
+ {
+  "id": "next_easy_010",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Rendering",
+  "question": "What is static rendering?",
+  "shortAnswer": "Generating a route's HTML at build time (or on revalidation) and serving the same cached result to all users.",
+  "detailedAnswer": "Static routes are the fastest: they can be served from a CDN. A route is static when it doesn't use request-specific data like cookies, headers or searchParams, and its data is cached.",
+  "keyPoints": [
+   "Rendered ahead of time",
+   "Served from cache/CDN",
+   "No request-specific APIs",
+   "Can be revalidated"
+  ],
+  "commonMistake": "Statically rendering personalized content.",
+  "interviewTip": "Name what opts a route into dynamic rendering."
+ },
+ {
+  "id": "next_easy_011",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Rendering",
+  "question": "What is dynamic rendering?",
+  "shortAnswer": "Rendering a route at request time because it depends on request data or uncached data.",
+  "detailedAnswer": "Using cookies(), headers(), searchParams, connection() or uncached fetches makes a route dynamic. It enables personalization but costs per-request work. Streaming and Suspense let you combine a static shell with dynamic parts.",
+  "keyPoints": [
+   "Rendered per request",
+   "Triggered by dynamic APIs",
+   "Enables personalization",
+   "Combine with streaming"
+  ],
+  "commonMistake": "Making a whole page dynamic for one small widget.",
+  "interviewTip": "Mention Suspense to isolate dynamic parts."
+ },
+ {
+  "id": "next_easy_012",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Data Fetching",
+  "question": "How do you fetch data in the App Router?",
+  "shortAnswer": "Make a Server Component async and await your data source directly — fetch, an ORM or an SDK.",
+  "detailedAnswer": "No useEffect or API route is needed for reads. Requests should run in parallel when independent (Promise.all). Identical fetches are memoized per request, and you control caching explicitly. For interactive client data, use SWR/TanStack Query or pass promises to use().",
+  "keyPoints": [
+   "async Server Components",
+   "Fetch directly from the source",
+   "Avoid waterfalls",
+   "Explicit caching"
+  ],
+  "commonMistake": "Fetching your own API route from a Server Component.",
+  "interviewTip": "Mention request memoization and parallel fetching."
+ },
+ {
+  "id": "next_easy_013",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Layouts",
+  "question": "What is loading.tsx?",
+  "shortAnswer": "A special file that wraps a route segment in a Suspense boundary and shows its UI instantly while the page loads.",
+  "detailedAnswer": "It gives immediate feedback on navigation while data loads, and content streams in when ready. For dynamic routes, the loading UI is prefetched.",
+  "keyPoints": [
+   "Automatic Suspense boundary",
+   "Instant loading state",
+   "Enables streaming",
+   "Prefetched for dynamic routes"
+  ],
+  "commonMistake": "Using only one loading file when sections load at very different speeds.",
+  "interviewTip": "Mention granular Suspense boundaries for finer control."
+ },
+ {
+  "id": "next_easy_014",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Layouts",
+  "question": "What is error.tsx?",
+  "shortAnswer": "A special file that creates an error boundary for a route segment and renders fallback UI with a reset function.",
+  "detailedAnswer": "It must be a Client Component and receives error and reset props. It doesn't catch errors in the same segment's layout. global-error.tsx handles root layout errors.",
+  "keyPoints": [
+   "Segment error boundary",
+   "Must be 'use client'",
+   "reset() retries",
+   "global-error for root layout"
+  ],
+  "commonMistake": "Forgetting the 'use client' directive.",
+  "interviewTip": "Mention the production digest that hides server error details."
+ },
+ {
+  "id": "next_easy_015",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Routing",
+  "question": "What is not-found.tsx?",
+  "shortAnswer": "A file that renders 404 UI when notFound() is called or no route matches.",
+  "detailedAnswer": "Call notFound() from next/navigation when a resource doesn't exist; Next.js renders the closest not-found.tsx and responds with a 404 status, which is important for SEO.",
+  "keyPoints": [
+   "Custom 404 UI",
+   "Triggered by notFound()",
+   "Correct 404 status",
+   "Root handles unmatched URLs"
+  ],
+  "commonMistake": "Rendering 'not found' text with a 200 status.",
+  "interviewTip": "Tie it to SEO and soft 404s."
+ },
+ {
+  "id": "next_easy_016",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "SEO",
+  "question": "How do you add metadata to a page in Next.js?",
+  "shortAnswer": "Export a metadata object or an async generateMetadata function from a layout or page.",
+  "detailedAnswer": "Metadata sets title, description, Open Graph and more. It merges from layouts to pages, supports title templates, and generateMetadata can use route params. Only Server Components can export metadata.",
+  "keyPoints": [
+   "export const metadata",
+   "generateMetadata for dynamic data",
+   "Merges through layouts",
+   "Server Components only"
+  ],
+  "commonMistake": "Exporting metadata from a Client Component.",
+  "interviewTip": "Mention file-based metadata like opengraph-image and sitemap.ts."
+ },
+ {
+  "id": "next_easy_017",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Performance",
+  "question": "What does next/image do?",
+  "shortAnswer": "It optimizes images automatically: resizing, modern formats, lazy loading and preventing layout shift.",
+  "detailedAnswer": "The Image component serves correctly sized WebP/AVIF images, lazy-loads offscreen images, requires dimensions (or fill) to avoid CLS, and supports placeholders and priority loading for the LCP image.",
+  "keyPoints": [
+   "Responsive sizes",
+   "Modern formats",
+   "Lazy loading",
+   "Prevents layout shift"
+  ],
+  "commonMistake": "Lazy-loading the hero image instead of prioritizing it.",
+  "interviewTip": "Mention the sizes prop and remotePatterns."
+ },
+ {
+  "id": "next_easy_018",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Performance",
+  "question": "What does next/font do?",
+  "shortAnswer": "It self-hosts fonts at build time, eliminating external requests and layout shift.",
+  "detailedAnswer": "next/font/google and next/font/local download fonts during the build, serve them from your domain and generate fallback metrics so text doesn't jump. No requests go to Google at runtime.",
+  "keyPoints": [
+   "Self-hosted fonts",
+   "No runtime Google requests",
+   "Prevents layout shift",
+   "Supports CSS variables"
+  ],
+  "commonMistake": "Linking Google Fonts manually alongside next/font.",
+  "interviewTip": "Mention the privacy benefit."
+ },
+ {
+  "id": "next_easy_019",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Configuration",
+  "question": "What are environment variables in Next.js and how are they exposed?",
+  "shortAnswer": "Values loaded from .env files; only those prefixed NEXT_PUBLIC_ are exposed to the browser, inlined at build time.",
+  "detailedAnswer": "Server code can read any variable via process.env. Public variables are baked into the client bundle during the build, so changing them requires a rebuild. Never put secrets in NEXT_PUBLIC_ variables.",
+  "keyPoints": [
+   ".env, .env.local, .env.production",
+   "NEXT_PUBLIC_ exposes to client",
+   "Inlined at build time",
+   "Keep secrets server-only"
+  ],
+  "commonMistake": "Putting an API secret in a NEXT_PUBLIC_ variable.",
+  "interviewTip": "Mention build-time inlining."
+ },
+ {
+  "id": "next_easy_020",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Route Handlers",
+  "question": "What is a Route Handler?",
+  "shortAnswer": "A route.ts file that exports HTTP method functions (GET, POST, ...) to create API endpoints using Web Request/Response.",
+  "detailedAnswer": "Route Handlers are the App Router's API routes. They're useful for webhooks, public APIs, file responses and OAuth callbacks. GET handlers aren't cached by default since Next.js 15.",
+  "keyPoints": [
+   "route.ts file",
+   "Export GET/POST/etc.",
+   "Web Request/Response",
+   "Good for webhooks and public APIs"
+  ],
+  "commonMistake": "Putting route.ts and page.tsx in the same folder.",
+  "interviewTip": "Explain when to prefer Server Actions instead."
+ },
+ {
+  "id": "next_easy_021",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Server Actions",
+  "question": "What are Server Actions?",
+  "shortAnswer": "Async functions marked 'use server' that run on the server and can be called from forms or client code to perform mutations.",
+  "detailedAnswer": "They remove the need for hand-written API routes for UI mutations, support progressive enhancement with forms, and can revalidate caches or redirect. They are public endpoints, so validate input and check authorization inside them.",
+  "keyPoints": [
+   "'use server' directive",
+   "Used with <form action>",
+   "Revalidate/redirect after mutation",
+   "Must validate and authorize"
+  ],
+  "commonMistake": "Assuming Server Actions are private because they're not linked.",
+  "interviewTip": "Always mention the security responsibility."
+ },
+ {
+  "id": "next_easy_022",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Pages Router",
+  "question": "What is the difference between the App Router and the Pages Router?",
+  "shortAnswer": "The Pages Router (pages/) uses getServerSideProps/getStaticProps; the App Router (app/) uses Server Components, nested layouts, streaming and Server Actions.",
+  "detailedAnswer": "Both are supported and can coexist. The App Router is recommended for new projects and receives new features. Pages Router concepts map roughly: getStaticProps → cached Server Component, getServerSideProps → dynamic Server Component, API routes → Route Handlers.",
+  "keyPoints": [
+   "pages/ vs app/",
+   "Data functions vs async components",
+   "Nested layouts and streaming in App Router",
+   "Can be used together during migration"
+  ],
+  "commonMistake": "Thinking you must migrate the whole app at once.",
+  "interviewTip": "Show the mapping between concepts."
+ },
+ {
+  "id": "next_easy_023",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Navigation",
+  "question": "How do you navigate programmatically in the App Router?",
+  "shortAnswer": "Use useRouter from next/navigation in Client Components, and redirect() on the server.",
+  "detailedAnswer": "router.push, replace, back and refresh handle client navigation. In Server Components, Server Actions and Route Handlers, redirect() and permanentRedirect() throw to end the request and send the user elsewhere.",
+  "keyPoints": [
+   "useRouter from next/navigation",
+   "router.refresh re-fetches server data",
+   "redirect() on the server",
+   "redirect throws — don't catch it"
+  ],
+  "commonMistake": "Importing useRouter from next/router in the App Router.",
+  "interviewTip": "Mention router.refresh."
+ },
+ {
+  "id": "next_easy_024",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Rendering",
+  "question": "What is streaming in Next.js?",
+  "shortAnswer": "Sending a page's HTML in chunks so fast parts appear immediately and slow parts stream in when ready.",
+  "detailedAnswer": "Using loading.tsx or Suspense boundaries, the server sends the shell first and streams each boundary's content as its data resolves. This improves perceived performance without hurting SEO.",
+  "keyPoints": [
+   "Progressive HTML",
+   "Based on Suspense",
+   "loading.tsx at route level",
+   "Better perceived speed"
+  ],
+  "commonMistake": "Fetching everything at the top of the page, blocking all boundaries.",
+  "interviewTip": "Connect streaming with component-level data fetching."
+ },
+ {
+  "id": "next_easy_025",
+  "category": "Next.js",
+  "difficulty": "Easy",
+  "topic": "Routing",
+  "question": "What are route groups?",
+  "shortAnswer": "Folders in parentheses like (marketing) that organize routes or share layouts without affecting the URL.",
+  "detailedAnswer": "They let sections of an app have different layouts, including multiple root layouts, while keeping clean URLs. Two groups can't resolve to the same path.",
+  "keyPoints": [
+   "(folder) syntax",
+   "Not part of the URL",
+   "Different layouts per section",
+   "Multiple root layouts possible"
+  ],
+  "commonMistake": "Expecting the group name to appear in the URL.",
+  "interviewTip": "Use the marketing vs app shell example."
+ },
+ {
+  "id": "react_medium_001",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Rendering",
+  "question": "What causes a React component to re-render?",
+  "shortAnswer": "A change to its own state, a re-render of its parent, or a change in a context it consumes.",
+  "detailedAnswer": "Props changing is really a consequence of the parent re-rendering. By default every child re-renders with its parent, even with identical props. memo, the React Compiler, moving state down and passing children can avoid unnecessary renders. Re-rendering is usually cheap; only DOM changes are committed.",
+  "keyPoints": [
+   "Own state change",
+   "Parent re-render",
+   "Context value change",
+   "memo/Compiler can skip identical renders"
+  ],
+  "commonMistake": "Saying components only re-render when their props change.",
+  "interviewTip": "List the three causes, then explain how to avoid wasted renders without memo first."
+ },
+ {
+  "id": "react_medium_002",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Rendering",
+  "question": "What is reconciliation?",
+  "shortAnswer": "The process React uses to diff the new element tree against the previous one and apply minimal DOM changes.",
+  "detailedAnswer": "React assumes elements of different types produce different trees (so it remounts them) and uses keys to match children across renders. This makes diffing O(n). Since React 16 the Fiber architecture lets this work be split, prioritized and interrupted.",
+  "keyPoints": [
+   "Tree diffing",
+   "Different type → remount",
+   "Keys match children",
+   "Fiber enables interruptible work"
+  ],
+  "commonMistake": "Not knowing that changing an element's type resets its subtree's state.",
+  "interviewTip": "Mention the two heuristics and Fiber."
+ },
+ {
+  "id": "react_medium_003",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Hooks",
+  "question": "When should you avoid useMemo?",
+  "shortAnswer": "When the computation is cheap, when dependencies change every render, or when the React Compiler already memoizes it.",
+  "detailedAnswer": "Memoization has costs: storing values, comparing dependencies and adding code complexity. Use useMemo for measured expensive calculations or to keep references stable for memoized children or Effect dependencies. It's a performance hint, not a semantic guarantee.",
+  "keyPoints": [
+   "Measure first",
+   "Cheap work doesn't need it",
+   "Useful for referential stability",
+   "React Compiler reduces manual memoization"
+  ],
+  "commonMistake": "Wrapping every derived value in useMemo by default.",
+  "interviewTip": "Show a case where useMemo is pointless because a dependency is a new object every render."
+ },
+ {
+  "id": "react_medium_004",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Hooks",
+  "question": "What is the difference between useMemo and useCallback?",
+  "shortAnswer": "useMemo caches the result of a function; useCallback caches the function itself.",
+  "detailedAnswer": "useCallback(fn, deps) is equivalent to useMemo(() => fn, deps). Both help only when something compares identity — memoized children, Effect dependencies or custom Hook consumers.",
+  "keyPoints": [
+   "useMemo → value",
+   "useCallback → function",
+   "useCallback = useMemo(() => fn)",
+   "Only useful when identity matters"
+  ],
+  "commonMistake": "Using useCallback without any memoized consumer.",
+  "interviewTip": "Explain with a memo child receiving an onSelect callback."
+ },
+ {
+  "id": "react_medium_005",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Hooks",
+  "question": "How does the useEffect dependency array work?",
+  "shortAnswer": "React re-runs the Effect after a render only if a dependency changed since the last run, compared with Object.is.",
+  "detailedAnswer": "No array means after every render; [] means only after mount; [a, b] means whenever a or b change. Every reactive value read inside the effect should be listed. Objects and functions created during render change every time, so move them inside the effect or memoize them.",
+  "keyPoints": [
+   "Object.is comparison",
+   "List all reactive values",
+   "[] = mount only",
+   "Unstable objects cause re-runs"
+  ],
+  "commonMistake": "Omitting dependencies to prevent re-runs, causing stale closures.",
+  "interviewTip": "Mention the exhaustive-deps lint rule and useEffectEvent for non-reactive logic."
+ },
+ {
+  "id": "react_medium_006",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Hooks",
+  "question": "What is a stale closure in React?",
+  "shortAnswer": "When a function captures a state or prop value from an old render and keeps using it after newer values exist.",
+  "detailedAnswer": "Each render has its own snapshot of props and state. Callbacks in timers, subscriptions or Effects with missing dependencies keep the old values. Fixes: include dependencies, use functional state updates, refs for mutable values, or useEffectEvent.",
+  "keyPoints": [
+   "Functions capture render snapshots",
+   "Common in intervals and listeners",
+   "Fix with correct deps",
+   "Use updater functions or useEffectEvent"
+  ],
+  "commonMistake": "Blaming React for a 'bug' that's a missing dependency.",
+  "interviewTip": "Show the setInterval counter example with setCount(c => c + 1)."
+ },
+ {
+  "id": "react_medium_007",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Hooks",
+  "question": "When would you use useReducer instead of useState?",
+  "shortAnswer": "When state has multiple sub-values that change together or when updates follow complex rules best expressed as actions.",
+  "detailedAnswer": "A reducer centralizes transitions in a pure function, making logic easier to test and reason about. dispatch is stable, which helps when passing it down. It pairs well with Context for app-level state.",
+  "keyPoints": [
+   "Complex or related state",
+   "Centralized pure transitions",
+   "Easy to unit test",
+   "Stable dispatch"
+  ],
+  "commonMistake": "Putting side effects inside the reducer.",
+  "interviewTip": "Use a cart or multi-step form example."
+ },
+ {
+  "id": "react_medium_008",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Context",
+  "question": "What are the performance implications of Context?",
+  "shortAnswer": "Every consumer re-renders when the context value changes, so frequently changing or broad values can cause many re-renders.",
+  "detailedAnswer": "Keep provider values stable (memoize objects), split unrelated data into separate contexts, and keep high-frequency state local or in a store with selectors. Context is a transport mechanism, not optimized state management.",
+  "keyPoints": [
+   "All consumers re-render on change",
+   "Memoize provider values",
+   "Split contexts",
+   "Use stores for high-frequency state"
+  ],
+  "commonMistake": "Passing a new object literal as value on every render.",
+  "interviewTip": "Mention selector-based stores like Zustand as an alternative."
+ },
+ {
+  "id": "react_medium_009",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Hooks",
+  "question": "How do custom Hooks share logic but not state?",
+  "shortAnswer": "Each call to a custom Hook creates its own state, because the Hooks inside it are called per component instance.",
+  "detailedAnswer": "Custom Hooks are functions composed of other Hooks. Two components calling useOnlineStatus each get their own copy. To share state you must lift it, use Context or an external store.",
+  "keyPoints": [
+   "Logic reuse, not state sharing",
+   "State is per call site",
+   "Share state via lifting/context/store",
+   "Name must start with use"
+  ],
+  "commonMistake": "Expecting a custom Hook to behave like a global store.",
+  "interviewTip": "Contrast with useSyncExternalStore for shared external state."
+ },
+ {
+  "id": "react_medium_010",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Data Fetching",
+  "question": "How do you handle race conditions when fetching in useEffect?",
+  "shortAnswer": "Ignore stale responses with a cleanup flag or abort the request with AbortController.",
+  "detailedAnswer": "If props change quickly, earlier requests may resolve after later ones and overwrite fresh data. In the cleanup, set ignore = true or call controller.abort(). Better still, use a framework or a data library (TanStack Query, SWR) that handles caching and races.",
+  "keyPoints": [
+   "Responses can arrive out of order",
+   "Cleanup sets ignore or aborts",
+   "Libraries handle this for you",
+   "Prefer server data fetching in frameworks"
+  ],
+  "commonMistake": "Fetching without cleanup, showing data for the wrong id.",
+  "interviewTip": "Write the ignore-flag pattern from memory."
+ },
+ {
+  "id": "react_medium_011",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Performance",
+  "question": "How does code splitting work in React?",
+  "shortAnswer": "Dynamic import() creates separate chunks; React.lazy and Suspense load components on demand.",
+  "detailedAnswer": "Bundlers split at each dynamic import. lazy(() => import('./X')) defers loading X until it renders, while Suspense shows a fallback. Frameworks split by route automatically. Split large, rarely used code to shrink the initial bundle.",
+  "keyPoints": [
+   "Dynamic import()",
+   "React.lazy + Suspense",
+   "Route-based splitting",
+   "Trade-off: more requests"
+  ],
+  "commonMistake": "Lazy-loading tiny components and creating waterfalls.",
+  "interviewTip": "Mention next/dynamic in Next.js."
+ },
+ {
+  "id": "react_medium_012",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Suspense",
+  "question": "What is Suspense?",
+  "shortAnswer": "A component that shows a fallback while its children are waiting for code or data.",
+  "detailedAnswer": "Suspense works with lazy components, use(promise), and Suspense-enabled frameworks/libraries. Nested boundaries enable progressive loading, and with streaming SSR the server can send fallbacks first and stream content later. Data fetched in useEffect doesn't trigger Suspense.",
+  "keyPoints": [
+   "fallback while suspended",
+   "Works with lazy and use()",
+   "Enables streaming",
+   "Not triggered by useEffect fetches"
+  ],
+  "commonMistake": "Expecting Suspense to catch errors (that's error boundaries).",
+  "interviewTip": "Discuss boundary placement for good UX."
+ },
+ {
+  "id": "react_medium_013",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Concurrent React",
+  "question": "What is useTransition and when would you use it?",
+  "shortAnswer": "It marks state updates as non-urgent so React can keep the UI responsive while rendering them.",
+  "detailedAnswer": "startTransition(() => setTab(next)) lets urgent updates like typing interrupt the transition render. isPending shows progress. In React 19, async functions in transitions (Actions) keep isPending true until they finish.",
+  "keyPoints": [
+   "Non-urgent updates",
+   "Interruptible rendering",
+   "isPending flag",
+   "Async Actions in React 19"
+  ],
+  "commonMistake": "Wrapping controlled input updates in a transition.",
+  "interviewTip": "Contrast with useDeferredValue."
+ },
+ {
+  "id": "react_medium_014",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Concurrent React",
+  "question": "What is the difference between useTransition and useDeferredValue?",
+  "shortAnswer": "useTransition wraps the state update; useDeferredValue wraps a value you receive and lets it lag behind.",
+  "detailedAnswer": "Use useTransition when you own the setter. Use useDeferredValue when you only receive a value (e.g. a prop) and want a slow subtree to render with lower priority. Both rely on concurrent rendering and should be combined with memo for the slow component.",
+  "keyPoints": [
+   "Transition: wrap the update",
+   "Deferred value: wrap the value",
+   "Both make work interruptible",
+   "Pair with memo"
+  ],
+  "commonMistake": "Using either to reduce network requests.",
+  "interviewTip": "Give the search input + results example."
+ },
+ {
+  "id": "react_medium_015",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "React 19",
+  "question": "What are Actions in React 19?",
+  "shortAnswer": "Async functions used in transitions or form actions; React manages their pending state, errors and optimistic updates.",
+  "detailedAnswer": "Actions can be passed to <form action>, used with useActionState for results and pending state, useFormStatus for nested pending UI, and useOptimistic for instant feedback. With frameworks they can be Server Functions.",
+  "keyPoints": [
+   "Async transitions",
+   "<form action={fn}>",
+   "useActionState, useFormStatus, useOptimistic",
+   "Server Functions in frameworks"
+  ],
+  "commonMistake": "Thinking Actions only work with servers.",
+  "interviewTip": "Show a form using useActionState."
+ },
+ {
+  "id": "react_medium_016",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "React 19",
+  "question": "What does useOptimistic do?",
+  "shortAnswer": "It shows a temporary optimistic state during an async Action and automatically reverts to the real state when it finishes.",
+  "detailedAnswer": "Call addOptimistic inside a transition or form action. The UI updates instantly; once the Action completes the source state takes over, so failures roll back naturally.",
+  "keyPoints": [
+   "Instant feedback",
+   "Must run inside an Action",
+   "Auto-revert when done",
+   "Real state must be updated on success"
+  ],
+  "commonMistake": "Calling addOptimistic outside a transition.",
+  "interviewTip": "Use a like-button or chat example."
+ },
+ {
+  "id": "react_medium_017",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "React 19",
+  "question": "What is the use() API?",
+  "shortAnswer": "A React API that reads a promise or context during render; it can be called conditionally.",
+  "detailedAnswer": "use(promise) suspends until the promise resolves and throws to error boundaries on rejection. use(context) is a flexible alternative to useContext. Promises should come from Server Components or caches, not be created during client render.",
+  "keyPoints": [
+   "Reads promises and context",
+   "Suspends on pending promises",
+   "Can be conditional",
+   "Don't create promises in render"
+  ],
+  "commonMistake": "Creating a new promise each render, causing endless suspense.",
+  "interviewTip": "Mention passing un-awaited promises from Server to Client Components."
+ },
+ {
+  "id": "react_medium_018",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Hydration",
+  "question": "What is hydration and what causes hydration mismatches?",
+  "shortAnswer": "Hydration attaches React to server-rendered HTML; mismatches occur when the first client render differs from the server output.",
+  "detailedAnswer": "Common causes: Date.now/Math.random, locale formatting, reading window or localStorage during render, invalid HTML nesting and browser extensions. Fix by rendering a stable placeholder and updating in an Effect, or using suppressHydrationWarning for unavoidable cases.",
+  "keyPoints": [
+   "Reuses server HTML",
+   "First render must match",
+   "Time/random/browser APIs cause mismatches",
+   "Fix with Effects or placeholders"
+  ],
+  "commonMistake": "Using typeof window checks during render.",
+  "interviewTip": "Walk through fixing a timestamp mismatch."
+ },
+ {
+  "id": "react_medium_019",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Server Components",
+  "question": "What are React Server Components?",
+  "shortAnswer": "Components that run only on the server and send their rendered output, not their code, to the client.",
+  "detailedAnswer": "They can be async, access databases and secrets, and reduce JavaScript bundles. They can't use state, effects or event handlers, and can only pass serializable props to Client Components. Frameworks like Next.js integrate them.",
+  "keyPoints": [
+   "Server-only execution",
+   "No client JS for their code",
+   "async data access",
+   "Serializable props to client"
+  ],
+  "commonMistake": "Confusing Server Components with SSR.",
+  "interviewTip": "Explain RSC vs SSR clearly."
+ },
+ {
+  "id": "react_medium_020",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Server Components",
+  "question": "What is the difference between Server Components and Client Components?",
+  "shortAnswer": "Server Components render only on the server with no client JS; Client Components are interactive and hydrate in the browser.",
+  "detailedAnswer": "Server Components handle data and static UI. Client Components (marked 'use client') handle state, effects and events, and also pre-render on the server. Compose them by rendering Client Components inside Server Components and passing Server Components as children to Client Components.",
+  "keyPoints": [
+   "Server: data, no interactivity",
+   "Client: state, events, browser APIs",
+   "Client still SSRs",
+   "Compose via children"
+  ],
+  "commonMistake": "Marking big trees as client to use a single hook.",
+  "interviewTip": "Advise pushing 'use client' to the leaves."
+ },
+ {
+  "id": "react_medium_021",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Testing",
+  "question": "How do you test React components with React Testing Library?",
+  "shortAnswer": "Render the component, find elements by role/label/text like a user would, interact with user-event and assert on visible output.",
+  "detailedAnswer": "Prefer getByRole with an accessible name, use findBy for async UI, and queryBy to assert absence. Avoid testing implementation details such as internal state. Mock network requests with MSW.",
+  "keyPoints": [
+   "render + screen",
+   "getByRole first",
+   "userEvent for interactions",
+   "findBy for async"
+  ],
+  "commonMistake": "Querying by class names or test ids unnecessarily.",
+  "interviewTip": "Show a short test for a counter or form."
+ },
+ {
+  "id": "react_medium_022",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Architecture",
+  "question": "How do you decide where state should live?",
+  "shortAnswer": "Keep state as local as possible and lift or share it only when multiple components need it.",
+  "detailedAnswer": "Ladder: local state → lift to common parent → composition → Context → external store. Separate server state (use framework data fetching or TanStack Query) from client UI state. Derive whatever you can instead of storing it.",
+  "keyPoints": [
+   "Start local",
+   "Lift only when shared",
+   "Context for broad values",
+   "Server state vs client state"
+  ],
+  "commonMistake": "Putting all state in a global store by default.",
+  "interviewTip": "Mention derived state to avoid duplication."
+ },
+ {
+  "id": "react_medium_023",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Forms",
+  "question": "How do you build forms in React 19?",
+  "shortAnswer": "Use <form action={fn}> with useActionState for results, useFormStatus for pending UI, and FormData to read values.",
+  "detailedAnswer": "Form Actions receive FormData; React handles pending state and resets uncontrolled forms after success. Server Functions enable progressive enhancement. Controlled inputs are still useful for live validation.",
+  "keyPoints": [
+   "<form action>",
+   "useActionState",
+   "useFormStatus in child components",
+   "Server validation still required"
+  ],
+  "commonMistake": "Calling useFormStatus in the component that renders the form.",
+  "interviewTip": "Compare with the classic onSubmit + preventDefault approach."
+ },
+ {
+  "id": "react_medium_024",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Rendering",
+  "question": "Why shouldn't you define a component inside another component?",
+  "shortAnswer": "Because a new component type is created every render, so React remounts it and loses its state.",
+  "detailedAnswer": "React compares element types by reference. A nested definition is a different function on each render, which looks like a new type, so the child unmounts and remounts — losing state, focus and running Effects again. Define components at module level.",
+  "keyPoints": [
+   "New function each render",
+   "Type mismatch → remount",
+   "State and focus lost",
+   "Define at module level"
+  ],
+  "commonMistake": "Hiding the issue with useCallback around the component definition.",
+  "interviewTip": "Relate it to reconciliation's type heuristic."
+ },
+ {
+  "id": "react_medium_025",
+  "category": "React",
+  "difficulty": "Medium",
+  "topic": "Performance",
+  "question": "What is the React Compiler?",
+  "shortAnswer": "A build-time tool that automatically memoizes components and values, reducing the need for useMemo, useCallback and memo.",
+  "detailedAnswer": "Stable since v1.0 (2025), it analyzes code that follows the Rules of React and inserts fine-grained memoization. It integrates with Babel, Next.js and Vite. Code that mutates state or breaks Hook rules is skipped.",
+  "keyPoints": [
+   "Automatic memoization",
+   "Requires Rules of React",
+   "Build plugin",
+   "Less manual useMemo/useCallback"
+  ],
+  "commonMistake": "Expecting it to fix impure components.",
+  "interviewTip": "Mention enabling it in Next.js with reactCompiler: true."
+ },
+ {
+  "id": "next_medium_001",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Rendering",
+  "question": "What is the difference between static and dynamic rendering?",
+  "shortAnswer": "Static rendering produces output ahead of time and reuses it for everyone; dynamic rendering produces it on each request.",
+  "detailedAnswer": "Static is fastest and cheapest, ideal for content that's the same for all users. Dynamic is required for personalization or request data (cookies, headers, searchParams). Next.js chooses per route, and streaming lets a page combine a static shell with dynamic parts.",
+  "keyPoints": [
+   "Static: build/revalidate time",
+   "Dynamic: request time",
+   "Dynamic APIs opt in",
+   "Mix via Suspense/streaming"
+  ],
+  "commonMistake": "Making a whole route dynamic for one personalized widget.",
+  "interviewTip": "Explain how Cache Components blend both in Next 16."
+ },
+ {
+  "id": "next_medium_002",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Caching",
+  "question": "What is revalidation?",
+  "shortAnswer": "Refreshing cached data or pages either after a time period or on demand after an event.",
+  "detailedAnswer": "Time-based revalidation (revalidate seconds, cacheLife) serves stale content while regenerating in the background. On-demand revalidation uses revalidatePath, revalidateTag (with a profile in Next 16) or updateTag inside Server Actions for read-your-writes.",
+  "keyPoints": [
+   "Time-based (stale-while-revalidate)",
+   "On-demand: revalidatePath/revalidateTag",
+   "updateTag in Server Actions",
+   "Historically called ISR"
+  ],
+  "commonMistake": "Forgetting to revalidate after mutations.",
+  "interviewTip": "Mention CMS webhooks calling revalidateTag."
+ },
+ {
+  "id": "next_medium_003",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Server Components",
+  "question": "What is the difference between Server and Client Components in Next.js?",
+  "shortAnswer": "Server Components are the default and run only on the server; Client Components use 'use client' and add interactivity in the browser.",
+  "detailedAnswer": "Server Components fetch data, keep secrets and ship no JS. Client Components handle state, events and browser APIs and hydrate after SSR. Props crossing the boundary must be serializable, and Server Components can be passed as children into Client Components.",
+  "keyPoints": [
+   "Server is default",
+   "Client needs 'use client'",
+   "Serializable props",
+   "Children pattern"
+  ],
+  "commonMistake": "Putting 'use client' in the root layout.",
+  "interviewTip": "Describe pushing client boundaries to the leaves."
+ },
+ {
+  "id": "next_medium_004",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Caching",
+  "question": "How does caching work in Next.js 15 and 16?",
+  "shortAnswer": "In Next 15, fetch and GET Route Handlers aren't cached by default; you opt in. Next 16 adds Cache Components where caching is explicit with 'use cache'.",
+  "detailedAnswer": "Layers include request memoization, data cache, full route cache and the client router cache. Opt in with cache: 'force-cache', next.revalidate, route segment config, or — with cacheComponents: true — the 'use cache' directive plus cacheLife and cacheTag.",
+  "keyPoints": [
+   "Caching is opt-in since 15",
+   "Four caching layers",
+   "'use cache' in Next 16",
+   "Tag and revalidate"
+  ],
+  "commonMistake": "Assuming Next 14's default fetch caching still applies.",
+  "interviewTip": "Show awareness of how defaults changed across versions."
+ },
+ {
+  "id": "next_medium_005",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Server Actions",
+  "question": "How do you handle forms with Server Actions?",
+  "shortAnswer": "Pass a 'use server' function to <form action>, validate input on the server, return errors, and revalidate or redirect on success.",
+  "detailedAnswer": "On the client, useActionState displays returned errors and pending state; useFormStatus disables the submit button. Forms work before hydration. Always authenticate and authorize inside the action.",
+  "keyPoints": [
+   "<form action={serverAction}>",
+   "Validate with a schema",
+   "Return errors, don't throw",
+   "Revalidate/redirect after success"
+  ],
+  "commonMistake": "Validating only on the client.",
+  "interviewTip": "Mention progressive enhancement."
+ },
+ {
+  "id": "next_medium_006",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Routing",
+  "question": "What are parallel routes?",
+  "shortAnswer": "Named slots (@folder) that render multiple pages in the same layout simultaneously.",
+  "detailedAnswer": "Each slot is passed to the layout as a prop and can have its own loading and error UI. default.js provides fallback content when a slot's state can't be recovered on hard navigation (required for every slot in Next 16). They power dashboards and modal patterns.",
+  "keyPoints": [
+   "@slot folders",
+   "Slots are layout props",
+   "Independent loading/error",
+   "default.js required"
+  ],
+  "commonMistake": "Forgetting default.js, causing 404s on refresh.",
+  "interviewTip": "Combine with intercepting routes for modals."
+ },
+ {
+  "id": "next_medium_007",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Routing",
+  "question": "What are intercepting routes?",
+  "shortAnswer": "Routes that load another route's content within the current layout during soft navigation, e.g. a photo modal.",
+  "detailedAnswer": "Conventions (.), (..), (..)(..) and (...) refer to route segments. On refresh or direct visit, the original page renders instead, so URLs remain shareable.",
+  "keyPoints": [
+   "Soft navigation interception",
+   "(.) (..) (...) conventions",
+   "Hard navigation renders full page",
+   "Used for modals"
+  ],
+  "commonMistake": "Counting (..) by file system folders instead of route segments.",
+  "interviewTip": "Explain the Instagram-style photo modal."
+ },
+ {
+  "id": "next_medium_008",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Data Fetching",
+  "question": "How do you avoid request waterfalls in Next.js?",
+  "shortAnswer": "Start independent requests in parallel, fetch in the component that needs the data, and stream slow parts with Suspense.",
+  "detailedAnswer": "Use Promise.all for independent data, preload functions, and React cache() to share requests. Split slow components behind Suspense so they don't block faster ones.",
+  "keyPoints": [
+   "Promise.all",
+   "Component-level fetching",
+   "Suspense streaming",
+   "cache() deduplication"
+  ],
+  "commonMistake": "Sequential awaits for unrelated data.",
+  "interviewTip": "Sketch before/after code."
+ },
+ {
+  "id": "next_medium_009",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Rendering",
+  "question": "What does generateStaticParams do?",
+  "shortAnswer": "It returns params for dynamic segments so those pages are pre-rendered at build time.",
+  "detailedAnswer": "It replaces getStaticPaths. Params not returned render on demand by default; dynamicParams = false returns 404 for them instead. Large sites pre-render popular pages only.",
+  "keyPoints": [
+   "Build-time params",
+   "Replaces getStaticPaths",
+   "dynamicParams controls unknown params",
+   "Pre-render popular paths"
+  ],
+  "commonMistake": "Generating huge numbers of pages and slowing builds.",
+  "interviewTip": "Mention the hybrid strategy."
+ },
+ {
+  "id": "next_medium_010",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "SEO",
+  "question": "How does generateMetadata work?",
+  "shortAnswer": "An async function exported from a page or layout that returns metadata based on params or fetched data.",
+  "detailedAnswer": "It receives params (a Promise) and the parent metadata. Shared data calls are memoized with fetch or cache(), so the page and metadata don't duplicate queries. Use it for dynamic titles and Open Graph images.",
+  "keyPoints": [
+   "Async, receives params",
+   "Memoized data requests",
+   "Dynamic titles and OG",
+   "Can't coexist with metadata object in same file"
+  ],
+  "commonMistake": "Fetching the same data twice without cache().",
+  "interviewTip": "Show cache() wrapping getProduct."
+ },
+ {
+  "id": "next_medium_011",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Route Handlers",
+  "question": "When would you use a Route Handler instead of a Server Action?",
+  "shortAnswer": "Use Route Handlers for endpoints consumed by external clients or webhooks, and Server Actions for mutations triggered by your own UI.",
+  "detailedAnswer": "Route Handlers support any HTTP method, custom responses (JSON, files, streams) and third-party callers like Stripe or mobile apps. Server Actions are POST-only RPC tied to your React UI with built-in revalidation.",
+  "keyPoints": [
+   "External callers → Route Handlers",
+   "Own UI mutations → Server Actions",
+   "Custom responses and methods",
+   "Webhooks and OAuth callbacks"
+  ],
+  "commonMistake": "Building an API route for every UI mutation.",
+  "interviewTip": "Give one example of each."
+ },
+ {
+  "id": "next_medium_012",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Proxy",
+  "question": "What is proxy.ts (formerly middleware) and what should it be used for?",
+  "shortAnswer": "Code that runs before requests complete — for redirects, rewrites, headers and optimistic auth checks. Next.js 16 renamed middleware.ts to proxy.ts.",
+  "detailedAnswer": "It runs on matching paths defined by config.matcher. Keep it fast; avoid heavy data work. Don't rely on it as the only authorization layer — verify access where data is read and mutated.",
+  "keyPoints": [
+   "Runs before routes",
+   "matcher config",
+   "Redirects/rewrites/headers",
+   "Not the only auth layer"
+  ],
+  "commonMistake": "Doing database queries for every request in proxy.",
+  "interviewTip": "Mention the 2025 middleware bypass CVE."
+ },
+ {
+  "id": "next_medium_013",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Authentication",
+  "question": "How do you implement authentication in the App Router?",
+  "shortAnswer": "Use an auth library or secure session cookies, verify sessions in a cached server helper, and check them in the data layer, Server Actions and Route Handlers.",
+  "detailedAnswer": "Store sessions in httpOnly secure cookies (stateless tokens or database sessions). Use proxy for optimistic redirects, but perform real checks close to data. Libraries like Auth.js, Clerk or Better Auth handle OAuth and session management.",
+  "keyPoints": [
+   "httpOnly secure cookies",
+   "verifySession wrapped in cache()",
+   "Check in DAL/actions/handlers",
+   "Use a vetted library"
+  ],
+  "commonMistake": "Protecting data only through a layout check.",
+  "interviewTip": "Explain why layout checks aren't enough."
+ },
+ {
+  "id": "next_medium_014",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Configuration",
+  "question": "Why are params and cookies() async in Next.js 15+?",
+  "shortAnswer": "So Next.js can prerender as much as possible and only wait for request-specific data when it's actually accessed.",
+  "detailedAnswer": "Making request APIs async lets the framework know exactly where dynamic data is needed, enabling static shells and streaming. Code must await params, searchParams, cookies(), headers() and draftMode().",
+  "keyPoints": [
+   "Async request APIs",
+   "Enables partial prerendering",
+   "Await params and searchParams",
+   "Synchronous access removed in Next 16"
+  ],
+  "commonMistake": "Accessing params.slug synchronously.",
+  "interviewTip": "Mention the codemod used for migration."
+ },
+ {
+  "id": "next_medium_015",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Caching",
+  "question": "What is the client router cache?",
+  "shortAnswer": "An in-browser cache of RSC payloads for visited and prefetched routes, enabling instant back/forward and navigation.",
+  "detailedAnswer": "Layouts and prefetched segments are reused during a session. router.refresh(), Server Action revalidation and cookie changes invalidate it. Its staleness can be configured with staleTimes.",
+  "keyPoints": [
+   "Browser memory cache",
+   "Prefetched route payloads",
+   "Invalidated by refresh/revalidate",
+   "staleTimes config"
+  ],
+  "commonMistake": "Confusing it with the server-side data cache.",
+  "interviewTip": "Name what invalidates it."
+ },
+ {
+  "id": "next_medium_016",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Server Components",
+  "question": "How can you use Context providers with Server Components?",
+  "shortAnswer": "Create a 'use client' Providers component and render it in the root layout around children.",
+  "detailedAnswer": "Context requires client components, but children passed through a provider can still be Server Components. Render providers as deep as possible to keep the static parts of the tree optimizable.",
+  "keyPoints": [
+   "Providers must be client",
+   "Wrap {children}",
+   "Children stay Server Components",
+   "Place providers as deep as possible"
+  ],
+  "commonMistake": "Marking the whole layout 'use client'.",
+  "interviewTip": "Explain why children remain Server Components."
+ },
+ {
+  "id": "next_medium_017",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Performance",
+  "question": "How do you optimize images in Next.js?",
+  "shortAnswer": "Use next/image with correct width/height or fill, an accurate sizes prop, and priority for the LCP image.",
+  "detailedAnswer": "next/image serves responsive WebP/AVIF images, lazy-loads offscreen ones and prevents CLS. Configure remotePatterns for external images and use placeholder='blur' for perceived performance.",
+  "keyPoints": [
+   "Responsive formats",
+   "sizes prop",
+   "priority for LCP",
+   "remotePatterns"
+  ],
+  "commonMistake": "Forgetting sizes with fill images.",
+  "interviewTip": "Tie image work to Core Web Vitals."
+ },
+ {
+  "id": "next_medium_018",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Navigation",
+  "question": "How does prefetching work in Next.js?",
+  "shortAnswer": "Link components in the viewport are prefetched in production: fully for static routes, down to the loading boundary for dynamic ones.",
+  "detailedAnswer": "Prefetched payloads go into the client router cache so navigation is instant. You can disable it with prefetch={false} or prefetch manually with router.prefetch.",
+  "keyPoints": [
+   "Automatic in production",
+   "Static vs dynamic differences",
+   "Stored in router cache",
+   "Configurable per Link"
+  ],
+  "commonMistake": "Expecting prefetching in development mode.",
+  "interviewTip": "Mention loading.js makes dynamic prefetch useful."
+ },
+ {
+  "id": "next_medium_019",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Deployment",
+  "question": "What deployment options exist for Next.js?",
+  "shortAnswer": "Managed platforms like Vercel, a Node.js server with next start, Docker with output: 'standalone', or static export with output: 'export'.",
+  "detailedAnswer": "Managed platforms support all features automatically. Self-hosting supports all features too, but you must configure caching across instances and CDNs. Static export works anywhere but drops server features.",
+  "keyPoints": [
+   "Vercel/managed",
+   "next start",
+   "standalone for Docker",
+   "Static export limitations"
+  ],
+  "commonMistake": "Using static export and expecting Server Actions to work.",
+  "interviewTip": "Mention shared cache handlers for multi-instance setups."
+ },
+ {
+  "id": "next_medium_020",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Rendering",
+  "question": "What is the RSC payload?",
+  "shortAnswer": "A compact serialized representation of the rendered Server Component tree sent to the client.",
+  "detailedAnswer": "It contains rendered output of Server Components, placeholders and references to Client Components with their props. React uses it to build the tree on the client and to update the UI during navigation without full page reloads.",
+  "keyPoints": [
+   "Serialized component tree",
+   "Client component references",
+   "Used on navigation",
+   "Accompanies initial HTML"
+  ],
+  "commonMistake": "Thinking the RSC payload is HTML.",
+  "interviewTip": "Explain how HTML and the payload work together on first load."
+ },
+ {
+  "id": "next_medium_021",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Server Components",
+  "question": "How do you keep secrets from leaking to the client?",
+  "shortAnswer": "Keep them in server-only modules (import 'server-only'), never use NEXT_PUBLIC_ for secrets, and pass only minimal DTOs to Client Components.",
+  "detailedAnswer": "A Data Access Layer centralizes database calls, authorization checks and DTO shaping. The server-only package causes a build error if a client module imports it. React's taint APIs can mark objects that must never be passed to the client.",
+  "keyPoints": [
+   "server-only package",
+   "No secrets in NEXT_PUBLIC_",
+   "DTOs to clients",
+   "Data Access Layer"
+  ],
+  "commonMistake": "Passing full database rows as props.",
+  "interviewTip": "Mention taint APIs as an extra safety net."
+ },
+ {
+  "id": "next_medium_022",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Layouts",
+  "question": "What is the difference between layout.tsx and template.tsx?",
+  "shortAnswer": "Layouts persist across navigation; templates remount on every navigation, resetting state and re-running effects.",
+  "detailedAnswer": "Use templates for per-page enter animations or effects that must run on each navigation. Prefer layouts otherwise for performance and preserved state.",
+  "keyPoints": [
+   "Layout persists",
+   "Template remounts",
+   "Templates reset state",
+   "Use templates sparingly"
+  ],
+  "commonMistake": "Using templates by default.",
+  "interviewTip": "Give the animation use case."
+ },
+ {
+  "id": "next_medium_023",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Performance",
+  "question": "How do you load third-party scripts efficiently?",
+  "shortAnswer": "Use next/script with an appropriate strategy such as afterInteractive or lazyOnload.",
+  "detailedAnswer": "Strategies control when scripts load: beforeInteractive for critical scripts, afterInteractive for analytics, lazyOnload for chat widgets. This keeps main-thread work off the critical path and improves INP.",
+  "keyPoints": [
+   "next/script",
+   "afterInteractive",
+   "lazyOnload",
+   "Protects Core Web Vitals"
+  ],
+  "commonMistake": "Adding blocking script tags to the head.",
+  "interviewTip": "Tie it to INP improvements."
+ },
+ {
+  "id": "next_medium_024",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Caching",
+  "question": "What do revalidatePath and revalidateTag do?",
+  "shortAnswer": "They invalidate cached data on demand — by route path or by cache tag.",
+  "detailedAnswer": "revalidatePath('/blog') invalidates a route's cached output. revalidateTag('posts', 'max') marks tagged data stale with stale-while-revalidate behaviour. In Next 16, updateTag offers immediate expiration within Server Actions.",
+  "keyPoints": [
+   "On-demand invalidation",
+   "Path vs tag",
+   "Profile argument in Next 16",
+   "updateTag for read-your-writes"
+  ],
+  "commonMistake": "Revalidating the whole site for one change.",
+  "interviewTip": "Prefer tags for precise invalidation."
+ },
+ {
+  "id": "next_medium_025",
+  "category": "Next.js",
+  "difficulty": "Medium",
+  "topic": "Error Handling",
+  "question": "How do you handle errors in the Next.js App Router?",
+  "shortAnswer": "Treat expected errors as return values or notFound(), and let unexpected errors bubble to error.tsx boundaries.",
+  "detailedAnswer": "Server Actions should return validation errors instead of throwing. Use notFound() for missing resources. error.tsx (a Client Component) catches rendering errors per segment with a reset() retry, and global-error.tsx covers the root layout. Report server errors with onRequestError in instrumentation.ts.",
+  "keyPoints": [
+   "Expected errors → return values",
+   "notFound() for missing data",
+   "error.tsx per segment",
+   "onRequestError for reporting"
+  ],
+  "commonMistake": "Wrapping redirect() or notFound() in try/catch.",
+  "interviewTip": "Separate expected from unexpected errors in your answer."
+ },
+ {
+  "id": "react_hard_001",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Performance",
+  "question": "You have a large React application where typing into a search field causes an expensive list to re-render. How would you diagnose and optimize it?",
+  "shortAnswer": "Profile to confirm the cause, isolate the input state, defer the list render with useDeferredValue (plus memo), and virtualize the list if it's long.",
+  "detailedAnswer": "First reproduce and record with the React DevTools Profiler to confirm the list is the slow commit and see why it renders. Then: move the input's state down so unrelated parts don't re-render; render the list with a deferred query (`useDeferredValue`) and wrap it in `memo` so urgent keystrokes skip it; memoize the filtered data with useMemo or rely on the React Compiler; virtualize thousands of rows; and debounce any network search. Measure again to verify improvements in INP.",
+  "keyPoints": [
+   "Measure with the Profiler first",
+   "Move state down / isolate input",
+   "useDeferredValue + memo",
+   "Virtualize long lists",
+   "Re-measure INP"
+  ],
+  "commonMistake": "Jumping straight to debouncing or sprinkling useMemo everywhere without measuring.",
+  "interviewTip": "Structure the answer as diagnose → fix → verify; interviewers grade the process."
+ },
+ {
+  "id": "react_hard_002",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Architecture",
+  "question": "How would you architect state management for a large React application?",
+  "shortAnswer": "Separate server state from client state, keep UI state local, use Context for low-frequency global values, and introduce a store only for complex shared client state.",
+  "detailedAnswer": "Server data (lists, entities) should be handled by the framework (Server Components) or a server-state library (TanStack Query/SWR) with caching and invalidation. UI state stays local or lifted. Broad, rarely changing values (theme, user) use Context. Complex cross-cutting client state (editors, multi-step workflows) can use Zustand or Redux Toolkit with selectors. Derive data instead of duplicating it and keep business logic in testable pure functions.",
+  "keyPoints": [
+   "Server state vs client state",
+   "Local first",
+   "Context for low-frequency globals",
+   "Stores with selectors for complex state",
+   "Derive instead of duplicate"
+  ],
+  "commonMistake": "Putting every API response into a global Redux store and syncing it manually.",
+  "interviewTip": "Name concrete tools and explain why each fits a type of state."
+ },
+ {
+  "id": "react_hard_003",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Concurrent React",
+  "question": "Explain concurrent rendering in React.",
+  "shortAnswer": "Concurrent rendering lets React prepare multiple versions of the UI and interrupt, pause or abandon render work to keep the app responsive.",
+  "detailedAnswer": "Since React 18, rendering can be interruptible when you use concurrent features (transitions, useDeferredValue, Suspense). Urgent updates like typing take priority over transition renders. The commit phase is still synchronous, so users never see half-rendered UI. This is why rendering must be pure: React may render a component multiple times without committing.",
+  "keyPoints": [
+   "Interruptible render phase",
+   "Priorities: urgent vs transition",
+   "Commit stays synchronous",
+   "Requires pure rendering",
+   "Opt-in via concurrent features"
+  ],
+  "commonMistake": "Thinking concurrent rendering means multi-threading.",
+  "interviewTip": "Relate it to Fiber's units of work and to Strict Mode's double render."
+ },
+ {
+  "id": "react_hard_004",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Rendering",
+  "question": "How does React's Fiber architecture work at a high level?",
+  "shortAnswer": "Fiber represents each component as a unit of work in a linked tree, allowing React to split rendering into chunks, prioritize them and resume later.",
+  "detailedAnswer": "Each fiber holds a component's type, props, state and links to child, sibling and parent. React builds a work-in-progress tree during render, can yield to the browser between units, and then commits all changes at once. Lanes assign priorities to updates. Double buffering (current vs work-in-progress trees) makes commits atomic.",
+  "keyPoints": [
+   "Fiber = unit of work",
+   "Work-in-progress tree",
+   "Yielding and priorities (lanes)",
+   "Atomic commit"
+  ],
+  "commonMistake": "Describing Fiber as a separate thread or Web Worker.",
+  "interviewTip": "Keep it high-level but mention render vs commit phases."
+ },
+ {
+  "id": "react_hard_005",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Hooks",
+  "question": "How would you implement a useFetch hook correctly, and why might you avoid it?",
+  "shortAnswer": "Track data/error/loading, abort or ignore stale requests in cleanup, and handle dependency changes — but prefer framework data fetching or a caching library in production.",
+  "detailedAnswer": "A correct hook needs an AbortController per effect run, guards against setting state after unmount or after a newer request, and a dependency on the URL. Hand-rolled hooks still lack caching, deduplication, retries, background refetching and SSR support, which TanStack Query, SWR or Server Components provide.",
+  "keyPoints": [
+   "AbortController in cleanup",
+   "Handle races",
+   "Loading/error states",
+   "Missing caching and dedup",
+   "Prefer libraries or server fetching"
+  ],
+  "commonMistake": "Ignoring race conditions and memory leaks.",
+  "interviewTip": "Write the hook, then explain why you'd pick a library."
+ },
+ {
+  "id": "react_hard_006",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Hooks",
+  "question": "What is useSyncExternalStore and when do you need it?",
+  "shortAnswer": "A Hook for subscribing to external stores in a way that's consistent with concurrent rendering.",
+  "detailedAnswer": "It takes subscribe, getSnapshot and optional getServerSnapshot functions. It prevents 'tearing' where different components see different versions of a store during a concurrent render. State libraries (Redux, Zustand) use it internally; you use it directly for browser APIs like online status or for custom stores.",
+  "keyPoints": [
+   "subscribe + getSnapshot",
+   "Prevents tearing",
+   "Server snapshot for SSR",
+   "Used by state libraries"
+  ],
+  "commonMistake": "Returning a new object from getSnapshot every call, causing infinite loops.",
+  "interviewTip": "Mention tearing — it shows deep understanding."
+ },
+ {
+  "id": "react_hard_007",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Server Components",
+  "question": "What are the trade-offs of React Server Components?",
+  "shortAnswer": "They reduce client JavaScript and simplify data fetching, but add a server/client boundary mental model, serialization constraints and new caching concerns.",
+  "detailedAnswer": "Benefits: smaller bundles, direct data access, secrets on the server, streaming. Costs: understanding where code runs, serializable props only, no hooks in Server Components, framework coupling, testing gaps for async components, and the need to think about caching and request-time data.",
+  "keyPoints": [
+   "Less client JS",
+   "Direct secure data access",
+   "Boundary complexity",
+   "Serialization constraints",
+   "Testing and tooling maturity"
+  ],
+  "commonMistake": "Presenting RSC as purely beneficial.",
+  "interviewTip": "Give both sides and a recommendation."
+ },
+ {
+  "id": "react_hard_008",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Server Components",
+  "question": "How does the RSC model serialize data between server and client?",
+  "shortAnswer": "React serializes the rendered Server Component tree into the RSC payload, including references to Client Components and their serializable props.",
+  "detailedAnswer": "Supported values include primitives, plain objects, arrays, Date, Map, Set, typed arrays, Promises, JSX elements and Server Function references. Functions and class instances can't be serialized. Promises can be streamed and resolved later with use().",
+  "keyPoints": [
+   "RSC payload",
+   "Client component references",
+   "Serializable types only",
+   "Promises can stream"
+  ],
+  "commonMistake": "Passing callbacks from Server to Client Components.",
+  "interviewTip": "Mention streaming promises with use()."
+ },
+ {
+  "id": "react_hard_009",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Server Components",
+  "question": "What security risks do Server Functions introduce and how do you mitigate them?",
+  "shortAnswer": "Every Server Function is a public HTTP endpoint, so attackers can call it with arbitrary inputs.",
+  "detailedAnswer": "Mitigate by authenticating and authorizing inside each function, validating input with a schema, checking resource ownership, rate limiting sensitive actions, avoiding returning sensitive data, and keeping dependencies updated. Don't assume the UI that renders the form protects the action.",
+  "keyPoints": [
+   "Public endpoints",
+   "Auth inside every function",
+   "Schema validation",
+   "Ownership checks",
+   "Rate limiting"
+  ],
+  "commonMistake": "Relying on page-level protection.",
+  "interviewTip": "Discuss IDOR and why bound arguments still need verification."
+ },
+ {
+  "id": "react_hard_010",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Hydration",
+  "question": "How do you debug and fix hydration errors in a large app?",
+  "shortAnswer": "Read React's diff in the error, find render logic that differs between server and client, and make the first client render deterministic.",
+  "detailedAnswer": "React 19 shows the mismatching content. Look for time/locale formatting, random values, browser APIs in render, user-agent branching, invalid HTML nesting and third-party scripts or extensions mutating the DOM. Fix with Effects that update after hydration, consistent server data, dynamic imports with ssr: false for client-only widgets, and suppressHydrationWarning only for unavoidable text.",
+  "keyPoints": [
+   "Inspect the error diff",
+   "Find non-deterministic render",
+   "Defer client-only values",
+   "Fix invalid nesting",
+   "Use suppressHydrationWarning sparingly"
+  ],
+  "commonMistake": "Disabling SSR for the whole page.",
+  "interviewTip": "Describe a concrete bug you've fixed or would look for."
+ },
+ {
+  "id": "react_hard_011",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Performance",
+  "question": "When does React.memo fail to prevent re-renders?",
+  "shortAnswer": "When props change by reference (inline objects/functions), when the component's own state or context changes, or when children are new JSX each render.",
+  "detailedAnswer": "memo compares props shallowly with Object.is. Inline objects, arrays, callbacks and JSX children are new every render, so memo sees changes. Context consumers re-render regardless of memo. Fix with stable references (useMemo/useCallback), passing primitives, or the React Compiler.",
+  "keyPoints": [
+   "Shallow comparison",
+   "Inline references break it",
+   "Context bypasses memo",
+   "children JSX is new each render"
+  ],
+  "commonMistake": "Assuming memo blocks all re-renders.",
+  "interviewTip": "Point out the children-as-prop subtlety."
+ },
+ {
+  "id": "react_hard_012",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Concurrent React",
+  "question": "How do Suspense and transitions work together?",
+  "shortAnswer": "If an update inside a transition causes a component to suspend, React keeps showing the existing UI instead of the Suspense fallback.",
+  "detailedAnswer": "Without a transition, suspending content that was already visible would be replaced by its fallback. With startTransition, React waits for the new content (showing isPending) and only falls back for newly revealed boundaries. Router navigations in frameworks are transitions for this reason.",
+  "keyPoints": [
+   "Transitions avoid unwanted fallbacks",
+   "Already-visible content stays",
+   "isPending signals progress",
+   "Navigations are transitions"
+  ],
+  "commonMistake": "Seeing flashing skeletons on every tab switch and not knowing why.",
+  "interviewTip": "Use a tab switch example."
+ },
+ {
+  "id": "react_hard_013",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Testing",
+  "question": "How would you design a testing strategy for a React + Next.js product?",
+  "shortAnswer": "Static checks everywhere, unit tests for logic, integration tests for components with RTL, and E2E tests for critical journeys against a production build.",
+  "detailedAnswer": "TypeScript and ESLint catch errors early. Unit-test reducers, validators, data functions and Server Action logic. RTL covers Client Components with user-centric queries and MSW for network. Playwright covers async Server Components, auth, payments and caching behaviour. Add visual regression and accessibility checks, run in CI, and keep tests fast and deterministic.",
+  "keyPoints": [
+   "Testing trophy",
+   "RTL for components",
+   "Playwright for critical flows",
+   "MSW for network mocks",
+   "CI integration"
+  ],
+  "commonMistake": "Relying on snapshot tests for confidence.",
+  "interviewTip": "Mention what you would NOT test as well."
+ },
+ {
+  "id": "react_hard_014",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Architecture",
+  "question": "How do you design a reusable component library in React?",
+  "shortAnswer": "Build accessible primitives with composable APIs, consistent tokens, clear props and thorough documentation and tests.",
+  "detailedAnswer": "Use composition (slots, compound components) over many boolean props, forward refs (or ref props in React 19), support controlled and uncontrolled modes, build on accessible primitives (Radix, React Aria) for keyboard and ARIA, expose design tokens via CSS variables, mark interactive components 'use client' for RSC compatibility, tree-shake exports, and document with Storybook.",
+  "keyPoints": [
+   "Composition over configuration",
+   "Accessibility built-in",
+   "Controlled + uncontrolled",
+   "Design tokens",
+   "RSC compatibility"
+  ],
+  "commonMistake": "Creating components with dozens of boolean props.",
+  "interviewTip": "Mention compound components with Context."
+ },
+ {
+  "id": "react_hard_015",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Hooks",
+  "question": "Explain closures and the rules behind useEffect cleanup timing.",
+  "shortAnswer": "Each Effect closes over the props and state of its render; React runs the previous Effect's cleanup before the next setup and on unmount.",
+  "detailedAnswer": "When dependencies change, React renders, commits, then runs cleanup with the old values before setup with new values. This guarantees subscriptions match current props. Because of closures, a cleanup always sees the values from its own render, which is correct for unsubscribing from the old resource.",
+  "keyPoints": [
+   "Effects capture render values",
+   "Cleanup runs before next setup",
+   "Cleanup also on unmount",
+   "Old values in cleanup are intentional"
+  ],
+  "commonMistake": "Expecting cleanup to see the latest state.",
+  "interviewTip": "Use the chat room roomId example."
+ },
+ {
+  "id": "react_hard_016",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Performance",
+  "question": "How would you reduce the JavaScript bundle size of a React app?",
+  "shortAnswer": "Move non-interactive UI to Server Components, split code by route and feature, remove or replace heavy dependencies and verify with a bundle analyzer.",
+  "detailedAnswer": "Analyze bundles to find big modules. Use Server Components so markdown parsers or date libraries stay on the server, lazy-load heavy client widgets, import only what you need (tree-shaking, optimizePackageImports), replace large libraries with lighter ones, and avoid shipping polyfills you don't need. Track a bundle budget in CI.",
+  "keyPoints": [
+   "Bundle analysis",
+   "Server Components",
+   "Lazy loading",
+   "Dependency hygiene",
+   "Budgets in CI"
+  ],
+  "commonMistake": "Minifying code and calling it done.",
+  "interviewTip": "Quote numbers from a bundle report if you can."
+ },
+ {
+  "id": "react_hard_017",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Rendering",
+  "question": "How does React batch state updates?",
+  "shortAnswer": "React groups multiple state updates in the same event or task into a single re-render, including in promises and timeouts since React 18.",
+  "detailedAnswer": "Automatic batching reduces renders. Updates are queued and processed together; the updater function form processes them in order. flushSync from react-dom can force a synchronous update in rare cases like measuring the DOM immediately.",
+  "keyPoints": [
+   "Automatic batching (React 18+)",
+   "Applies to timeouts and promises",
+   "Updater functions queue in order",
+   "flushSync opts out"
+  ],
+  "commonMistake": "Thinking batching only happens in React event handlers.",
+  "interviewTip": "Mention that React 17 only batched inside event handlers."
+ },
+ {
+  "id": "react_hard_018",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Architecture",
+  "question": "How would you migrate a large class-component codebase to modern React?",
+  "shortAnswer": "Incrementally: upgrade React, add tests, convert leaf components to functions with Hooks, extract logic into custom Hooks, and adopt modern patterns feature by feature.",
+  "detailedAnswer": "Avoid a big-bang rewrite. Upgrade dependencies first, enable StrictMode to surface issues, add tests around risky areas, then convert components as you touch them. Replace HOCs and render props with custom Hooks, move data fetching to a library or framework, keep error boundaries as classes or use react-error-boundary, and measure performance along the way.",
+  "keyPoints": [
+   "Incremental migration",
+   "Tests as a safety net",
+   "Custom Hooks replace HOCs",
+   "StrictMode to find issues",
+   "Keep error boundaries"
+  ],
+  "commonMistake": "Rewriting everything at once.",
+  "interviewTip": "Discuss how you'd prioritize which parts to migrate."
+ },
+ {
+  "id": "react_hard_019",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Accessibility",
+  "question": "How do you make a custom modal dialog accessible?",
+  "shortAnswer": "Use role='dialog' with aria-modal and a label, move focus into it, trap focus while open, close on Escape and return focus to the trigger.",
+  "detailedAnswer": "The native <dialog> element with showModal() handles much of this. Otherwise: label with aria-labelledby, make the rest of the page inert, trap Tab focus, restore focus on close, prevent background scroll and ensure the close button is reachable. Libraries like Radix or React Aria provide tested implementations.",
+  "keyPoints": [
+   "Native <dialog> or role=dialog",
+   "Focus management",
+   "Escape to close",
+   "Inert background",
+   "Restore focus"
+  ],
+  "commonMistake": "Building a div overlay that keyboard users can't escape.",
+  "interviewTip": "Mention native <dialog> as the first choice."
+ },
+ {
+  "id": "react_hard_020",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Error Handling",
+  "question": "How do you design error handling across a React application?",
+  "shortAnswer": "Use error boundaries at feature level, handle async and event errors explicitly, show recoverable UI and report everything to monitoring.",
+  "detailedAnswer": "Error boundaries catch render errors; place them around independent features. Event handler and async errors need try/catch or library error states. Distinguish expected errors (validation) from unexpected ones. Report with root onCaughtError/onUncaughtError callbacks to Sentry or similar, and provide retry actions.",
+  "keyPoints": [
+   "Feature-level boundaries",
+   "try/catch for events/async",
+   "Expected vs unexpected",
+   "Monitoring integration",
+   "Retry UX"
+  ],
+  "commonMistake": "One root boundary that blanks the whole app.",
+  "interviewTip": "Mention React 19 root error callbacks."
+ },
+ {
+  "id": "react_hard_021",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "React Compiler",
+  "question": "How does the React Compiler change how you write React code?",
+  "shortAnswer": "You write plain, idiomatic code that follows the Rules of React; the compiler adds memoization, so manual useMemo/useCallback/memo become rare.",
+  "detailedAnswer": "It memoizes at a finer granularity than humans usually do, including JSX and intermediate values. Code that mutates or breaks Hook rules is skipped, so linting and purity matter more. Existing memoization can stay; remove it only with testing. You might still use useMemo to control Effect dependencies.",
+  "keyPoints": [
+   "Write idiomatic code",
+   "Purity is required",
+   "Less manual memoization",
+   "Lint rules surface issues",
+   "Keep escape hatches"
+  ],
+  "commonMistake": "Assuming the compiler makes any code fast.",
+  "interviewTip": "Explain what kinds of code it bails out on."
+ },
+ {
+  "id": "react_hard_022",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Data Flow",
+  "question": "How would you implement optimistic UI with rollback in React 19?",
+  "shortAnswer": "Use useOptimistic inside an Action to show the expected state immediately; when the Action finishes, React renders the real state, which rolls back automatically on failure.",
+  "detailedAnswer": "Pair useOptimistic with a form action or startTransition. On success update the source state (or revalidate server data); on failure show an error — the optimistic value disappears because the Action has completed. For complex caches, libraries like TanStack Query offer onMutate/rollback hooks.",
+  "keyPoints": [
+   "useOptimistic",
+   "Inside Actions",
+   "Source of truth updates on success",
+   "Automatic rollback",
+   "Show errors"
+  ],
+  "commonMistake": "Mutating the real state optimistically and forgetting to revert.",
+  "interviewTip": "Compare with manual rollback in TanStack Query."
+ },
+ {
+  "id": "react_hard_023",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Performance",
+  "question": "How would you render a list of 100,000 items efficiently?",
+  "shortAnswer": "Virtualize it so only visible rows are in the DOM, keep rows memoized with stable keys, and paginate or stream data where possible.",
+  "detailedAnswer": "Rendering 100k DOM nodes is slow regardless of React. Libraries like TanStack Virtual or react-window render a window of rows and spacer elements. Combine with stable keys, memoized row components, CSS containment and server-side pagination or infinite loading.",
+  "keyPoints": [
+   "Virtualization",
+   "Stable keys",
+   "Memoized rows",
+   "Pagination / infinite loading"
+  ],
+  "commonMistake": "Trying to optimize with useMemo alone.",
+  "interviewTip": "Mention measuring scroll performance."
+ },
+ {
+  "id": "react_hard_024",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Internationalization",
+  "question": "How would you add internationalization to a React/Next.js app?",
+  "shortAnswer": "Store messages per locale, load only the active locale, format with Intl APIs, and route by locale (e.g. /en, /de) with proper metadata.",
+  "detailedAnswer": "Use a library like next-intl, react-intl or i18next. In the App Router, a [locale] segment plus proxy-based detection works well. Use Intl.DateTimeFormat/NumberFormat to avoid hydration mismatches by formatting with the same locale on server and client. Add hreflang alternates for SEO.",
+  "keyPoints": [
+   "Locale routing",
+   "Load messages per locale",
+   "Intl formatting",
+   "Consistent server/client locale",
+   "hreflang for SEO"
+  ],
+  "commonMistake": "Formatting dates with the browser default locale during SSR.",
+  "interviewTip": "Connect to hydration mismatches."
+ },
+ {
+  "id": "react_hard_025",
+  "category": "React",
+  "difficulty": "Hard",
+  "topic": "Security",
+  "question": "How do you prevent XSS in a React application?",
+  "shortAnswer": "Rely on JSX auto-escaping, avoid dangerouslySetInnerHTML with untrusted input (sanitize with DOMPurify), validate URLs and set a Content Security Policy.",
+  "detailedAnswer": "React escapes interpolated strings. Risks remain with raw HTML injection, user-controlled href/src (javascript: URLs), third-party scripts and server-rendered data inlined into scripts. Sanitize, validate protocols, use CSP with nonces, and keep dependencies updated.",
+  "keyPoints": [
+   "Auto-escaping",
+   "Sanitize raw HTML",
+   "Validate URLs",
+   "CSP headers",
+   "Audit dependencies"
+  ],
+  "commonMistake": "Believing React makes XSS impossible.",
+  "interviewTip": "Mention CSP nonces in Next.js."
+ },
+ {
+  "id": "next_hard_001",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Caching",
+  "question": "Design a caching strategy for an e-commerce product page in Next.js.",
+  "shortAnswer": "Cache product data with tags and long lifetimes, keep cart and personalization dynamic behind Suspense, and revalidate on product updates via webhook.",
+  "detailedAnswer": "Product details and images: 'use cache' (or fetch with revalidate) with cacheTag(`product-${id}`) and cacheLife('hours'). Inventory/price may need shorter lifetimes or a dynamic island. The cart and recommendations read cookies, so render them dynamically inside Suspense. A CMS/ERP webhook calls revalidateTag, and admin Server Actions use updateTag for immediate consistency. Pre-render top products with generateStaticParams.",
+  "keyPoints": [
+   "Tag product data",
+   "Dynamic islands for personalization",
+   "Webhook revalidation",
+   "updateTag after admin edits",
+   "Pre-render popular products"
+  ],
+  "commonMistake": "Making the whole page dynamic or caching per-user data globally.",
+  "interviewTip": "Draw the page as static shell + dynamic holes."
+ },
+ {
+  "id": "next_hard_002",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Architecture",
+  "question": "How would you structure a large Next.js application for multiple teams?",
+  "shortAnswer": "Feature-based modules, a server-only Data Access Layer, a shared design system, clear boundaries via route groups, and possibly a monorepo or Multi-Zones.",
+  "detailedAnswer": "Pages stay thin and compose features. Each feature owns components, Server Actions and queries. A DAL centralizes auth and DTOs. Shared UI lives in a package. Turborepo/Nx monorepos share code across apps; Multi-Zones split ownership of URL spaces. Document caching and auth conventions, and enforce with lint rules and CI.",
+  "keyPoints": [
+   "Feature modules",
+   "Data Access Layer",
+   "Design system package",
+   "Monorepo / Multi-Zones",
+   "Documented conventions"
+  ],
+  "commonMistake": "Letting every team invent its own data fetching and caching patterns.",
+  "interviewTip": "Talk about ownership and conventions, not just folders."
+ },
+ {
+  "id": "next_hard_003",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Authentication",
+  "question": "Where should authorization checks live in a Next.js app, and why isn't proxy (middleware) enough?",
+  "shortAnswer": "In the Data Access Layer, Server Actions and Route Handlers — close to the data — with proxy used only for optimistic redirects.",
+  "detailedAnswer": "Proxy runs before rendering and can be misconfigured or bypassed (as CVE-2025-29927 showed). Layouts don't re-render on navigation, and Server Actions are callable directly. A cached verifySession plus per-resource permission checks in the DAL ensures every read and write is protected.",
+  "keyPoints": [
+   "Check close to data",
+   "Proxy for UX redirects only",
+   "Layouts aren't security boundaries",
+   "Server Actions are endpoints",
+   "Cached verifySession"
+  ],
+  "commonMistake": "Protecting routes only with matcher-based middleware.",
+  "interviewTip": "Reference the 2025 middleware bypass advisory."
+ },
+ {
+  "id": "next_hard_004",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Rendering",
+  "question": "Explain how Cache Components (Partial Prerendering) work in Next.js 16.",
+  "shortAnswer": "Routes produce a static shell at build time from cached and static content, while uncached request-time parts are wrapped in Suspense and stream in per request.",
+  "detailedAnswer": "With cacheComponents: true, rendering is dynamic by default; 'use cache' marks cacheable components/functions. During prerendering, anything static or cached is included in the shell; components that access request data (cookies, headers, uncached fetches) must sit inside Suspense and are rendered at request time. The user gets an instant shell from the edge and streamed dynamic content.",
+  "keyPoints": [
+   "cacheComponents flag",
+   "'use cache' opt-in",
+   "Static shell + dynamic holes",
+   "Suspense required around dynamic data",
+   "Replaces experimental PPR"
+  ],
+  "commonMistake": "Reading cookies outside Suspense and breaking the static shell.",
+  "interviewTip": "Explain how this blends static speed with dynamic personalization."
+ },
+ {
+  "id": "next_hard_005",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Performance",
+  "question": "A Next.js page has poor LCP. How would you investigate and fix it?",
+  "shortAnswer": "Identify the LCP element, then reduce server response time, prioritize the LCP resource, remove render-blocking work and stream non-critical content.",
+  "detailedAnswer": "Use Lighthouse/Web Vitals to find the LCP element. If it's an image, use next/image with priority and correct sizes. Reduce TTFB with caching or static rendering, move slow data behind Suspense, self-host fonts with next/font, defer third-party scripts, and reduce client JavaScript with Server Components. Verify with field data, not just lab tests.",
+  "keyPoints": [
+   "Find the LCP element",
+   "Prioritize LCP image",
+   "Lower TTFB via caching",
+   "Stream non-critical parts",
+   "Defer scripts and fonts"
+  ],
+  "commonMistake": "Optimizing random images instead of the actual LCP element.",
+  "interviewTip": "Mention lab vs field data."
+ },
+ {
+  "id": "next_hard_006",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Server Actions",
+  "question": "How do Server Actions work under the hood?",
+  "shortAnswer": "The bundler replaces the function on the client with a reference id; calling it POSTs serialized arguments to the server, which runs the function and returns the result plus any updated RSC payload.",
+  "detailedAnswer": "Action ids are encrypted and rotate between builds; unused actions are tree-shaken. Bound arguments are encrypted. Actions run sequentially per client. After revalidatePath/revalidateTag/updateTag, Next.js returns fresh RSC data in the same response so the UI updates without an extra round-trip.",
+  "keyPoints": [
+   "Reference ids on client",
+   "POST with serialized args",
+   "Encrypted ids and bound args",
+   "Single round-trip UI updates",
+   "Sequential execution"
+  ],
+  "commonMistake": "Using Server Actions for parallel data fetching.",
+  "interviewTip": "Explain why they're intended for mutations."
+ },
+ {
+  "id": "next_hard_007",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Deployment",
+  "question": "What should you consider when self-hosting Next.js on multiple instances?",
+  "shortAnswer": "Shared caching, consistent build artifacts and encryption keys, CDN configuration and image optimization.",
+  "detailedAnswer": "Configure a shared cache handler (e.g. Redis) so revalidation affects all instances, set the same NEXT_SERVER_ACTIONS_ENCRYPTION_KEY and deployment ids, serve static assets via a CDN with correct cache headers, decide where images are optimized, use output: 'standalone' for containers, and set up health checks and graceful shutdown.",
+  "keyPoints": [
+   "Shared cache handler",
+   "Consistent encryption keys",
+   "CDN for static assets",
+   "Image optimization strategy",
+   "standalone output"
+  ],
+  "commonMistake": "Running instances with separate in-memory caches and inconsistent data.",
+  "interviewTip": "Mention version skew between deployments."
+ },
+ {
+  "id": "next_hard_008",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Data Fetching",
+  "question": "How do you prevent duplicate data fetching between layouts, pages and generateMetadata?",
+  "shortAnswer": "Use fetch's request memoization or wrap data functions in React's cache() so repeated calls in one request return the same result.",
+  "detailedAnswer": "Within a single render pass, identical fetch calls are deduplicated automatically. For ORMs or SDKs, wrap the function with cache(). For cross-request reuse, add caching ('use cache' or revalidate). Preload patterns can start requests early.",
+  "keyPoints": [
+   "fetch memoization",
+   "React cache()",
+   "Cross-request caching",
+   "Preload pattern"
+  ],
+  "commonMistake": "Passing data down through many layers to avoid refetching.",
+  "interviewTip": "Explain request scope vs persistent cache."
+ },
+ {
+  "id": "next_hard_009",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Rendering",
+  "question": "How would you build a personalized dashboard that still loads fast?",
+  "shortAnswer": "Serve a static or cached shell immediately, stream personalized widgets with Suspense, fetch in parallel and cache shared data.",
+  "detailedAnswer": "Layout, navigation and skeletons are static. Each widget fetches its own data (in parallel) behind its own Suspense boundary. Non-user-specific data (exchange rates, product catalog) is cached; per-user data is dynamic. Use loading.tsx for instant navigation feedback and prefetch common routes.",
+  "keyPoints": [
+   "Static shell",
+   "Per-widget Suspense",
+   "Parallel fetching",
+   "Cache shared data",
+   "Prefetch routes"
+  ],
+  "commonMistake": "One blocking query for the entire dashboard.",
+  "interviewTip": "Relate to Cache Components."
+ },
+ {
+  "id": "next_hard_010",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "SEO",
+  "question": "How do you handle SEO for a large dynamic site in Next.js?",
+  "shortAnswer": "Server-render content, generate unique metadata per page, produce sitemaps programmatically, add structured data and return correct status codes.",
+  "detailedAnswer": "Use generateMetadata for titles, descriptions, canonical URLs and OG images; sitemap.ts (split with generateSitemaps for large sites) and robots.ts; JSON-LD for products or articles; notFound()/permanentRedirect() for correct statuses; i18n alternates; and good Core Web Vitals.",
+  "keyPoints": [
+   "Server-rendered content",
+   "Per-page metadata",
+   "Programmatic sitemaps",
+   "Structured data",
+   "Correct status codes"
+  ],
+  "commonMistake": "Client-rendering important content.",
+  "interviewTip": "Mention generateSitemaps for very large catalogs."
+ },
+ {
+  "id": "next_hard_011",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Routing",
+  "question": "How would you implement a modal with a shareable URL in the App Router?",
+  "shortAnswer": "Combine a parallel route slot (@modal) with an intercepting route so soft navigation shows a modal and hard navigation shows the full page.",
+  "detailedAnswer": "The layout renders {children} and {modal}. @modal/(.)photo/[id]/page.tsx renders the modal on Link navigation; photo/[id]/page.tsx renders the full page on refresh. @modal/default.tsx returns null. Close with router.back().",
+  "keyPoints": [
+   "Parallel @modal slot",
+   "Intercepting (.) route",
+   "default.tsx returns null",
+   "router.back() to close",
+   "Shareable URLs"
+  ],
+  "commonMistake": "Managing the modal with client state only, losing deep links.",
+  "interviewTip": "Draw the folder structure."
+ },
+ {
+  "id": "next_hard_012",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Caching",
+  "question": "What problems can arise from caching in Next.js and how do you debug them?",
+  "shortAnswer": "Stale data after mutations, personalized data cached globally, and confusion across cache layers; debug by checking which layer served the data and whether invalidation ran.",
+  "detailedAnswer": "Check if the route is static or dynamic (build output), whether fetches are cached, whether tags match between cacheTag/fetch and revalidateTag, and whether the client router cache is holding old payloads (router.refresh). Log cache behaviour, use the Next.js dev overlay and build output, and make caching explicit and documented.",
+  "keyPoints": [
+   "Identify the cache layer",
+   "Static vs dynamic route",
+   "Tag mismatches",
+   "Client router cache",
+   "Explicit documentation"
+  ],
+  "commonMistake": "Disabling all caching to fix a bug.",
+  "interviewTip": "Give a concrete stale-after-update story."
+ },
+ {
+  "id": "next_hard_013",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Data Fetching",
+  "question": "How would you implement infinite scrolling with Server Components and Server Actions or Route Handlers?",
+  "shortAnswer": "Render the first page on the server, then fetch subsequent pages from the client via a Route Handler, Server Function or library, appending results.",
+  "detailedAnswer": "The initial list is server-rendered for SEO and speed. A Client Component observes the last item (IntersectionObserver) and loads the next page with cursor-based pagination, using TanStack Query's useInfiniteQuery or a Server Function that returns serializable data. Keep the URL in sync if needed and virtualize long lists.",
+  "keyPoints": [
+   "Server-rendered first page",
+   "Client loads more",
+   "Cursor pagination",
+   "IntersectionObserver",
+   "Virtualize"
+  ],
+  "commonMistake": "Fetching all items at once.",
+  "interviewTip": "Mention cursor vs offset pagination trade-offs."
+ },
+ {
+  "id": "next_hard_014",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Runtime",
+  "question": "When would you use the Edge runtime vs the Node.js runtime?",
+  "shortAnswer": "Default to Node.js for full compatibility; use edge for lightweight, latency-sensitive logic without Node-only dependencies.",
+  "detailedAnswer": "Edge has fast startup and runs near users but supports a subset of APIs and many npm packages won't work. If the function talks to a single-region database, edge can add latency. Node.js supports everything, including ORMs and native modules. Next 16's proxy runs on Node.js.",
+  "keyPoints": [
+   "Node.js is default",
+   "Edge: Web APIs subset",
+   "Data locality matters",
+   "Proxy runs on Node in 16"
+  ],
+  "commonMistake": "Moving database-heavy routes to the edge for 'speed'.",
+  "interviewTip": "Bring up data locality."
+ },
+ {
+  "id": "next_hard_015",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Migration",
+  "question": "How would you migrate a Pages Router app to the App Router?",
+  "shortAnswer": "Incrementally: add app/ alongside pages/, move routes one by one, convert data functions to async Server Components, and replace API routes and _app logic.",
+  "detailedAnswer": "Start with a root layout replacing _app/_document. Migrate simple pages first. getStaticProps → cached Server Component fetching; getServerSideProps → dynamic Server Component; getStaticPaths → generateStaticParams; useRouter from next/router → next/navigation hooks; API routes → Route Handlers or Server Actions; head tags → Metadata API. Watch for 'use client' needs in interactive components and test each route.",
+  "keyPoints": [
+   "Incremental coexistence",
+   "Root layout replaces _app/_document",
+   "Map data functions",
+   "Navigation hooks change",
+   "Metadata API"
+  ],
+  "commonMistake": "Big-bang migration of the entire app.",
+  "interviewTip": "Show the concept mapping table."
+ },
+ {
+  "id": "next_hard_016",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Security",
+  "question": "How do you secure a Next.js application end to end?",
+  "shortAnswer": "Authenticate with a vetted library, authorize in a server-only DAL, validate all inputs, protect secrets, set security headers and keep dependencies updated.",
+  "detailedAnswer": "Use httpOnly secure cookies, verify sessions in every Server Action and Route Handler, return DTOs, sanitize HTML, add CSP/HSTS headers, rate-limit auth endpoints, avoid NEXT_PUBLIC_ secrets, audit dependencies, and monitor errors. Don't rely solely on proxy for auth.",
+  "keyPoints": [
+   "Vetted auth library",
+   "DAL with authorization",
+   "Input validation",
+   "Security headers",
+   "Dependency updates"
+  ],
+  "commonMistake": "Securing only the UI.",
+  "interviewTip": "Organize the answer by layer."
+ },
+ {
+  "id": "next_hard_017",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Observability",
+  "question": "How would you monitor a Next.js app in production?",
+  "shortAnswer": "Instrument with OpenTelemetry via instrumentation.ts, report errors with onRequestError, collect real-user Web Vitals and log key events with after().",
+  "detailedAnswer": "Track server traces for slow data fetches, error rates per route, cache hit rates, Server Action failures, and client metrics (LCP, INP, CLS) via useReportWebVitals or a vendor SDK. Use after() for non-blocking analytics and alert on regressions.",
+  "keyPoints": [
+   "OpenTelemetry",
+   "onRequestError",
+   "Web Vitals RUM",
+   "after() for non-blocking logs",
+   "Alerts on regressions"
+  ],
+  "commonMistake": "Only monitoring uptime.",
+  "interviewTip": "Mention tying traces to deployments."
+ },
+ {
+  "id": "next_hard_018",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Server Components",
+  "question": "How would you share data between a layout and its pages without prop drilling?",
+  "shortAnswer": "Fetch in each place that needs the data using a memoized function (fetch memoization or React cache()); layouts can't pass props to pages.",
+  "detailedAnswer": "Because layouts render children without props, call getUser() in both layout and page — request memoization ensures one query. For client-side sharing, put a Context provider (client) in the layout and pass the server-fetched value to it.",
+  "keyPoints": [
+   "Layouts can't pass props to pages",
+   "Fetch where needed",
+   "cache() deduplication",
+   "Client context for client consumers"
+  ],
+  "commonMistake": "Trying to clone children with extra props in a layout.",
+  "interviewTip": "Explain request-scoped memoization."
+ },
+ {
+  "id": "next_hard_019",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Rendering",
+  "question": "How does Next.js decide whether a route is static or dynamic?",
+  "shortAnswer": "During build it tries to prerender; if code accesses request-time APIs or uncached data, the route (or that part) becomes dynamic.",
+  "detailedAnswer": "Dynamic APIs (cookies, headers, searchParams, connection, draftMode) and uncached fetches opt in to request-time rendering. Route segment config (dynamic, revalidate) can force behaviour in the classic model. With Cache Components, Next.js prerenders everything it can into a shell and requires Suspense around dynamic access. The build output shows each route's type.",
+  "keyPoints": [
+   "Static by default when possible",
+   "Dynamic APIs opt in",
+   "Uncached data opts in",
+   "Build output shows route types"
+  ],
+  "commonMistake": "Not realizing a deep child reading searchParams makes the route dynamic.",
+  "interviewTip": "Mention reading the build output."
+ },
+ {
+  "id": "next_hard_020",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Forms",
+  "question": "How would you build a multi-step form with Server Actions?",
+  "shortAnswer": "Keep step state on the client (or in the URL), validate each step with server-side schemas, persist drafts if needed, and submit the final data with a Server Action.",
+  "detailedAnswer": "Client state (useReducer) holds progress; each step can call a Server Action to validate partial data and return errors. Use the URL (searchParams) for step navigation to support back/refresh. Final submission revalidates and redirects. Validate the full payload again on the server at the end.",
+  "keyPoints": [
+   "Client step state or URL",
+   "Per-step server validation",
+   "Final full validation",
+   "Revalidate + redirect"
+  ],
+  "commonMistake": "Trusting earlier step validation on final submit.",
+  "interviewTip": "Mention useActionState per step."
+ },
+ {
+  "id": "next_hard_021",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Performance",
+  "question": "How do you minimize client JavaScript in a Next.js app?",
+  "shortAnswer": "Keep components on the server, push 'use client' to small leaves, lazy-load heavy widgets and audit bundles.",
+  "detailedAnswer": "Use the children pattern to keep providers thin, avoid client-only libraries for static UI, use next/dynamic for rarely used components, configure optimizePackageImports, enable the React Compiler for runtime efficiency, and analyze bundles regularly.",
+  "keyPoints": [
+   "Server-first",
+   "Small client islands",
+   "next/dynamic",
+   "optimizePackageImports",
+   "Bundle analysis"
+  ],
+  "commonMistake": "Converting whole pages to client components for convenience.",
+  "interviewTip": "Quantify impact with bundle analyzer results."
+ },
+ {
+  "id": "next_hard_022",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Caching",
+  "question": "Explain the difference between revalidateTag and updateTag in Next.js 16.",
+  "shortAnswer": "revalidateTag marks data stale with stale-while-revalidate semantics (requires a cacheLife profile); updateTag immediately expires data and is only available in Server Actions for read-your-writes.",
+  "detailedAnswer": "Use revalidateTag('posts', 'max') from webhooks or background jobs where serving slightly stale content while refreshing is fine. Use updateTag('posts') right after a user's own mutation so their next render shows the change. refresh() refreshes uncached data on the client router.",
+  "keyPoints": [
+   "revalidateTag: SWR semantics",
+   "Profile argument required in 16",
+   "updateTag: immediate, Server Actions only",
+   "refresh() for uncached data"
+  ],
+  "commonMistake": "Using revalidateTag after a user edit and showing them stale data.",
+  "interviewTip": "Tie it to user experience expectations."
+ },
+ {
+  "id": "next_hard_023",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Rendering",
+  "question": "How does streaming affect HTTP status codes, redirects and SEO in Next.js?",
+  "shortAnswer": "Once streaming starts the 200 status and headers are already sent, so later notFound() or redirect() calls are handled by injecting client-side instructions; crawlers still receive the full streamed HTML.",
+  "detailedAnswer": "Call notFound() and redirect() before any Suspense boundary starts streaming (e.g. at the top of the page) when the status code matters. Inside streamed content, Next.js inserts a meta tag or script to redirect or show the not-found UI. Streamed HTML is complete when the response finishes, so content is indexable, and metadata can be streamed for browsers while still placed in the head for bots.",
+  "keyPoints": [
+   "Status sent with first chunk",
+   "Do critical checks before streaming",
+   "Client-side fallback for late redirects",
+   "Streamed HTML is indexable"
+  ],
+  "commonMistake": "Calling notFound() deep inside a Suspense boundary and expecting a 404 status.",
+  "interviewTip": "Explain why ordering of checks matters for SEO-critical pages."
+ },
+ {
+  "id": "next_hard_024",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Data Fetching",
+  "question": "How would you handle real-time data (e.g. live notifications) in a Next.js App Router app?",
+  "shortAnswer": "Render initial data on the server, then subscribe on the client via WebSockets, Server-Sent Events or a hosted real-time service, merging updates into client state.",
+  "detailedAnswer": "Server Components provide the initial snapshot for fast, SEO-friendly HTML. A Client Component opens a subscription in useEffect (with cleanup) or uses useSyncExternalStore around a socket store. Serverless platforms often require a managed real-time provider (Pusher, Ably, Supabase Realtime) because long-lived connections aren't supported. Call router.refresh() or revalidate tags when events affect server-rendered data.",
+  "keyPoints": [
+   "Server-rendered initial snapshot",
+   "Client subscription with cleanup",
+   "Managed real-time on serverless",
+   "router.refresh/revalidate on events"
+  ],
+  "commonMistake": "Polling Server Actions in a tight loop.",
+  "interviewTip": "Mention connection limits of serverless functions."
+ },
+ {
+  "id": "next_hard_025",
+  "category": "Next.js",
+  "difficulty": "Hard",
+  "topic": "Architecture",
+  "question": "How would you design a multi-tenant SaaS on Next.js?",
+  "shortAnswer": "Resolve the tenant early (subdomain or path) in proxy, carry the tenant id through a server-only context, and scope every query and cache key by tenant.",
+  "detailedAnswer": "Proxy rewrites tenant subdomains to a [tenant] segment. The DAL reads the tenant from params and the session, verifies membership, and filters queries by tenant id. Cache tags and 'use cache' keys must include the tenant to avoid cross-tenant leaks. Per-tenant metadata and theming come from cached tenant config. Add row-level security in the database as defense in depth.",
+  "keyPoints": [
+   "Tenant resolution in proxy",
+   "[tenant] segment",
+   "Tenant-scoped queries",
+   "Tenant in cache keys",
+   "Database row-level security"
+  ],
+  "commonMistake": "Caching tenant data without the tenant in the key.",
+  "interviewTip": "Emphasize data isolation and cache keys."
+ }
+]

@@ -1,0 +1,3752 @@
+[
+ {
+  "id": "mcq_001",
+  "category": "React",
+  "topic": "Basics",
+  "difficulty": "Easy",
+  "question": "What is React primarily used for?",
+  "options": [
+   "Styling web pages",
+   "Building user interfaces",
+   "Managing databases",
+   "Running servers"
+  ],
+  "correctAnswer": 1,
+  "explanation": "React is a library for building UIs from components."
+ },
+ {
+  "id": "mcq_002",
+  "category": "React",
+  "topic": "JSX",
+  "difficulty": "Easy",
+  "question": "Which attribute sets a CSS class on a JSX element?",
+  "options": [
+   "className",
+   "styleName",
+   "class",
+   "cssClass"
+  ],
+  "correctAnswer": 0,
+  "explanation": "`class` is reserved in JavaScript, so JSX uses `className`."
+ },
+ {
+  "id": "mcq_003",
+  "category": "React",
+  "topic": "JSX",
+  "difficulty": "Easy",
+  "question": "How do you embed a JavaScript expression in JSX?",
+  "options": [
+   "With angle brackets <>",
+   "With curly braces {}",
+   "With double quotes",
+   "With square brackets []"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Curly braces evaluate any JavaScript expression inside JSX."
+ },
+ {
+  "id": "mcq_004",
+  "category": "React",
+  "topic": "JSX",
+  "difficulty": "Easy",
+  "question": "What does `<>...</>` represent in JSX?",
+  "options": [
+   "A portal",
+   "An empty div",
+   "A comment",
+   "A Fragment"
+  ],
+  "correctAnswer": 3,
+  "explanation": "The short syntax creates a Fragment that groups children without extra DOM."
+ },
+ {
+  "id": "mcq_005",
+  "category": "React",
+  "topic": "Components",
+  "difficulty": "Easy",
+  "question": "Why must component names start with a capital letter?",
+  "options": [
+   "To enable Hooks",
+   "So JSX treats them as components, not HTML tags",
+   "It's required by CSS",
+   "For performance"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Lowercase tags are treated as built-in HTML elements."
+ },
+ {
+  "id": "mcq_006",
+  "category": "React",
+  "topic": "Props",
+  "difficulty": "Easy",
+  "question": "Can a child component modify its props directly?",
+  "options": [
+   "Only in class components",
+   "Only objects",
+   "Yes, always",
+   "No, props are read-only"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Props are immutable from the child's perspective; request changes via callbacks."
+ },
+ {
+  "id": "mcq_007",
+  "category": "React",
+  "topic": "State",
+  "difficulty": "Easy",
+  "question": "What does useState return?",
+  "options": [
+   "A pair: the current state and a setter function",
+   "A ref object",
+   "A promise",
+   "Only the state value"
+  ],
+  "correctAnswer": 0,
+  "explanation": "`const [value, setValue] = useState(initial)`."
+ },
+ {
+  "id": "mcq_008",
+  "category": "React",
+  "topic": "State",
+  "difficulty": "Easy",
+  "question": "What happens when you call a state setter with a new value?",
+  "options": [
+   "Nothing until reload",
+   "The component unmounts",
+   "The DOM updates synchronously without rendering",
+   "React schedules a re-render"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Updating state triggers a re-render with the new value."
+ },
+ {
+  "id": "mcq_009",
+  "category": "React",
+  "topic": "Events",
+  "difficulty": "Easy",
+  "question": "Which is the correct way to attach a click handler?",
+  "options": [
+   "onClick={handle}",
+   "onClick={handle()}",
+   "onclick=\"handle()\"",
+   "click={handle}"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Pass the function reference; `handle()` would run during render."
+ },
+ {
+  "id": "mcq_010",
+  "category": "React",
+  "topic": "Lists",
+  "difficulty": "Easy",
+  "question": "Which array method is most commonly used to render a list in JSX?",
+  "options": [
+   "some",
+   "map",
+   "forEach",
+   "reduce"
+  ],
+  "correctAnswer": 1,
+  "explanation": "`map` returns an array of elements React can render."
+ },
+ {
+  "id": "mcq_011",
+  "category": "React",
+  "topic": "Keys",
+  "difficulty": "Easy",
+  "question": "What is the best value for a list item's key?",
+  "options": [
+   "A stable unique id from the data",
+   "The item's text length",
+   "The array index for every list",
+   "Math.random()"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Stable unique ids preserve identity across renders."
+ },
+ {
+  "id": "mcq_012",
+  "category": "React",
+  "topic": "Keys",
+  "difficulty": "Easy",
+  "question": "Keys must be unique…",
+  "options": [
+   "Across the entire app",
+   "Among siblings in the same list",
+   "Per file",
+   "Per component type"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Uniqueness only matters among siblings."
+ },
+ {
+  "id": "mcq_013",
+  "category": "React",
+  "topic": "Conditional Rendering",
+  "difficulty": "Easy",
+  "question": "Which renders `<Spinner />` only when `loading` is true?",
+  "options": [
+   "{loading && <Spinner />}",
+   "{loading ?? <Spinner />}",
+   "{if (loading) <Spinner />}",
+   "{loading || <Spinner />}"
+  ],
+  "correctAnswer": 0,
+  "explanation": "`&&` renders the right side when the left side is truthy."
+ },
+ {
+  "id": "mcq_014",
+  "category": "React",
+  "topic": "Conditional Rendering",
+  "difficulty": "Easy",
+  "question": "What should a component return to render nothing?",
+  "options": [
+   "undefined is required",
+   "false is invalid",
+   "null",
+   "An empty object"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Returning null renders nothing."
+ },
+ {
+  "id": "mcq_015",
+  "category": "React",
+  "topic": "Hooks",
+  "difficulty": "Easy",
+  "question": "Hooks can be called…",
+  "options": [
+   "At the top level of components and custom Hooks",
+   "Inside loops",
+   "Inside conditions",
+   "Inside class components"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Hooks must be called unconditionally at the top level."
+ },
+ {
+  "id": "mcq_016",
+  "category": "React",
+  "topic": "Hooks",
+  "difficulty": "Easy",
+  "question": "Which Hook runs side effects after rendering?",
+  "options": [
+   "useEffect",
+   "useRef",
+   "useId",
+   "useMemo"
+  ],
+  "correctAnswer": 0,
+  "explanation": "useEffect runs after the component commits."
+ },
+ {
+  "id": "mcq_017",
+  "category": "React",
+  "topic": "Hooks",
+  "difficulty": "Easy",
+  "question": "Which Hook returns a mutable object that persists across renders without causing re-renders?",
+  "options": [
+   "useReducer",
+   "useContext",
+   "useState",
+   "useRef"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Changing `ref.current` doesn't trigger a render."
+ },
+ {
+  "id": "mcq_018",
+  "category": "React",
+  "topic": "Context",
+  "difficulty": "Easy",
+  "question": "Context is mainly used to…",
+  "options": [
+   "Handle routing",
+   "Pass data deeply without prop drilling",
+   "Fetch data",
+   "Style components"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Context makes values available to a whole subtree."
+ },
+ {
+  "id": "mcq_019",
+  "category": "React",
+  "topic": "Forms",
+  "difficulty": "Easy",
+  "question": "A controlled input gets its value from…",
+  "options": [
+   "React state via the value prop",
+   "The DOM",
+   "localStorage",
+   "A ref only"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Controlled inputs are driven by state and onChange."
+ },
+ {
+  "id": "mcq_020",
+  "category": "React",
+  "topic": "Forms",
+  "difficulty": "Easy",
+  "question": "Which prop sets the initial value of an uncontrolled input?",
+  "options": [
+   "startValue",
+   "value",
+   "defaultValue",
+   "initialValue"
+  ],
+  "correctAnswer": 2,
+  "explanation": "`defaultValue` lets the DOM manage the value afterwards."
+ },
+ {
+  "id": "mcq_021",
+  "category": "React",
+  "topic": "Components",
+  "difficulty": "Easy",
+  "question": "What is the `children` prop?",
+  "options": [
+   "Content placed between a component's opening and closing tags",
+   "The parent component",
+   "The component's state",
+   "A list of child refs"
+  ],
+  "correctAnswer": 0,
+  "explanation": "children enables composition."
+ },
+ {
+  "id": "mcq_022",
+  "category": "React",
+  "topic": "Rendering",
+  "difficulty": "Easy",
+  "question": "When a parent re-renders, by default its children…",
+  "options": [
+   "Only re-render if keys change",
+   "Unmount",
+   "Never re-render",
+   "Also re-render"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Children re-render with their parent unless memoized."
+ },
+ {
+  "id": "mcq_023",
+  "category": "React",
+  "topic": "Strict Mode",
+  "difficulty": "Easy",
+  "question": "In which environment does Strict Mode double-invoke components?",
+  "options": [
+   "Production",
+   "Development",
+   "Testing only",
+   "Never"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Strict Mode checks are development-only."
+ },
+ {
+  "id": "mcq_024",
+  "category": "React",
+  "topic": "Effects",
+  "difficulty": "Easy",
+  "question": "What does an empty dependency array `[]` mean for useEffect?",
+  "options": [
+   "Run before render",
+   "Run once after mount (plus cleanup on unmount)",
+   "Run after every render",
+   "Never run"
+  ],
+  "correctAnswer": 1,
+  "explanation": "With [], the Effect runs after the initial mount."
+ },
+ {
+  "id": "mcq_025",
+  "category": "React",
+  "topic": "Effects",
+  "difficulty": "Easy",
+  "question": "What should an Effect return to clean up a subscription?",
+  "options": [
+   "The subscription object",
+   "A promise",
+   "A cleanup function",
+   "null always"
+  ],
+  "correctAnswer": 2,
+  "explanation": "React calls the returned function before re-running and on unmount."
+ },
+ {
+  "id": "mcq_026",
+  "category": "React",
+  "topic": "Basics",
+  "difficulty": "Easy",
+  "question": "What does 'declarative UI' mean in React?",
+  "options": [
+   "UI is written in XML",
+   "You write each DOM change step by step",
+   "You must use classes",
+   "You describe what the UI should look like for a state"
+  ],
+  "correctAnswer": 3,
+  "explanation": "React figures out how to update the DOM to match your description."
+ },
+ {
+  "id": "mcq_027",
+  "category": "React",
+  "topic": "JSX",
+  "difficulty": "Easy",
+  "question": "JSX is compiled into…",
+  "options": [
+   "WebAssembly",
+   "JavaScript function calls",
+   "CSS",
+   "HTML files"
+  ],
+  "correctAnswer": 1,
+  "explanation": "JSX becomes jsx()/createElement calls."
+ },
+ {
+  "id": "mcq_028",
+  "category": "React",
+  "topic": "Props",
+  "difficulty": "Easy",
+  "question": "How do you set a default value for a prop in a function component?",
+  "options": [
+   "Default parameters in destructuring",
+   "Using a ref",
+   "Using useEffect",
+   "defaultProps on functions is required"
+  ],
+  "correctAnswer": 0,
+  "explanation": "e.g. `function Button({ size = 'md' })`."
+ },
+ {
+  "id": "mcq_029",
+  "category": "React",
+  "topic": "State",
+  "difficulty": "Easy",
+  "question": "State in React is best described as…",
+  "options": [
+   "A component's memory between renders",
+   "Global variables",
+   "Server data",
+   "CSS variables"
+  ],
+  "correctAnswer": 0,
+  "explanation": "State persists across renders for a component instance."
+ },
+ {
+  "id": "mcq_030",
+  "category": "React",
+  "topic": "Error Boundaries",
+  "difficulty": "Easy",
+  "question": "What do error boundaries catch?",
+  "options": [
+   "Network errors",
+   "Errors during rendering of their children",
+   "Syntax errors",
+   "Errors in event handlers"
+  ],
+  "correctAnswer": 1,
+  "explanation": "They catch errors thrown while rendering their subtree."
+ },
+ {
+  "id": "mcq_031",
+  "category": "React",
+  "topic": "Performance",
+  "difficulty": "Easy",
+  "question": "What does React.memo do?",
+  "options": [
+   "Stores data in memory permanently",
+   "Memoizes state setters",
+   "Skips re-rendering when props are unchanged",
+   "Caches API responses"
+  ],
+  "correctAnswer": 2,
+  "explanation": "memo performs a shallow prop comparison."
+ },
+ {
+  "id": "mcq_032",
+  "category": "React",
+  "topic": "Lazy Loading",
+  "difficulty": "Easy",
+  "question": "What must wrap a component created with React.lazy while it loads?",
+  "options": [
+   "Profiler",
+   "ErrorBoundary only",
+   "StrictMode",
+   "Suspense"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Suspense shows a fallback while the code loads."
+ },
+ {
+  "id": "mcq_033",
+  "category": "React",
+  "topic": "Testing",
+  "difficulty": "Easy",
+  "question": "Which React Testing Library query is generally preferred?",
+  "options": [
+   "getByTestId",
+   "getByClassName",
+   "getByRole",
+   "querySelector"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Role-based queries mirror how users and assistive tech find elements."
+ },
+ {
+  "id": "mcq_034",
+  "category": "React",
+  "topic": "Accessibility",
+  "difficulty": "Easy",
+  "question": "Which element should you use for a clickable action?",
+  "options": [
+   "<button>",
+   "<p onClick>",
+   "<div onClick>",
+   "<span onClick>"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Buttons are focusable and keyboard accessible by default."
+ },
+ {
+  "id": "mcq_035",
+  "category": "React",
+  "topic": "Tooling",
+  "difficulty": "Easy",
+  "question": "Which is the recommended way to start a client-only React SPA in 2026?",
+  "options": [
+   "Grunt",
+   "Bower",
+   "A Vite template",
+   "create-react-app"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Create React App is deprecated; Vite is the common choice for SPAs."
+ },
+ {
+  "id": "mcq_036",
+  "category": "React",
+  "topic": "State",
+  "difficulty": "Medium",
+  "question": "After clicking, what does the counter show?\n`setCount(count + 1); setCount(count + 1);` (count starts at 0)",
+  "options": [
+   "1",
+   "2",
+   "An error",
+   "0"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Both calls use the same snapshot (0), so the result is 1."
+ },
+ {
+  "id": "mcq_037",
+  "category": "React",
+  "topic": "State",
+  "difficulty": "Medium",
+  "question": "How do you correctly increment a counter twice in one handler?",
+  "options": [
+   "setCount(count + 2) is impossible",
+   "setCount(count++)",
+   "count++ twice",
+   "setCount(c => c + 1) twice"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Updater functions apply to the latest queued state."
+ },
+ {
+  "id": "mcq_038",
+  "category": "React",
+  "topic": "State",
+  "difficulty": "Medium",
+  "question": "Why shouldn't you mutate a state array with push()?",
+  "options": [
+   "The reference doesn't change, so React may not re-render",
+   "It throws an error",
+   "Arrays can't be state",
+   "push is slow"
+  ],
+  "correctAnswer": 0,
+  "explanation": "React compares references; create a new array instead."
+ },
+ {
+  "id": "mcq_039",
+  "category": "React",
+  "topic": "State",
+  "difficulty": "Medium",
+  "question": "When does the function passed to useState(() => init()) run?",
+  "options": [
+   "On unmount",
+   "Only on the initial render",
+   "When state changes",
+   "Every render"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Lazy initializers run once."
+ },
+ {
+  "id": "mcq_040",
+  "category": "React",
+  "topic": "Effects",
+  "difficulty": "Medium",
+  "question": "Which is the most appropriate use of useEffect?",
+  "options": [
+   "Handling a button click",
+   "Computing a total from props",
+   "Filtering a list for display",
+   "Subscribing to a WebSocket"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Effects synchronize with external systems; derived values belong in render."
+ },
+ {
+  "id": "mcq_041",
+  "category": "React",
+  "topic": "Effects",
+  "difficulty": "Medium",
+  "question": "When a dependency changes, what runs first?",
+  "options": [
+   "The component unmounts",
+   "The new effect setup",
+   "Nothing",
+   "The previous effect's cleanup"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Cleanup for the old values runs before the new setup."
+ },
+ {
+  "id": "mcq_042",
+  "category": "React",
+  "topic": "Effects",
+  "difficulty": "Medium",
+  "question": "Why does an Effect run setup → cleanup → setup on mount in development?",
+  "options": [
+   "Hot reloading",
+   "Strict Mode checks that cleanup works",
+   "Network retries",
+   "A bug in React"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Strict Mode remounts once in development."
+ },
+ {
+  "id": "mcq_043",
+  "category": "React",
+  "topic": "Effects",
+  "difficulty": "Medium",
+  "question": "What is a common way to avoid race conditions when fetching in an Effect?",
+  "options": [
+   "Use setTimeout",
+   "Ignore stale responses or abort in cleanup",
+   "Fetch twice",
+   "Remove dependencies"
+  ],
+  "correctAnswer": 1,
+  "explanation": "A cleanup flag or AbortController prevents stale updates."
+ },
+ {
+  "id": "mcq_044",
+  "category": "React",
+  "topic": "Effects",
+  "difficulty": "Medium",
+  "question": "An object created in render is listed as an Effect dependency. What happens?",
+  "options": [
+   "The effect runs once",
+   "React throws",
+   "The effect runs after every render",
+   "The effect never runs"
+  ],
+  "correctAnswer": 2,
+  "explanation": "A new object every render has a new identity."
+ },
+ {
+  "id": "mcq_045",
+  "category": "React",
+  "topic": "Hooks",
+  "difficulty": "Medium",
+  "question": "What is the primary purpose of useMemo?",
+  "options": [
+   "To perform side effects",
+   "To memoize a computed value",
+   "To create a context",
+   "To update state"
+  ],
+  "correctAnswer": 1,
+  "explanation": "useMemo caches the result of a calculation between renders."
+ },
+ {
+  "id": "mcq_046",
+  "category": "React",
+  "topic": "Hooks",
+  "difficulty": "Medium",
+  "question": "useCallback(fn, deps) is equivalent to…",
+  "options": [
+   "useState(fn)",
+   "useRef(fn)",
+   "useEffect(fn, deps)",
+   "useMemo(() => fn, deps)"
+  ],
+  "correctAnswer": 3,
+  "explanation": "It memoizes the function itself."
+ },
+ {
+  "id": "mcq_047",
+  "category": "React",
+  "topic": "Hooks",
+  "difficulty": "Medium",
+  "question": "When does useCallback actually improve performance?",
+  "options": [
+   "When the function is passed to a memoized child or used as a dependency",
+   "When the function is async",
+   "When used in class components",
+   "Always"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Only identity-sensitive consumers benefit."
+ },
+ {
+  "id": "mcq_048",
+  "category": "React",
+  "topic": "Hooks",
+  "difficulty": "Medium",
+  "question": "What does useReducer's dispatch function do?",
+  "options": [
+   "Mutates state directly",
+   "Creates a context",
+   "Fetches data",
+   "Sends an action to the reducer to compute the next state"
+  ],
+  "correctAnswer": 3,
+  "explanation": "dispatch(action) → reducer(state, action) → next state."
+ },
+ {
+  "id": "mcq_049",
+  "category": "React",
+  "topic": "Hooks",
+  "difficulty": "Medium",
+  "question": "A reducer must be…",
+  "options": [
+   "Connected to Redux",
+   "Asynchronous",
+   "Defined inside the component",
+   "Pure"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Reducers compute the next state without side effects."
+ },
+ {
+  "id": "mcq_050",
+  "category": "React",
+  "topic": "Hooks",
+  "difficulty": "Medium",
+  "question": "Two components call the same custom Hook useCounter(). What is true?",
+  "options": [
+   "Only the first one works",
+   "Each gets independent state",
+   "React throws a warning",
+   "They share one count"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Custom Hooks share logic, not state."
+ },
+ {
+  "id": "mcq_051",
+  "category": "React",
+  "topic": "Hooks",
+  "difficulty": "Medium",
+  "question": "What naming rule applies to custom Hooks?",
+  "options": [
+   "Must end with Hook",
+   "No rule",
+   "Must start with use",
+   "Must be PascalCase"
+  ],
+  "correctAnswer": 2,
+  "explanation": "The `use` prefix lets tooling enforce Hook rules."
+ },
+ {
+  "id": "mcq_052",
+  "category": "React",
+  "topic": "Context",
+  "difficulty": "Medium",
+  "question": "What happens when a context value changes?",
+  "options": [
+   "Nothing",
+   "The whole app remounts",
+   "All components reading that context re-render",
+   "Only the provider re-renders"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Consumers re-render with the new value."
+ },
+ {
+  "id": "mcq_053",
+  "category": "React",
+  "topic": "Context",
+  "difficulty": "Medium",
+  "question": "Why might you memoize an object passed as a context value?",
+  "options": [
+   "Contexts require it",
+   "To make it immutable",
+   "To enable SSR",
+   "To avoid re-rendering all consumers on every provider render"
+  ],
+  "correctAnswer": 3,
+  "explanation": "A new object each render changes the value identity."
+ },
+ {
+  "id": "mcq_054",
+  "category": "React",
+  "topic": "Context",
+  "difficulty": "Medium",
+  "question": "In React 19, how can you render a context provider?",
+  "options": [
+   "<MyContext.Consumer>",
+   "MyContext.provide(v)",
+   "useProvider(MyContext)",
+   "<MyContext value={v}>"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Context objects can be rendered directly as providers."
+ },
+ {
+  "id": "mcq_055",
+  "category": "React",
+  "topic": "Refs",
+  "difficulty": "Medium",
+  "question": "In React 19, how do function components receive refs?",
+  "options": [
+   "Through context",
+   "As a regular `ref` prop",
+   "They can't",
+   "Only via forwardRef"
+  ],
+  "correctAnswer": 1,
+  "explanation": "ref is now a prop for function components."
+ },
+ {
+  "id": "mcq_056",
+  "category": "React",
+  "topic": "Refs",
+  "difficulty": "Medium",
+  "question": "What can a ref callback return in React 19?",
+  "options": [
+   "A new ref",
+   "JSX",
+   "A promise",
+   "A cleanup function"
+  ],
+  "correctAnswer": 3,
+  "explanation": "React calls the cleanup when the element is detached."
+ },
+ {
+  "id": "mcq_057",
+  "category": "React",
+  "topic": "Keys",
+  "difficulty": "Medium",
+  "question": "What happens when you change a component's key?",
+  "options": [
+   "React remounts it with fresh state",
+   "It re-renders with the same state",
+   "It is ignored",
+   "It throws"
+  ],
+  "correctAnswer": 0,
+  "explanation": "A new key means a new identity."
+ },
+ {
+  "id": "mcq_058",
+  "category": "React",
+  "topic": "Keys",
+  "difficulty": "Medium",
+  "question": "Using array indexes as keys in a list where items can be deleted can cause…",
+  "options": [
+   "Faster rendering",
+   "State attached to the wrong items",
+   "Memory leaks only",
+   "Compile errors"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Indexes shift when items are removed, mismatching state."
+ },
+ {
+  "id": "mcq_059",
+  "category": "React",
+  "topic": "Rendering",
+  "difficulty": "Medium",
+  "question": "Which does NOT trigger a re-render by itself?",
+  "options": [
+   "Calling setState with a new value",
+   "Changing ref.current",
+   "A consumed context changing",
+   "The parent re-rendering"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Refs are mutable containers outside the render cycle."
+ },
+ {
+  "id": "mcq_060",
+  "category": "React",
+  "topic": "Rendering",
+  "difficulty": "Medium",
+  "question": "Why should you avoid declaring a component inside another component?",
+  "options": [
+   "It disables Hooks",
+   "It creates a new type each render, resetting its state",
+   "It breaks CSS",
+   "It's a syntax error"
+  ],
+  "correctAnswer": 1,
+  "explanation": "React sees a different component type every render."
+ },
+ {
+  "id": "mcq_061",
+  "category": "React",
+  "topic": "Rendering",
+  "difficulty": "Medium",
+  "question": "What are the phases of a React update?",
+  "options": [
+   "Mount, patch, paint",
+   "Fetch, parse, execute",
+   "Compile, link, run",
+   "Trigger, render, commit"
+  ],
+  "correctAnswer": 3,
+  "explanation": "React renders components, then commits DOM changes."
+ },
+ {
+  "id": "mcq_062",
+  "category": "React",
+  "topic": "Reconciliation",
+  "difficulty": "Medium",
+  "question": "What does React do when an element at the same position changes type (div → section)?",
+  "options": [
+   "Ignores it",
+   "Updates the tag in place",
+   "Keeps both",
+   "Tears down the subtree and mounts a new one"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Different types produce different trees."
+ },
+ {
+  "id": "mcq_063",
+  "category": "React",
+  "topic": "Derived State",
+  "difficulty": "Medium",
+  "question": "You have firstName and lastName in state. How should you get fullName?",
+  "options": [
+   "Use a ref",
+   "Compute it during render",
+   "Use context",
+   "Store it in another state and sync with useEffect"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Derived values should be calculated, not stored."
+ },
+ {
+  "id": "mcq_064",
+  "category": "React",
+  "topic": "Derived State",
+  "difficulty": "Medium",
+  "question": "What's wrong with `const [color, setColor] = useState(props.color)` if you expect it to follow prop changes?",
+  "options": [
+   "It re-renders infinitely",
+   "It throws",
+   "Nothing",
+   "State ignores later prop changes after the first render"
+  ],
+  "correctAnswer": 3,
+  "explanation": "The initial value is only used once."
+ },
+ {
+  "id": "mcq_065",
+  "category": "React",
+  "topic": "Forms",
+  "difficulty": "Medium",
+  "question": "In React 19, what does a function passed to `<form action={fn}>` receive?",
+  "options": [
+   "Nothing",
+   "The submit event",
+   "FormData",
+   "A ref to the form"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Form Actions receive the submitted FormData."
+ },
+ {
+  "id": "mcq_066",
+  "category": "React",
+  "topic": "Forms",
+  "difficulty": "Medium",
+  "question": "Where must useFormStatus be called?",
+  "options": [
+   "In a component rendered inside the form",
+   "In the component that renders the form",
+   "Anywhere",
+   "In a Server Component"
+  ],
+  "correctAnswer": 0,
+  "explanation": "It reads the status of its parent form."
+ },
+ {
+  "id": "mcq_067",
+  "category": "React",
+  "topic": "Forms",
+  "difficulty": "Medium",
+  "question": "Which module exports useFormStatus?",
+  "options": [
+   "react",
+   "next/form",
+   "react-server",
+   "react-dom"
+  ],
+  "correctAnswer": 3,
+  "explanation": "useFormStatus comes from react-dom."
+ },
+ {
+  "id": "mcq_068",
+  "category": "React",
+  "topic": "Suspense",
+  "difficulty": "Medium",
+  "question": "Which of these triggers a Suspense fallback?",
+  "options": [
+   "A lazy() component loading",
+   "A setTimeout",
+   "Data fetched in useEffect",
+   "An event handler"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Lazy components and Suspense-enabled data sources suspend."
+ },
+ {
+  "id": "mcq_069",
+  "category": "React",
+  "topic": "Suspense",
+  "difficulty": "Medium",
+  "question": "Why use nested Suspense boundaries?",
+  "options": [
+   "To reveal independent parts of the page progressively",
+   "To catch errors",
+   "To improve SEO only",
+   "Required by React"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Each boundary can show its content as soon as it's ready."
+ },
+ {
+  "id": "mcq_070",
+  "category": "React",
+  "topic": "Error Boundaries",
+  "difficulty": "Medium",
+  "question": "Which error is NOT caught by an error boundary?",
+  "options": [
+   "Error in a child's constructor",
+   "Error thrown in an onClick handler",
+   "Error in a lazy component render",
+   "Error in a child's render"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Event handler errors need try/catch."
+ },
+ {
+  "id": "mcq_071",
+  "category": "React",
+  "topic": "Error Boundaries",
+  "difficulty": "Medium",
+  "question": "How are error boundaries implemented natively?",
+  "options": [
+   "Class components with getDerivedStateFromError/componentDidCatch",
+   "CSS",
+   "Function components with useError",
+   "Hooks only"
+  ],
+  "correctAnswer": 0,
+  "explanation": "They're still class components (or wrappers like react-error-boundary)."
+ },
+ {
+  "id": "mcq_072",
+  "category": "React",
+  "topic": "Performance",
+  "difficulty": "Medium",
+  "question": "An object literal is passed as a prop to a memo component on every render. Result?",
+  "options": [
+   "The object is cached automatically",
+   "React throws",
+   "The component re-renders every time",
+   "memo prevents re-renders"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Shallow comparison sees a new reference each time."
+ },
+ {
+  "id": "mcq_073",
+  "category": "React",
+  "topic": "Performance",
+  "difficulty": "Medium",
+  "question": "What is the first step when a React screen feels slow?",
+  "options": [
+   "Rewrite in another framework",
+   "Add useMemo everywhere",
+   "Remove all state",
+   "Measure with the React Profiler"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Measure before optimizing."
+ },
+ {
+  "id": "mcq_074",
+  "category": "React",
+  "topic": "Performance",
+  "difficulty": "Medium",
+  "question": "Which technique keeps only visible rows of a long list in the DOM?",
+  "options": [
+   "Batching",
+   "Hydration",
+   "Virtualization",
+   "Memoization"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Virtualization renders a window of rows."
+ },
+ {
+  "id": "mcq_075",
+  "category": "React",
+  "topic": "Code Splitting",
+  "difficulty": "Medium",
+  "question": "What creates a separate chunk in a bundler?",
+  "options": [
+   "A JSX element",
+   "An export statement",
+   "Dynamic import()",
+   "A static import"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Dynamic imports become split points."
+ },
+ {
+  "id": "mcq_076",
+  "category": "React",
+  "topic": "Testing",
+  "difficulty": "Medium",
+  "question": "Which RTL query should you use for an element that appears asynchronously?",
+  "options": [
+   "queryBy",
+   "getAllBy",
+   "getBy",
+   "findBy"
+  ],
+  "correctAnswer": 3,
+  "explanation": "findBy returns a promise and waits."
+ },
+ {
+  "id": "mcq_077",
+  "category": "React",
+  "topic": "Testing",
+  "difficulty": "Medium",
+  "question": "To assert an element is NOT in the document, use…",
+  "options": [
+   "getBy",
+   "findBy",
+   "queryBy",
+   "getByTestId"
+  ],
+  "correctAnswer": 2,
+  "explanation": "queryBy returns null instead of throwing."
+ },
+ {
+  "id": "mcq_078",
+  "category": "React",
+  "topic": "Accessibility",
+  "difficulty": "Medium",
+  "question": "Which Hook generates ids that match between server and client for label associations?",
+  "options": [
+   "useState",
+   "useRef",
+   "useId",
+   "useMemo"
+  ],
+  "correctAnswer": 2,
+  "explanation": "useId produces stable, unique ids."
+ },
+ {
+  "id": "mcq_079",
+  "category": "React",
+  "topic": "Hydration",
+  "difficulty": "Medium",
+  "question": "What is hydration?",
+  "options": [
+   "Caching API calls",
+   "Attaching React to server-rendered HTML to make it interactive",
+   "Fetching data",
+   "Compressing assets"
+  ],
+  "correctAnswer": 1,
+  "explanation": "React reuses existing HTML and attaches handlers."
+ },
+ {
+  "id": "mcq_080",
+  "category": "React",
+  "topic": "Batching",
+  "difficulty": "Medium",
+  "question": "Since React 18, updates inside setTimeout are…",
+  "options": [
+   "Synchronous always",
+   "Ignored",
+   "Automatically batched",
+   "Never batched"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Automatic batching applies everywhere."
+ },
+ {
+  "id": "mcq_081",
+  "category": "React",
+  "topic": "Concurrent",
+  "difficulty": "Hard",
+  "question": "What does startTransition do to a state update?",
+  "options": [
+   "Runs it on a Web Worker",
+   "Marks it as non-urgent and interruptible",
+   "Makes it synchronous",
+   "Delays it by 300ms"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Transitions can be interrupted by urgent updates."
+ },
+ {
+  "id": "mcq_082",
+  "category": "React",
+  "topic": "Concurrent",
+  "difficulty": "Hard",
+  "question": "Which statement about the commit phase is true?",
+  "options": [
+   "It runs on the server",
+   "It is always synchronous",
+   "It's skipped in transitions",
+   "It can be interrupted"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Only the render phase is interruptible."
+ },
+ {
+  "id": "mcq_083",
+  "category": "React",
+  "topic": "Concurrent",
+  "difficulty": "Hard",
+  "question": "useDeferredValue is most useful when…",
+  "options": [
+   "You receive a value and want a slow subtree to update with lower priority",
+   "You want to cache API data",
+   "You need a ref",
+   "You want to debounce network requests"
+  ],
+  "correctAnswer": 0,
+  "explanation": "It defers rendering work, not requests."
+ },
+ {
+  "id": "mcq_084",
+  "category": "React",
+  "topic": "Concurrent",
+  "difficulty": "Hard",
+  "question": "Why should a slow component using a deferred value be wrapped in memo?",
+  "options": [
+   "To avoid hydration errors",
+   "memo is required by the API",
+   "To enable Suspense",
+   "So the urgent render can skip it and only the deferred render does heavy work"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Without memo it still renders on every keystroke."
+ },
+ {
+  "id": "mcq_085",
+  "category": "React",
+  "topic": "Concurrent",
+  "difficulty": "Hard",
+  "question": "During a transition, a component suspends on already-visible content. What does React show?",
+  "options": [
+   "The Suspense fallback immediately",
+   "The previous content until the new content is ready",
+   "A blank screen",
+   "An error"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Transitions avoid hiding already-revealed content."
+ },
+ {
+  "id": "mcq_086",
+  "category": "React",
+  "topic": "React 19",
+  "difficulty": "Hard",
+  "question": "What is the first parameter of an action used with useActionState?",
+  "options": [
+   "isPending",
+   "The event",
+   "FormData",
+   "The previous state"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Signature: (previousState, formData)."
+ },
+ {
+  "id": "mcq_087",
+  "category": "React",
+  "topic": "React 19",
+  "difficulty": "Hard",
+  "question": "What does useActionState return?",
+  "options": [
+   "[state, formAction, isPending]",
+   "{ data, error }",
+   "[isPending, startTransition]",
+   "[state, setState]"
+  ],
+  "correctAnswer": 0,
+  "explanation": "It returns the state, a wrapped action and a pending flag."
+ },
+ {
+  "id": "mcq_088",
+  "category": "React",
+  "topic": "React 19",
+  "difficulty": "Hard",
+  "question": "When does a useOptimistic value revert to the real state?",
+  "options": [
+   "After a fixed timeout",
+   "When the Action/transition completes",
+   "Never automatically",
+   "On unmount only"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Optimistic state only lives during the pending Action."
+ },
+ {
+  "id": "mcq_089",
+  "category": "React",
+  "topic": "React 19",
+  "difficulty": "Hard",
+  "question": "Where must addOptimistic be called?",
+  "options": [
+   "In render",
+   "In useEffect only",
+   "In a reducer",
+   "Inside an Action or startTransition"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Calling it outside a transition causes a warning."
+ },
+ {
+  "id": "mcq_090",
+  "category": "React",
+  "topic": "React 19",
+  "difficulty": "Hard",
+  "question": "Which is true about the `use()` API?",
+  "options": [
+   "It can be called inside conditions",
+   "It must be called at the top level only",
+   "It replaces useEffect",
+   "It only works with context"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Unlike Hooks, use can be called conditionally."
+ },
+ {
+  "id": "mcq_091",
+  "category": "React",
+  "topic": "React 19",
+  "difficulty": "Hard",
+  "question": "What happens if you create a new promise during each client render and pass it to use()?",
+  "options": [
+   "The component may suspend repeatedly",
+   "React converts it to state",
+   "Nothing special",
+   "It's cached automatically"
+  ],
+  "correctAnswer": 0,
+  "explanation": "A new promise each render never stays resolved; cache or create it on the server."
+ },
+ {
+  "id": "mcq_092",
+  "category": "React",
+  "topic": "React 19",
+  "difficulty": "Hard",
+  "question": "How does use(promise) handle a rejected promise?",
+  "options": [
+   "Returns undefined",
+   "Logs a warning only",
+   "Throws to the nearest error boundary",
+   "Retries automatically"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Rejections are handled by error boundaries."
+ },
+ {
+  "id": "mcq_093",
+  "category": "React",
+  "topic": "React 19.2",
+  "difficulty": "Hard",
+  "question": "What happens to Effects inside `<Activity mode=\"hidden\">`?",
+  "options": [
+   "They keep running",
+   "They are cleaned up until visible again",
+   "They run twice",
+   "They are deleted permanently"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Hidden Activity unmounts Effects but preserves state."
+ },
+ {
+  "id": "mcq_094",
+  "category": "React",
+  "topic": "React 19.2",
+  "difficulty": "Hard",
+  "question": "Why use useEffectEvent?",
+  "options": [
+   "To create effects that run on events",
+   "To read latest values in an Effect without making them dependencies",
+   "To batch updates",
+   "To replace useCallback"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Effect Events are non-reactive logic called from Effects."
+ },
+ {
+  "id": "mcq_095",
+  "category": "React",
+  "topic": "React Compiler",
+  "difficulty": "Hard",
+  "question": "What does the React Compiler require from your code?",
+  "options": [
+   "Class components",
+   "TypeScript",
+   "Following the Rules of React (purity, immutability, Hook rules)",
+   "Using Redux"
+  ],
+  "correctAnswer": 2,
+  "explanation": "It skips code that breaks the rules."
+ },
+ {
+  "id": "mcq_096",
+  "category": "React",
+  "topic": "React Compiler",
+  "difficulty": "Hard",
+  "question": "With the React Compiler enabled, manual useMemo is…",
+  "options": [
+   "Usually unnecessary but still allowed as an escape hatch",
+   "Required everywhere",
+   "Forbidden",
+   "Converted to useEffect"
+  ],
+  "correctAnswer": 0,
+  "explanation": "The compiler memoizes automatically; useMemo still works."
+ },
+ {
+  "id": "mcq_097",
+  "category": "React",
+  "topic": "Server Components",
+  "difficulty": "Hard",
+  "question": "Which can a React Server Component NOT do?",
+  "options": [
+   "Render a Client Component",
+   "await a database query",
+   "Use useState",
+   "Read environment secrets"
+  ],
+  "correctAnswer": 2,
+  "explanation": "State and effects require Client Components."
+ },
+ {
+  "id": "mcq_098",
+  "category": "React",
+  "topic": "Server Components",
+  "difficulty": "Hard",
+  "question": "Which prop CANNOT be passed from a Server Component to a Client Component?",
+  "options": [
+   "A regular function",
+   "A Promise",
+   "A string",
+   "A plain object"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Functions aren't serializable (except Server Functions)."
+ },
+ {
+  "id": "mcq_099",
+  "category": "React",
+  "topic": "Server Components",
+  "difficulty": "Hard",
+  "question": "How can a Client Component display a Server Component?",
+  "options": [
+   "Through useEffect",
+   "It can't",
+   "By receiving it as children or another prop",
+   "By importing it directly"
+  ],
+  "correctAnswer": 2,
+  "explanation": "The server renders it and passes the result in."
+ },
+ {
+  "id": "mcq_100",
+  "category": "React",
+  "topic": "Server Components",
+  "difficulty": "Hard",
+  "question": "What best distinguishes RSC from classic SSR?",
+  "options": [
+   "They are identical",
+   "RSC code never ships to the client; SSR still hydrates all component code",
+   "RSC only works offline",
+   "SSR is faster"
+  ],
+  "correctAnswer": 1,
+  "explanation": "SSR produces HTML for all components; RSC avoids shipping their code."
+ },
+ {
+  "id": "mcq_101",
+  "category": "React",
+  "topic": "Server Components",
+  "difficulty": "Hard",
+  "question": "What does 'use client' mark?",
+  "options": [
+   "A server function",
+   "A component that only renders in the browser",
+   "A test file",
+   "A module boundary where client code begins"
+  ],
+  "correctAnswer": 3,
+  "explanation": "It marks the entry into the client module graph."
+ },
+ {
+  "id": "mcq_102",
+  "category": "React",
+  "topic": "Server Functions",
+  "difficulty": "Hard",
+  "question": "Which statement about Server Functions ('use server') is true?",
+  "options": [
+   "They run in the browser",
+   "They're private and need no auth checks",
+   "They are callable endpoints and must validate input and authorize",
+   "They can return any value including functions"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Treat them like public API endpoints."
+ },
+ {
+  "id": "mcq_103",
+  "category": "React",
+  "topic": "Hydration",
+  "difficulty": "Hard",
+  "question": "Which code is most likely to cause a hydration mismatch?",
+  "options": [
+   "{user.name}",
+   "{Math.random()}",
+   "useState(0)",
+   "<button onClick={f}>"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Random values differ between server and client."
+ },
+ {
+  "id": "mcq_104",
+  "category": "React",
+  "topic": "Hydration",
+  "difficulty": "Hard",
+  "question": "What is a correct way to show the user's local time without a mismatch?",
+  "options": [
+   "Render a placeholder, then set the time in useEffect",
+   "Use suppressHydrationWarning on the root",
+   "Render new Date() directly",
+   "Read window in render"
+  ],
+  "correctAnswer": 0,
+  "explanation": "The first client render matches the server; the Effect updates after hydration."
+ },
+ {
+  "id": "mcq_105",
+  "category": "React",
+  "topic": "Hydration",
+  "difficulty": "Hard",
+  "question": "What does selective hydration enable?",
+  "options": [
+   "Hydrating only on the server",
+   "Hydrating CSS",
+   "Skipping hydration",
+   "Hydrating Suspense boundaries independently and prioritizing ones the user interacts with"
+  ],
+  "correctAnswer": 3,
+  "explanation": "React prioritizes interactive regions."
+ },
+ {
+  "id": "mcq_106",
+  "category": "React",
+  "topic": "Streaming",
+  "difficulty": "Hard",
+  "question": "Which API streams server rendering in Node.js?",
+  "options": [
+   "hydrateRoot",
+   "renderToPipeableStream",
+   "createRoot",
+   "renderToString"
+  ],
+  "correctAnswer": 1,
+  "explanation": "renderToPipeableStream supports streaming with Suspense."
+ },
+ {
+  "id": "mcq_107",
+  "category": "React",
+  "topic": "Reconciliation",
+  "difficulty": "Hard",
+  "question": "Why is React's diffing algorithm O(n) instead of O(n³)?",
+  "options": [
+   "It assumes different types produce different trees and uses keys",
+   "It diffs only the root",
+   "It uses Web Workers",
+   "It skips diffing"
+  ],
+  "correctAnswer": 0,
+  "explanation": "These heuristics make linear-time diffing possible."
+ },
+ {
+  "id": "mcq_108",
+  "category": "React",
+  "topic": "Fiber",
+  "difficulty": "Hard",
+  "question": "What is a fiber in React's architecture?",
+  "options": [
+   "A CSS animation",
+   "A unit of work representing a component in the tree",
+   "A thread",
+   "A network request"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Fibers let React split, pause and resume rendering."
+ },
+ {
+  "id": "mcq_109",
+  "category": "React",
+  "topic": "Hooks",
+  "difficulty": "Hard",
+  "question": "What problem does useSyncExternalStore solve?",
+  "options": [
+   "Tearing when reading external stores during concurrent rendering",
+   "Memoizing callbacks",
+   "Managing forms",
+   "Fetching data"
+  ],
+  "correctAnswer": 0,
+  "explanation": "It keeps external store reads consistent."
+ },
+ {
+  "id": "mcq_110",
+  "category": "React",
+  "topic": "Hooks",
+  "difficulty": "Hard",
+  "question": "getSnapshot in useSyncExternalStore returns a new object every call. Result?",
+  "options": [
+   "Better performance",
+   "Nothing",
+   "An infinite re-render loop warning",
+   "A hydration error"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Snapshots must be cached/stable when unchanged."
+ },
+ {
+  "id": "mcq_111",
+  "category": "React",
+  "topic": "Hooks",
+  "difficulty": "Hard",
+  "question": "What is a stale closure?",
+  "options": [
+   "A memory leak in the DOM",
+   "A function using values from an old render",
+   "An unmounted component",
+   "A closed WebSocket"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Callbacks capture the props/state of the render that created them."
+ },
+ {
+  "id": "mcq_112",
+  "category": "React",
+  "topic": "Hooks",
+  "difficulty": "Hard",
+  "question": "Inside setInterval in an Effect with [] deps, `setCount(count + 1)` keeps showing 1. Best fix?",
+  "options": [
+   "Use useMemo",
+   "Add a ref",
+   "Remove the dependency array",
+   "Use setCount(c => c + 1)"
+  ],
+  "correctAnswer": 3,
+  "explanation": "The updater form doesn't depend on the stale count."
+ },
+ {
+  "id": "mcq_113",
+  "category": "React",
+  "topic": "Performance",
+  "difficulty": "Hard",
+  "question": "Which is NOT a reason memo fails to skip a render?",
+  "options": [
+   "A consumed context changed",
+   "An inline arrow function prop",
+   "All props are identical primitives",
+   "The component's own state changed"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Identical primitive props allow memo to skip."
+ },
+ {
+  "id": "mcq_114",
+  "category": "React",
+  "topic": "Performance",
+  "difficulty": "Hard",
+  "question": "JSX passed as children to a memo component on every parent render will…",
+  "options": [
+   "Throw",
+   "Be a new element each render, breaking memo",
+   "Be cached by React",
+   "Never change"
+  ],
+  "correctAnswer": 1,
+  "explanation": "children is a prop and new JSX means a new reference."
+ },
+ {
+  "id": "mcq_115",
+  "category": "React",
+  "topic": "Performance",
+  "difficulty": "Hard",
+  "question": "Which metric best captures input responsiveness?",
+  "options": [
+   "LCP",
+   "INP",
+   "TTFB",
+   "CLS"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Interaction to Next Paint measures responsiveness."
+ },
+ {
+  "id": "mcq_116",
+  "category": "React",
+  "topic": "State Management",
+  "difficulty": "Hard",
+  "question": "Which is 'server state'?",
+  "options": [
+   "The current input text",
+   "Hover state",
+   "A cached list of orders from an API",
+   "Whether a modal is open"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Server state originates on the backend and needs caching and invalidation."
+ },
+ {
+  "id": "mcq_117",
+  "category": "React",
+  "topic": "State Management",
+  "difficulty": "Hard",
+  "question": "When is an external store with selectors preferable to Context?",
+  "options": [
+   "For a single form field",
+   "Never",
+   "For a theme that rarely changes",
+   "For high-frequency shared state read by many components"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Selectors limit re-renders to components that need changed slices."
+ },
+ {
+  "id": "mcq_118",
+  "category": "React",
+  "topic": "Architecture",
+  "difficulty": "Hard",
+  "question": "Which pattern avoids prop drilling without Context?",
+  "options": [
+   "Global variables",
+   "Using refs",
+   "Composition: passing elements as children",
+   "Lifting state higher"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Render deep children at the top and pass them down."
+ },
+ {
+  "id": "mcq_119",
+  "category": "React",
+  "topic": "Security",
+  "difficulty": "Hard",
+  "question": "Which is the riskiest pattern for XSS?",
+  "options": [
+   "{userInput} in JSX",
+   "Using useId",
+   "className={userClass}",
+   "dangerouslySetInnerHTML with unsanitized user HTML"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Raw HTML injection bypasses React's escaping."
+ },
+ {
+  "id": "mcq_120",
+  "category": "React",
+  "topic": "Security",
+  "difficulty": "Hard",
+  "question": "Where should validation that protects your data happen?",
+  "options": [
+   "Only in the browser",
+   "In CSS",
+   "In localStorage",
+   "On the server"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Client validation is UX; server validation is security."
+ },
+ {
+  "id": "mcq_121",
+  "category": "React",
+  "topic": "Testing",
+  "difficulty": "Hard",
+  "question": "How are async Server Components best tested today?",
+  "options": [
+   "Snapshot tests only",
+   "Shallow rendering",
+   "They can't be tested",
+   "End-to-end tests"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Unit-testing tools don't fully support async Server Components."
+ },
+ {
+  "id": "mcq_122",
+  "category": "React",
+  "topic": "Rendering",
+  "difficulty": "Hard",
+  "question": "What does flushSync do?",
+  "options": [
+   "Clears the cache",
+   "Hydrates immediately",
+   "Forces React to apply updates synchronously",
+   "Batches updates"
+  ],
+  "correctAnswer": 2,
+  "explanation": "It opts out of batching for rare cases like DOM measurement."
+ },
+ {
+  "id": "mcq_123",
+  "category": "React",
+  "topic": "Error Handling",
+  "difficulty": "Hard",
+  "question": "Which React 19 root options report errors?",
+  "options": [
+   "componentDidCatch only",
+   "window.onerror only",
+   "onCaughtError and onUncaughtError",
+   "onError and onWarn"
+  ],
+  "correctAnswer": 2,
+  "explanation": "createRoot/hydrateRoot accept these callbacks."
+ },
+ {
+  "id": "mcq_124",
+  "category": "React",
+  "topic": "Accessibility",
+  "difficulty": "Hard",
+  "question": "Which is required for an accessible modal dialog?",
+  "options": [
+   "Auto-playing audio",
+   "Disabling the keyboard",
+   "Hiding the close button",
+   "Moving focus into the dialog and restoring it on close"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Focus management is essential for keyboard and screen reader users."
+ },
+ {
+  "id": "mcq_125",
+  "category": "React",
+  "topic": "Effects",
+  "difficulty": "Hard",
+  "question": "You need an Effect to reconnect when roomId changes but only read the latest theme. Best tool?",
+  "options": [
+   "Disable the lint rule",
+   "Add theme to deps",
+   "useEffectEvent for the theme-reading logic",
+   "useMemo"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Effect Events read latest values without being dependencies."
+ },
+ {
+  "id": "mcq_126",
+  "category": "Next.js",
+  "topic": "Basics",
+  "difficulty": "Easy",
+  "question": "Next.js is…",
+  "options": [
+   "A JavaScript runtime",
+   "A CSS framework",
+   "A database",
+   "A React framework for full-stack web apps"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Next.js builds on React with routing, rendering and data features."
+ },
+ {
+  "id": "mcq_127",
+  "category": "Next.js",
+  "topic": "App Router",
+  "difficulty": "Easy",
+  "question": "Which directory does the App Router use?",
+  "options": [
+   "src/views/",
+   "routes/",
+   "pages/",
+   "app/"
+  ],
+  "correctAnswer": 3,
+  "explanation": "The App Router lives in app/."
+ },
+ {
+  "id": "mcq_128",
+  "category": "Next.js",
+  "topic": "Routing",
+  "difficulty": "Easy",
+  "question": "Which file makes a route publicly accessible?",
+  "options": [
+   "template.tsx",
+   "page.tsx",
+   "layout.tsx",
+   "default.tsx"
+  ],
+  "correctAnswer": 1,
+  "explanation": "A segment needs a page (or route) file to be routable."
+ },
+ {
+  "id": "mcq_129",
+  "category": "Next.js",
+  "topic": "Routing",
+  "difficulty": "Easy",
+  "question": "What URL does app/about/page.tsx serve?",
+  "options": [
+   "/about",
+   "/app/about",
+   "/page/about",
+   "/about/page"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Folders map to URL segments."
+ },
+ {
+  "id": "mcq_130",
+  "category": "Next.js",
+  "topic": "Routing",
+  "difficulty": "Easy",
+  "question": "How do you create a dynamic segment?",
+  "options": [
+   "{id}",
+   "[id]",
+   "(id)",
+   "@id"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Square brackets define dynamic segments."
+ },
+ {
+  "id": "mcq_131",
+  "category": "Next.js",
+  "topic": "Routing",
+  "difficulty": "Easy",
+  "question": "Which folder name is a route group?",
+  "options": [
+   "[marketing]",
+   "(marketing)",
+   "@marketing",
+   "_marketing"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Parentheses create route groups that don't affect the URL."
+ },
+ {
+  "id": "mcq_132",
+  "category": "Next.js",
+  "topic": "Routing",
+  "difficulty": "Easy",
+  "question": "What does prefixing a folder with an underscore (_components) do?",
+  "options": [
+   "Makes it a parallel route",
+   "Makes it dynamic",
+   "Makes it private to the server",
+   "Excludes it from routing"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Private folders are ignored by the router."
+ },
+ {
+  "id": "mcq_133",
+  "category": "Next.js",
+  "topic": "Layouts",
+  "difficulty": "Easy",
+  "question": "Which file defines UI shared by multiple pages?",
+  "options": [
+   "loading.tsx",
+   "route.ts",
+   "page.tsx",
+   "layout.tsx"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Layouts wrap their child routes."
+ },
+ {
+  "id": "mcq_134",
+  "category": "Next.js",
+  "topic": "Layouts",
+  "difficulty": "Easy",
+  "question": "Which elements must the root layout render?",
+  "options": [
+   "<div id=\"root\">",
+   "<main> and <footer>",
+   "<html> and <body>",
+   "<head> only"
+  ],
+  "correctAnswer": 2,
+  "explanation": "The root layout defines the document."
+ },
+ {
+  "id": "mcq_135",
+  "category": "Next.js",
+  "topic": "Layouts",
+  "difficulty": "Easy",
+  "question": "Which file shows an instant loading state for a segment?",
+  "options": [
+   "loading.tsx",
+   "spinner.tsx",
+   "pending.tsx",
+   "wait.tsx"
+  ],
+  "correctAnswer": 0,
+  "explanation": "loading.tsx wraps the page in Suspense."
+ },
+ {
+  "id": "mcq_136",
+  "category": "Next.js",
+  "topic": "Layouts",
+  "difficulty": "Easy",
+  "question": "Which file handles errors in a route segment?",
+  "options": [
+   "catch.tsx",
+   "boundary.tsx",
+   "fail.tsx",
+   "error.tsx"
+  ],
+  "correctAnswer": 3,
+  "explanation": "error.tsx creates an error boundary."
+ },
+ {
+  "id": "mcq_137",
+  "category": "Next.js",
+  "topic": "Routing",
+  "difficulty": "Easy",
+  "question": "Which function renders the 404 UI for a missing resource?",
+  "options": [
+   "abort()",
+   "redirect()",
+   "notFound()",
+   "throw404()"
+  ],
+  "correctAnswer": 2,
+  "explanation": "notFound() from next/navigation."
+ },
+ {
+  "id": "mcq_138",
+  "category": "Next.js",
+  "topic": "Navigation",
+  "difficulty": "Easy",
+  "question": "Which component enables client-side navigation?",
+  "options": [
+   "<Link> from next/link",
+   "<Route>",
+   "<a>",
+   "<Navigate>"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Link provides soft navigation and prefetching."
+ },
+ {
+  "id": "mcq_139",
+  "category": "Next.js",
+  "topic": "Navigation",
+  "difficulty": "Easy",
+  "question": "In the App Router, useRouter is imported from…",
+  "options": [
+   "next/link",
+   "next/navigation",
+   "next/router",
+   "react-router"
+  ],
+  "correctAnswer": 1,
+  "explanation": "App Router hooks live in next/navigation."
+ },
+ {
+  "id": "mcq_140",
+  "category": "Next.js",
+  "topic": "Server Components",
+  "difficulty": "Easy",
+  "question": "In the App Router, components are by default…",
+  "options": [
+   "Static HTML only",
+   "Client Components",
+   "Web Components",
+   "Server Components"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Server Components are the default."
+ },
+ {
+  "id": "mcq_141",
+  "category": "Next.js",
+  "topic": "Client Components",
+  "difficulty": "Easy",
+  "question": "Which directive marks a Client Component boundary?",
+  "options": [
+   "'use server'",
+   "'use client'",
+   "'client only'",
+   "'use browser'"
+  ],
+  "correctAnswer": 1,
+  "explanation": "'use client' goes at the top of the file."
+ },
+ {
+  "id": "mcq_142",
+  "category": "Next.js",
+  "topic": "Client Components",
+  "difficulty": "Easy",
+  "question": "Which requires a Client Component?",
+  "options": [
+   "Using useState and onClick",
+   "Reading environment secrets",
+   "Rendering static text",
+   "Fetching data from a database"
+  ],
+  "correctAnswer": 0,
+  "explanation": "State and event handlers need the client."
+ },
+ {
+  "id": "mcq_143",
+  "category": "Next.js",
+  "topic": "Data Fetching",
+  "difficulty": "Easy",
+  "question": "How do you fetch data in a Server Component?",
+  "options": [
+   "getInitialProps",
+   "Make the component async and await the data",
+   "componentDidMount",
+   "useEffect"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Server Components can be async."
+ },
+ {
+  "id": "mcq_144",
+  "category": "Next.js",
+  "topic": "Route Handlers",
+  "difficulty": "Easy",
+  "question": "Which file creates an API endpoint in the App Router?",
+  "options": [
+   "route.ts",
+   "handler.ts",
+   "server.ts",
+   "api.ts"
+  ],
+  "correctAnswer": 0,
+  "explanation": "route.ts exports HTTP method functions."
+ },
+ {
+  "id": "mcq_145",
+  "category": "Next.js",
+  "topic": "Route Handlers",
+  "difficulty": "Easy",
+  "question": "How do you handle POST requests in a Route Handler?",
+  "options": [
+   "export const method = 'POST'",
+   "export async function POST(request)",
+   "app.post()",
+   "export default function"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Export a function named after the HTTP method."
+ },
+ {
+  "id": "mcq_146",
+  "category": "Next.js",
+  "topic": "Server Actions",
+  "difficulty": "Easy",
+  "question": "Which directive defines a Server Action?",
+  "options": [
+   "'use cache'",
+   "'use client'",
+   "'use action'",
+   "'use server'"
+  ],
+  "correctAnswer": 3,
+  "explanation": "'use server' marks server functions."
+ },
+ {
+  "id": "mcq_147",
+  "category": "Next.js",
+  "topic": "SEO",
+  "difficulty": "Easy",
+  "question": "How do you set a static page title in the App Router?",
+  "options": [
+   "next.config title",
+   "export const metadata = { title }",
+   "<Head> from next/head",
+   "document.title in render"
+  ],
+  "correctAnswer": 1,
+  "explanation": "The Metadata API sets head tags."
+ },
+ {
+  "id": "mcq_148",
+  "category": "Next.js",
+  "topic": "Images",
+  "difficulty": "Easy",
+  "question": "Which component optimizes images in Next.js?",
+  "options": [
+   "<img>",
+   "<LazyImage> from react",
+   "<Picture>",
+   "<Image> from next/image"
+  ],
+  "correctAnswer": 3,
+  "explanation": "next/image handles sizing, formats and lazy loading."
+ },
+ {
+  "id": "mcq_149",
+  "category": "Next.js",
+  "topic": "Fonts",
+  "difficulty": "Easy",
+  "question": "What does next/font do?",
+  "options": [
+   "Self-hosts fonts at build time",
+   "Loads fonts from Google at runtime",
+   "Converts fonts to images",
+   "Disables custom fonts"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Fonts are downloaded at build and served from your domain."
+ },
+ {
+  "id": "mcq_150",
+  "category": "Next.js",
+  "topic": "Config",
+  "difficulty": "Easy",
+  "question": "Which prefix exposes an environment variable to the browser?",
+  "options": [
+   "REACT_APP_",
+   "NEXT_PUBLIC_",
+   "PUBLIC_",
+   "CLIENT_"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Only NEXT_PUBLIC_ variables reach client code."
+ },
+ {
+  "id": "mcq_151",
+  "category": "Next.js",
+  "topic": "Static Files",
+  "difficulty": "Easy",
+  "question": "Where do you put static files like favicon images?",
+  "options": [
+   "assets/ only",
+   "public/",
+   "static/",
+   "app/static/"
+  ],
+  "correctAnswer": 1,
+  "explanation": "public/ is served from the root URL."
+ },
+ {
+  "id": "mcq_152",
+  "category": "Next.js",
+  "topic": "Pages Router",
+  "difficulty": "Easy",
+  "question": "Which function fetches data on every request in the Pages Router?",
+  "options": [
+   "getStaticProps",
+   "useEffect",
+   "getServerSideProps",
+   "generateStaticParams"
+  ],
+  "correctAnswer": 2,
+  "explanation": "getServerSideProps runs per request."
+ },
+ {
+  "id": "mcq_153",
+  "category": "Next.js",
+  "topic": "Rendering",
+  "difficulty": "Easy",
+  "question": "Static rendering means pages are…",
+  "options": [
+   "Never cached",
+   "Rendered ahead of time and reused",
+   "Rendered only in the browser",
+   "Rendered on every request"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Static output is generated at build or revalidation time."
+ },
+ {
+  "id": "mcq_154",
+  "category": "Next.js",
+  "topic": "Rendering",
+  "difficulty": "Easy",
+  "question": "Which typically makes a route dynamic?",
+  "options": [
+   "Using next/image",
+   "Importing CSS",
+   "Using a layout",
+   "Reading cookies()"
+  ],
+  "correctAnswer": 3,
+  "explanation": "cookies() depends on the request."
+ },
+ {
+  "id": "mcq_155",
+  "category": "Next.js",
+  "topic": "Tooling",
+  "difficulty": "Easy",
+  "question": "Which command creates a new Next.js app?",
+  "options": [
+   "next init",
+   "npm init react",
+   "npx create-next-app@latest",
+   "npx next new"
+  ],
+  "correctAnswer": 2,
+  "explanation": "create-next-app scaffolds a project."
+ },
+ {
+  "id": "mcq_156",
+  "category": "Next.js",
+  "topic": "Navigation",
+  "difficulty": "Easy",
+  "question": "Which hook returns the current pathname in a Client Component?",
+  "options": [
+   "usePathname",
+   "useParams",
+   "useLocation",
+   "useRouter"
+  ],
+  "correctAnswer": 0,
+  "explanation": "usePathname from next/navigation."
+ },
+ {
+  "id": "mcq_157",
+  "category": "Next.js",
+  "topic": "Navigation",
+  "difficulty": "Easy",
+  "question": "Which function redirects from a Server Component?",
+  "options": [
+   "window.location",
+   "redirect() from next/navigation",
+   "router.push",
+   "res.redirect"
+  ],
+  "correctAnswer": 1,
+  "explanation": "redirect() works on the server."
+ },
+ {
+  "id": "mcq_158",
+  "category": "Next.js",
+  "topic": "Layouts",
+  "difficulty": "Easy",
+  "question": "Do layouts re-render when navigating between their child pages?",
+  "options": [
+   "Only with templates",
+   "Only in development",
+   "No, they persist",
+   "Yes, always"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Shared layouts keep state and stay mounted."
+ },
+ {
+  "id": "mcq_159",
+  "category": "Next.js",
+  "topic": "Deployment",
+  "difficulty": "Easy",
+  "question": "Which company maintains Next.js?",
+  "options": [
+   "Google",
+   "Meta",
+   "Netlify",
+   "Vercel"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Vercel created and maintains Next.js."
+ },
+ {
+  "id": "mcq_160",
+  "category": "Next.js",
+  "topic": "Streaming",
+  "difficulty": "Easy",
+  "question": "What enables streaming UI in the App Router?",
+  "options": [
+   "Web Workers",
+   "Service workers",
+   "Suspense boundaries and loading.tsx",
+   "iframes"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Suspense boundaries define streamable chunks."
+ },
+ {
+  "id": "mcq_161",
+  "category": "Next.js",
+  "topic": "Routing",
+  "difficulty": "Medium",
+  "question": "Which folder matches /docs, /docs/a and /docs/a/b?",
+  "options": [
+   "[slug]",
+   "[...slug]",
+   "[[...slug]]",
+   "(slug)"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Optional catch-all also matches the base path."
+ },
+ {
+  "id": "mcq_162",
+  "category": "Next.js",
+  "topic": "Routing",
+  "difficulty": "Medium",
+  "question": "In Next.js 15+, what is the type of `params` passed to a page?",
+  "options": [
+   "A Map",
+   "A URLSearchParams",
+   "A plain object",
+   "A Promise"
+  ],
+  "correctAnswer": 3,
+  "explanation": "params and searchParams are async."
+ },
+ {
+  "id": "mcq_163",
+  "category": "Next.js",
+  "topic": "Routing",
+  "difficulty": "Medium",
+  "question": "What does `export const dynamicParams = false` do?",
+  "options": [
+   "Returns 404 for params not from generateStaticParams",
+   "Makes the page dynamic",
+   "Disables dynamic routes",
+   "Disables caching"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Only pre-generated params are allowed."
+ },
+ {
+  "id": "mcq_164",
+  "category": "Next.js",
+  "topic": "Rendering",
+  "difficulty": "Medium",
+  "question": "generateStaticParams is the App Router replacement for…",
+  "options": [
+   "getStaticPaths",
+   "API routes",
+   "getInitialProps",
+   "getServerSideProps"
+  ],
+  "correctAnswer": 0,
+  "explanation": "It lists params to pre-render."
+ },
+ {
+  "id": "mcq_165",
+  "category": "Next.js",
+  "topic": "Layouts",
+  "difficulty": "Medium",
+  "question": "What's the key difference between layout.tsx and template.tsx?",
+  "options": [
+   "Templates are required",
+   "Layouts are client-only",
+   "Templates remount on navigation",
+   "Templates can't have children"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Templates create a new instance per navigation."
+ },
+ {
+  "id": "mcq_166",
+  "category": "Next.js",
+  "topic": "Layouts",
+  "difficulty": "Medium",
+  "question": "Which file catches errors thrown in the root layout?",
+  "options": [
+   "not-found.tsx",
+   "error.tsx",
+   "root-error.tsx",
+   "global-error.tsx"
+  ],
+  "correctAnswer": 3,
+  "explanation": "global-error.tsx must render its own html and body."
+ },
+ {
+  "id": "mcq_167",
+  "category": "Next.js",
+  "topic": "Layouts",
+  "difficulty": "Medium",
+  "question": "error.tsx must be…",
+  "options": [
+   "A route handler",
+   "A Client Component",
+   "A Server Component",
+   "An async component"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Error boundaries run on the client."
+ },
+ {
+  "id": "mcq_168",
+  "category": "Next.js",
+  "topic": "Layouts",
+  "difficulty": "Medium",
+  "question": "Which props does error.tsx receive?",
+  "options": [
+   "children and slot",
+   "error and reset",
+   "request and response",
+   "params and searchParams"
+  ],
+  "correctAnswer": 1,
+  "explanation": "reset() retries rendering the segment."
+ },
+ {
+  "id": "mcq_169",
+  "category": "Next.js",
+  "topic": "Layouts",
+  "difficulty": "Medium",
+  "question": "Do layouts receive searchParams?",
+  "options": [
+   "No",
+   "Only root layouts",
+   "Only in development",
+   "Yes"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Layouts don't re-render per navigation, so they don't get searchParams."
+ },
+ {
+  "id": "mcq_170",
+  "category": "Next.js",
+  "topic": "Caching",
+  "difficulty": "Medium",
+  "question": "In Next.js 15+, are fetch requests cached by default?",
+  "options": [
+   "No, caching is opt-in",
+   "Only GET requests",
+   "Yes",
+   "Only in production"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Next.js 15 changed fetch to uncached by default."
+ },
+ {
+  "id": "mcq_171",
+  "category": "Next.js",
+  "topic": "Caching",
+  "difficulty": "Medium",
+  "question": "How do you cache a fetch for one hour?",
+  "options": [
+   "fetch(url, { cache: 'no-store' })",
+   "fetch(url, { maxAge: 1 })",
+   "fetch(url, { ttl: 3600 })",
+   "fetch(url, { next: { revalidate: 3600 } })"
+  ],
+  "correctAnswer": 3,
+  "explanation": "next.revalidate sets time-based revalidation."
+ },
+ {
+  "id": "mcq_172",
+  "category": "Next.js",
+  "topic": "Caching",
+  "difficulty": "Medium",
+  "question": "Which function invalidates cached data for a specific path?",
+  "options": [
+   "clearCache",
+   "revalidatePath",
+   "purgePath",
+   "router.reload"
+  ],
+  "correctAnswer": 1,
+  "explanation": "revalidatePath('/blog') invalidates that route."
+ },
+ {
+  "id": "mcq_173",
+  "category": "Next.js",
+  "topic": "Caching",
+  "difficulty": "Medium",
+  "question": "What does fetch(url, { next: { tags: ['posts'] } }) enable?",
+  "options": [
+   "Faster DNS",
+   "CORS",
+   "Request logging",
+   "On-demand invalidation with revalidateTag('posts', ...)"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Tags group cache entries for invalidation."
+ },
+ {
+  "id": "mcq_174",
+  "category": "Next.js",
+  "topic": "Caching",
+  "difficulty": "Medium",
+  "question": "What happens after a revalidate period expires?",
+  "options": [
+   "The page 404s",
+   "Stale content is served while a fresh version regenerates in the background",
+   "Next request waits for a full rebuild",
+   "The cache is ignored forever"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Stale-while-revalidate semantics."
+ },
+ {
+  "id": "mcq_175",
+  "category": "Next.js",
+  "topic": "Caching",
+  "difficulty": "Medium",
+  "question": "Are GET Route Handlers cached by default in Next.js 15+?",
+  "options": [
+   "Only with params",
+   "Only on Vercel",
+   "Yes",
+   "No"
+  ],
+  "correctAnswer": 3,
+  "explanation": "They're dynamic by default."
+ },
+ {
+  "id": "mcq_176",
+  "category": "Next.js",
+  "topic": "Data Fetching",
+  "difficulty": "Medium",
+  "question": "How do you avoid a waterfall when fetching user and posts independently?",
+  "options": [
+   "Use Promise.all",
+   "Fetch in a layout and page twice",
+   "Use useEffect",
+   "Await each sequentially"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Start independent requests in parallel."
+ },
+ {
+  "id": "mcq_177",
+  "category": "Next.js",
+  "topic": "Data Fetching",
+  "difficulty": "Medium",
+  "question": "Identical fetch calls in one render pass are…",
+  "options": [
+   "Cached forever",
+   "Executed multiple times",
+   "Rejected",
+   "Memoized automatically"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Request memoization deduplicates them."
+ },
+ {
+  "id": "mcq_178",
+  "category": "Next.js",
+  "topic": "Data Fetching",
+  "difficulty": "Medium",
+  "question": "How do you deduplicate an ORM query used in a layout and a page?",
+  "options": [
+   "localStorage",
+   "React cache()",
+   "useCallback",
+   "useMemo"
+  ],
+  "correctAnswer": 1,
+  "explanation": "cache() memoizes per request on the server."
+ },
+ {
+  "id": "mcq_179",
+  "category": "Next.js",
+  "topic": "Data Fetching",
+  "difficulty": "Medium",
+  "question": "Should a Server Component fetch data from your own Route Handler?",
+  "options": [
+   "Only in production",
+   "Yes, always",
+   "No, call the data source or function directly",
+   "Only for POST"
+  ],
+  "correctAnswer": 2,
+  "explanation": "The extra HTTP hop is unnecessary."
+ },
+ {
+  "id": "mcq_180",
+  "category": "Next.js",
+  "topic": "Server Components",
+  "difficulty": "Medium",
+  "question": "Which prop can be passed from a Server to a Client Component?",
+  "options": [
+   "An onClick function",
+   "A class instance",
+   "A plain serializable object",
+   "A database connection"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Props must be serializable."
+ },
+ {
+  "id": "mcq_181",
+  "category": "Next.js",
+  "topic": "Server Components",
+  "difficulty": "Medium",
+  "question": "How do you use a Context provider in an App Router app?",
+  "options": [
+   "Mark the root layout 'use client'",
+   "Context isn't supported",
+   "Create a 'use client' Providers component that wraps children",
+   "Use context in Server Components"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Children can remain Server Components."
+ },
+ {
+  "id": "mcq_182",
+  "category": "Next.js",
+  "topic": "Server Components",
+  "difficulty": "Medium",
+  "question": "What does `import 'server-only'` do?",
+  "options": [
+   "Encrypts data",
+   "Speeds up builds",
+   "Causes a build error if the module is imported by client code",
+   "Disables SSR"
+  ],
+  "correctAnswer": 2,
+  "explanation": "It guards server modules from client imports."
+ },
+ {
+  "id": "mcq_183",
+  "category": "Next.js",
+  "topic": "Client Components",
+  "difficulty": "Medium",
+  "question": "Do Client Components render on the server during the first load?",
+  "options": [
+   "Only in development",
+   "Yes, they're pre-rendered to HTML and then hydrated",
+   "Only with getServerSideProps",
+   "No, never"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Client means 'also runs in the browser'."
+ },
+ {
+  "id": "mcq_184",
+  "category": "Next.js",
+  "topic": "Client Components",
+  "difficulty": "Medium",
+  "question": "How do you load a browser-only library without SSR?",
+  "options": [
+   "useServer",
+   "import in a Server Component",
+   "next/script",
+   "next/dynamic with ssr: false inside a Client Component"
+  ],
+  "correctAnswer": 3,
+  "explanation": "dynamic with ssr: false skips server rendering."
+ },
+ {
+  "id": "mcq_185",
+  "category": "Next.js",
+  "topic": "Server Actions",
+  "difficulty": "Medium",
+  "question": "How do you pass an extra argument (like an id) to a Server Action used as a form action?",
+  "options": [
+   "A hidden cookie",
+   "Not possible",
+   "Global variable",
+   "action.bind(null, id)"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Bound arguments are encrypted and passed first."
+ },
+ {
+  "id": "mcq_186",
+  "category": "Next.js",
+  "topic": "Server Actions",
+  "difficulty": "Medium",
+  "question": "Which Hook displays errors returned from a Server Action form?",
+  "options": [
+   "useActionState",
+   "useState",
+   "useServerState",
+   "useEffect"
+  ],
+  "correctAnswer": 0,
+  "explanation": "useActionState provides the action's returned state."
+ },
+ {
+  "id": "mcq_187",
+  "category": "Next.js",
+  "topic": "Server Actions",
+  "difficulty": "Medium",
+  "question": "Why must Server Actions check authorization?",
+  "options": [
+   "For SEO",
+   "They run in the browser",
+   "They are reachable as POST endpoints",
+   "Next.js doesn't support auth"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Anyone can call them with crafted requests."
+ },
+ {
+  "id": "mcq_188",
+  "category": "Next.js",
+  "topic": "Server Actions",
+  "difficulty": "Medium",
+  "question": "Server Actions are intended primarily for…",
+  "options": [
+   "Styling",
+   "Static generation",
+   "Mutations",
+   "Fetching data in Client Components"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Fetch in Server Components; mutate with actions."
+ },
+ {
+  "id": "mcq_189",
+  "category": "Next.js",
+  "topic": "Navigation",
+  "difficulty": "Medium",
+  "question": "What does router.refresh() do?",
+  "options": [
+   "Clears localStorage",
+   "Reloads the browser page",
+   "Navigates home",
+   "Re-fetches Server Components for the current route keeping client state"
+  ],
+  "correctAnswer": 3,
+  "explanation": "It's a soft refresh of server data."
+ },
+ {
+  "id": "mcq_190",
+  "category": "Next.js",
+  "topic": "Navigation",
+  "difficulty": "Medium",
+  "question": "Why shouldn't redirect() be called inside try/catch?",
+  "options": [
+   "It's slow",
+   "It throws a special error that catch would swallow",
+   "It's async",
+   "It only works in layouts"
+  ],
+  "correctAnswer": 1,
+  "explanation": "redirect works by throwing."
+ },
+ {
+  "id": "mcq_191",
+  "category": "Next.js",
+  "topic": "Navigation",
+  "difficulty": "Medium",
+  "question": "When are Links prefetched automatically?",
+  "options": [
+   "Only with prefetch={true} on every link",
+   "Only on hover in dev",
+   "Never",
+   "When in the viewport in production"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Production prefetches visible links."
+ },
+ {
+  "id": "mcq_192",
+  "category": "Next.js",
+  "topic": "Cookies",
+  "difficulty": "Medium",
+  "question": "Where can you set cookies in the App Router?",
+  "options": [
+   "In Server Actions, Route Handlers or proxy",
+   "In next.config",
+   "During Server Component render",
+   "In metadata"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Render can't modify response headers."
+ },
+ {
+  "id": "mcq_193",
+  "category": "Next.js",
+  "topic": "Cookies",
+  "difficulty": "Medium",
+  "question": "How do you read a cookie in Next.js 15+?",
+  "options": [
+   "req.cookies.x",
+   "document.cookie on the server",
+   "(await cookies()).get('x')",
+   "cookies().get('x')"
+  ],
+  "correctAnswer": 2,
+  "explanation": "cookies() is async."
+ },
+ {
+  "id": "mcq_194",
+  "category": "Next.js",
+  "topic": "SEO",
+  "difficulty": "Medium",
+  "question": "Can a file export both `metadata` and `generateMetadata`?",
+  "options": [
+   "No",
+   "Only pages",
+   "Only layouts",
+   "Yes"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Use one per segment."
+ },
+ {
+  "id": "mcq_195",
+  "category": "Next.js",
+  "topic": "SEO",
+  "difficulty": "Medium",
+  "question": "Which file generates sitemap.xml?",
+  "options": [
+   "pages/sitemap.xml",
+   "public/sitemap.tsx",
+   "app/sitemap.ts",
+   "next.config sitemap"
+  ],
+  "correctAnswer": 2,
+  "explanation": "app/sitemap.ts returns sitemap entries."
+ },
+ {
+  "id": "mcq_196",
+  "category": "Next.js",
+  "topic": "SEO",
+  "difficulty": "Medium",
+  "question": "What does a metadata title template like '%s | Acme' do?",
+  "options": [
+   "Sets the favicon",
+   "Creates OG images",
+   "Inserts child page titles into the pattern",
+   "Sets canonical URLs"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Child titles fill the %s placeholder."
+ },
+ {
+  "id": "mcq_197",
+  "category": "Next.js",
+  "topic": "Images",
+  "difficulty": "Medium",
+  "question": "Which prop should the above-the-fold LCP image use?",
+  "options": [
+   "priority (or preload)",
+   "unoptimized",
+   "loading=\"lazy\"",
+   "quality={1}"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Prioritize the LCP image."
+ },
+ {
+  "id": "mcq_198",
+  "category": "Next.js",
+  "topic": "Images",
+  "difficulty": "Medium",
+  "question": "Which config allows images from external hosts?",
+  "options": [
+   "images.domains (preferred)",
+   "images.remotePatterns",
+   "allowedImages",
+   "next.images.hosts"
+  ],
+  "correctAnswer": 1,
+  "explanation": "remotePatterns replaces the deprecated domains option."
+ },
+ {
+  "id": "mcq_199",
+  "category": "Next.js",
+  "topic": "Images",
+  "difficulty": "Medium",
+  "question": "Why does next/image require width and height (or fill)?",
+  "options": [
+   "It doesn't",
+   "For SEO",
+   "To reserve space and prevent layout shift",
+   "To enable caching"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Known dimensions avoid CLS."
+ },
+ {
+  "id": "mcq_200",
+  "category": "Next.js",
+  "topic": "Config",
+  "difficulty": "Medium",
+  "question": "When are NEXT_PUBLIC_ variables inlined?",
+  "options": [
+   "Never",
+   "On first page view",
+   "At build time",
+   "At runtime per request"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Changing them requires a rebuild."
+ },
+ {
+  "id": "mcq_201",
+  "category": "Next.js",
+  "topic": "Parallel Routes",
+  "difficulty": "Medium",
+  "question": "How are parallel route slots defined?",
+  "options": [
+   "(slot)",
+   "_slot",
+   "[slot]",
+   "@slot"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Slots use the @ prefix."
+ },
+ {
+  "id": "mcq_202",
+  "category": "Next.js",
+  "topic": "Parallel Routes",
+  "difficulty": "Medium",
+  "question": "What is default.tsx used for in parallel routes?",
+  "options": [
+   "The root layout",
+   "The 404 page",
+   "Error handling",
+   "Fallback UI when a slot's state can't be recovered"
+  ],
+  "correctAnswer": 3,
+  "explanation": "It renders on hard navigation for unmatched slots."
+ },
+ {
+  "id": "mcq_203",
+  "category": "Next.js",
+  "topic": "Intercepting Routes",
+  "difficulty": "Medium",
+  "question": "Which convention intercepts a route at the same level?",
+  "options": [
+   "(...)",
+   "[.]",
+   "(..)",
+   "(.)"
+  ],
+  "correctAnswer": 3,
+  "explanation": "(.) matches segments on the same level."
+ },
+ {
+  "id": "mcq_204",
+  "category": "Next.js",
+  "topic": "Scripts",
+  "difficulty": "Medium",
+  "question": "Which next/script strategy loads during browser idle time?",
+  "options": [
+   "lazyOnload",
+   "beforeInteractive",
+   "afterInteractive",
+   "worker"
+  ],
+  "correctAnswer": 0,
+  "explanation": "lazyOnload defers until idle."
+ },
+ {
+  "id": "mcq_205",
+  "category": "Next.js",
+  "topic": "Deployment",
+  "difficulty": "Medium",
+  "question": "Which output mode creates a minimal server bundle for Docker?",
+  "options": [
+   "output: 'standalone'",
+   "output: 'server'",
+   "output: 'export'",
+   "output: 'docker'"
+  ],
+  "correctAnswer": 0,
+  "explanation": "standalone includes only what's needed to run."
+ },
+ {
+  "id": "mcq_206",
+  "category": "Next.js",
+  "topic": "Next.js 16",
+  "difficulty": "Hard",
+  "question": "In Next.js 16, middleware.ts was renamed to…",
+  "options": [
+   "gateway.ts",
+   "intercept.ts",
+   "edge.ts",
+   "proxy.ts"
+  ],
+  "correctAnswer": 3,
+  "explanation": "proxy.ts clarifies its network-boundary role; middleware.ts is deprecated."
+ },
+ {
+  "id": "mcq_207",
+  "category": "Next.js",
+  "topic": "Next.js 16",
+  "difficulty": "Hard",
+  "question": "Which runtime does proxy.ts use in Next.js 16?",
+  "options": [
+   "Deno",
+   "Node.js",
+   "Edge only",
+   "Browser"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Proxy runs on Node.js; keep middleware.ts if you need the edge runtime."
+ },
+ {
+  "id": "mcq_208",
+  "category": "Next.js",
+  "topic": "Next.js 16",
+  "difficulty": "Hard",
+  "question": "Which config flag enables Cache Components?",
+  "options": [
+   "dynamicIO: false",
+   "staticShell: true",
+   "experimental.ppr",
+   "cacheComponents: true"
+  ],
+  "correctAnswer": 3,
+  "explanation": "cacheComponents enables the 'use cache' model."
+ },
+ {
+  "id": "mcq_209",
+  "category": "Next.js",
+  "topic": "Next.js 16",
+  "difficulty": "Hard",
+  "question": "With Cache Components enabled, routes are by default…",
+  "options": [
+   "Client-rendered",
+   "Fully static",
+   "Dynamic unless code opts into caching with 'use cache'",
+   "Edge-rendered"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Caching becomes explicit."
+ },
+ {
+  "id": "mcq_210",
+  "category": "Next.js",
+  "topic": "Next.js 16",
+  "difficulty": "Hard",
+  "question": "Which function sets a cache lifetime inside a 'use cache' scope?",
+  "options": [
+   "setTTL()",
+   "expires()",
+   "cacheLife()",
+   "revalidate()"
+  ],
+  "correctAnswer": 2,
+  "explanation": "cacheLife('hours') etc."
+ },
+ {
+  "id": "mcq_211",
+  "category": "Next.js",
+  "topic": "Next.js 16",
+  "difficulty": "Hard",
+  "question": "Which function tags a 'use cache' entry for invalidation?",
+  "options": [
+   "tag()",
+   "revalidateTag()",
+   "addTag()",
+   "cacheTag()"
+  ],
+  "correctAnswer": 3,
+  "explanation": "cacheTag() attaches tags inside cached scopes."
+ },
+ {
+  "id": "mcq_212",
+  "category": "Next.js",
+  "topic": "Next.js 16",
+  "difficulty": "Hard",
+  "question": "What second argument does revalidateTag expect in Next.js 16?",
+  "options": [
+   "A path",
+   "A boolean",
+   "Nothing",
+   "A cache-life profile like 'max'"
+  ],
+  "correctAnswer": 3,
+  "explanation": "The single-argument form is deprecated."
+ },
+ {
+  "id": "mcq_213",
+  "category": "Next.js",
+  "topic": "Next.js 16",
+  "difficulty": "Hard",
+  "question": "updateTag() differs from revalidateTag() because it…",
+  "options": [
+   "Immediately expires data and is for Server Actions (read-your-writes)",
+   "Rebuilds the site",
+   "Only works with fetch",
+   "Works in Client Components"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Users see their own changes right away."
+ },
+ {
+  "id": "mcq_214",
+  "category": "Next.js",
+  "topic": "Next.js 16",
+  "difficulty": "Hard",
+  "question": "What happens in Next.js 16 if a parallel route slot lacks default.js?",
+  "options": [
+   "It renders the root layout",
+   "The build fails",
+   "Nothing",
+   "It falls back to page.js silently"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Every slot needs an explicit default."
+ },
+ {
+  "id": "mcq_215",
+  "category": "Next.js",
+  "topic": "Next.js 16",
+  "difficulty": "Hard",
+  "question": "Which bundler is the default for next dev and next build in Next.js 16?",
+  "options": [
+   "Rollup",
+   "webpack",
+   "Turbopack",
+   "Vite"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Turbopack became the default."
+ },
+ {
+  "id": "mcq_216",
+  "category": "Next.js",
+  "topic": "Cache Components",
+  "difficulty": "Hard",
+  "question": "Can you call cookies() inside a 'use cache' function?",
+  "options": [
+   "Only in layouts",
+   "No — read it outside and pass values in",
+   "Yes",
+   "Only in development"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Request-specific data isn't allowed in cached scopes."
+ },
+ {
+  "id": "mcq_217",
+  "category": "Next.js",
+  "topic": "Cache Components",
+  "difficulty": "Hard",
+  "question": "With Cache Components, where must uncached request-time data access go?",
+  "options": [
+   "In a template",
+   "In next.config",
+   "In global-error",
+   "Inside a Suspense boundary"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Suspense lets the static shell render while dynamic parts stream."
+ },
+ {
+  "id": "mcq_218",
+  "category": "Next.js",
+  "topic": "Cache Components",
+  "difficulty": "Hard",
+  "question": "What becomes part of a 'use cache' entry's key?",
+  "options": [
+   "The user's cookies automatically",
+   "Only the URL",
+   "Function arguments and closed-over values",
+   "Nothing"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Inputs determine the cache key."
+ },
+ {
+  "id": "mcq_219",
+  "category": "Next.js",
+  "topic": "Rendering",
+  "difficulty": "Hard",
+  "question": "What does `await connection()` from next/server do?",
+  "options": [
+   "Prefetches routes",
+   "Opts the render into dynamic, request-time rendering",
+   "Connects to WebSockets",
+   "Opens a DB connection"
+  ],
+  "correctAnswer": 1,
+  "explanation": "It signals that following code needs a real request."
+ },
+ {
+  "id": "mcq_220",
+  "category": "Next.js",
+  "topic": "Rendering",
+  "difficulty": "Hard",
+  "question": "A deeply nested component reads searchParams. What happens to the route?",
+  "options": [
+   "Build fails",
+   "Nothing",
+   "It becomes dynamic (or that part must stream inside Suspense)",
+   "It's cached per param automatically"
+  ],
+  "correctAnswer": 2,
+  "explanation": "searchParams is request-time data."
+ },
+ {
+  "id": "mcq_221",
+  "category": "Next.js",
+  "topic": "Streaming",
+  "difficulty": "Hard",
+  "question": "Once streaming has started, what happens if notFound() is called inside a Suspense boundary?",
+  "options": [
+   "The request hangs",
+   "The status changes to 404",
+   "Status stays 200; Next.js renders not-found UI via injected instructions",
+   "The server crashes"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Headers are already sent; do status-critical checks before streaming."
+ },
+ {
+  "id": "mcq_222",
+  "category": "Next.js",
+  "topic": "Server Actions",
+  "difficulty": "Hard",
+  "question": "How are Server Action ids protected?",
+  "options": [
+   "They're encrypted, non-deterministic per build, and unused actions are removed",
+   "They're plain function names",
+   "They're not protected",
+   "They're hidden in cookies"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Next.js obscures action ids, but you still must authorize."
+ },
+ {
+  "id": "mcq_223",
+  "category": "Next.js",
+  "topic": "Server Actions",
+  "difficulty": "Hard",
+  "question": "How do multiple Server Action calls from one client execute?",
+  "options": [
+   "Randomly",
+   "Sequentially",
+   "In parallel always",
+   "On the edge"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Actions are queued, one reason not to use them for data fetching."
+ },
+ {
+  "id": "mcq_224",
+  "category": "Next.js",
+  "topic": "Server Actions",
+  "difficulty": "Hard",
+  "question": "After calling revalidatePath in a Server Action, how does the UI update?",
+  "options": [
+   "The client must poll",
+   "It doesn't",
+   "Next.js returns fresh RSC payload in the same response",
+   "Full page reload"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Single round-trip updates."
+ },
+ {
+  "id": "mcq_225",
+  "category": "Next.js",
+  "topic": "Security",
+  "difficulty": "Hard",
+  "question": "Why isn't proxy (middleware) sufficient for authorization?",
+  "options": [
+   "It can be misconfigured or bypassed, and Server Actions/Route Handlers are separately reachable",
+   "It's too slow",
+   "It doesn't run in production",
+   "It can't read cookies"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Authorize close to the data as well."
+ },
+ {
+  "id": "mcq_226",
+  "category": "Next.js",
+  "topic": "Security",
+  "difficulty": "Hard",
+  "question": "What did CVE-2025-29927 demonstrate?",
+  "options": [
+   "Fonts leaked IPs",
+   "XSS in next/image",
+   "Middleware authorization could be bypassed via a crafted header",
+   "Server Actions leaked secrets"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Apps relying solely on middleware for auth were exposed."
+ },
+ {
+  "id": "mcq_227",
+  "category": "Next.js",
+  "topic": "Security",
+  "difficulty": "Hard",
+  "question": "What should a Data Access Layer return to the UI?",
+  "options": [
+   "Encrypted blobs",
+   "Minimal DTOs with only needed fields",
+   "Database connections",
+   "Raw database rows"
+  ],
+  "correctAnswer": 1,
+  "explanation": "DTOs prevent accidental data exposure."
+ },
+ {
+  "id": "mcq_228",
+  "category": "Next.js",
+  "topic": "Security",
+  "difficulty": "Hard",
+  "question": "A user deletes another user's post by changing an id. Which vulnerability is this?",
+  "options": [
+   "SQL injection",
+   "XSS",
+   "CSRF",
+   "IDOR (missing ownership check)"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Always verify ownership on the server."
+ },
+ {
+  "id": "mcq_229",
+  "category": "Next.js",
+  "topic": "Caching",
+  "difficulty": "Hard",
+  "question": "Which cache stores RSC payloads in the browser during a session?",
+  "options": [
+   "Full route cache",
+   "Data cache",
+   "Client router cache",
+   "CDN cache"
+  ],
+  "correctAnswer": 2,
+  "explanation": "It enables instant back/forward navigation."
+ },
+ {
+  "id": "mcq_230",
+  "category": "Next.js",
+  "topic": "Caching",
+  "difficulty": "Hard",
+  "question": "Which caching layer stores pre-rendered HTML and RSC payloads for static routes on the server?",
+  "options": [
+   "Client router cache",
+   "Request memoization",
+   "Browser HTTP cache",
+   "Full route cache"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Static routes are cached as rendered output."
+ },
+ {
+  "id": "mcq_231",
+  "category": "Next.js",
+  "topic": "Caching",
+  "difficulty": "Hard",
+  "question": "Request memoization lasts for…",
+  "options": [
+   "One hour",
+   "A single server render pass/request",
+   "The deployment",
+   "Forever"
+  ],
+  "correctAnswer": 1,
+  "explanation": "It deduplicates within one request."
+ },
+ {
+  "id": "mcq_232",
+  "category": "Next.js",
+  "topic": "Caching",
+  "difficulty": "Hard",
+  "question": "Self-hosting on multiple instances, why configure a shared cache handler?",
+  "options": [
+   "To enable images",
+   "To speed up builds",
+   "So revalidation and cached data are consistent across instances",
+   "It's required for SSR"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Separate in-memory caches diverge."
+ },
+ {
+  "id": "mcq_233",
+  "category": "Next.js",
+  "topic": "Data Fetching",
+  "difficulty": "Hard",
+  "question": "Which statement about un-awaited promises passed to Client Components is true?",
+  "options": [
+   "They're awaited automatically on the server",
+   "They must be JSON strings",
+   "They can be read with use() and stream when resolved",
+   "Not allowed"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Promises are serializable in the RSC protocol."
+ },
+ {
+  "id": "mcq_234",
+  "category": "Next.js",
+  "topic": "Data Fetching",
+  "difficulty": "Hard",
+  "question": "Which pattern fetches different dashboard widgets without blocking each other?",
+  "options": [
+   "Each widget fetches its own data inside its own Suspense boundary",
+   "Fetching in proxy",
+   "useEffect in each widget",
+   "One big Promise.all at the top"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Independent boundaries stream independently."
+ },
+ {
+  "id": "mcq_235",
+  "category": "Next.js",
+  "topic": "Rendering",
+  "difficulty": "Hard",
+  "question": "What is the RSC payload?",
+  "options": [
+   "A CSS bundle",
+   "A serialized representation of the rendered server component tree",
+   "Minified HTML",
+   "A JSON API response"
+  ],
+  "correctAnswer": 1,
+  "explanation": "React uses it to build and update the tree on the client."
+ },
+ {
+  "id": "mcq_236",
+  "category": "Next.js",
+  "topic": "Routing",
+  "difficulty": "Hard",
+  "question": "Intercepting route segments like (..) are counted based on…",
+  "options": [
+   "Route segments",
+   "Component depth",
+   "URL query params",
+   "File-system folders"
+  ],
+  "correctAnswer": 0,
+  "explanation": "Conventions refer to route segments, not folders like @slots."
+ },
+ {
+  "id": "mcq_237",
+  "category": "Next.js",
+  "topic": "Routing",
+  "difficulty": "Hard",
+  "question": "On a hard refresh of an intercepted modal URL, what renders?",
+  "options": [
+   "The modal over a blank page",
+   "A 404",
+   "The original full page route",
+   "The previous page"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Interception only applies to soft navigation."
+ },
+ {
+  "id": "mcq_238",
+  "category": "Next.js",
+  "topic": "Routing",
+  "difficulty": "Hard",
+  "question": "Navigating between two different root layouts (route groups) causes…",
+  "options": [
+   "An error",
+   "Nothing visible",
+   "A full page load",
+   "A soft navigation"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Root layouts can't be swapped client-side."
+ },
+ {
+  "id": "mcq_239",
+  "category": "Next.js",
+  "topic": "Runtime",
+  "difficulty": "Hard",
+  "question": "Which is a limitation of the Edge runtime?",
+  "options": [
+   "No fetch",
+   "No JavaScript",
+   "Not all Node.js APIs (e.g. fs) are available",
+   "No environment variables"
+  ],
+  "correctAnswer": 2,
+  "explanation": "It's built on Web APIs."
+ },
+ {
+  "id": "mcq_240",
+  "category": "Next.js",
+  "topic": "Runtime",
+  "difficulty": "Hard",
+  "question": "Why might moving a DB-heavy route to the edge increase latency?",
+  "options": [
+   "Edge disables caching",
+   "Edge has no networking",
+   "Edge is slower at JavaScript",
+   "The database may be far from edge locations"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Data locality usually dominates."
+ },
+ {
+  "id": "mcq_241",
+  "category": "Next.js",
+  "topic": "Observability",
+  "difficulty": "Hard",
+  "question": "Which export in instrumentation.ts receives server errors with request context?",
+  "options": [
+   "onRequestError",
+   "reportError",
+   "onError",
+   "register"
+  ],
+  "correctAnswer": 0,
+  "explanation": "onRequestError is called for rendering, actions and route handler errors."
+ },
+ {
+  "id": "mcq_242",
+  "category": "Next.js",
+  "topic": "Observability",
+  "difficulty": "Hard",
+  "question": "What does after() from next/server do?",
+  "options": [
+   "Caches a response",
+   "Delays navigation",
+   "Schedules work after the response is sent",
+   "Runs code before rendering"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Ideal for non-blocking logging and analytics."
+ },
+ {
+  "id": "mcq_243",
+  "category": "Next.js",
+  "topic": "Deployment",
+  "difficulty": "Hard",
+  "question": "Which feature is unavailable with output: 'export'?",
+  "options": [
+   "Static pages",
+   "Client Components",
+   "CSS",
+   "Server Actions"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Static export has no server runtime."
+ },
+ {
+  "id": "mcq_244",
+  "category": "Next.js",
+  "topic": "Deployment",
+  "difficulty": "Hard",
+  "question": "Which variable should match across instances so Server Actions work behind a load balancer?",
+  "options": [
+   "PORT",
+   "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY",
+   "NODE_ENV",
+   "NEXT_PUBLIC_URL"
+  ],
+  "correctAnswer": 1,
+  "explanation": "Instances must share the encryption key."
+ },
+ {
+  "id": "mcq_245",
+  "category": "Next.js",
+  "topic": "Metadata",
+  "difficulty": "Hard",
+  "question": "How does Next.js avoid duplicate queries between generateMetadata and the page?",
+  "options": [
+   "It doesn't",
+   "Using cookies",
+   "By skipping metadata",
+   "fetch memoization or React cache() for shared functions"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Memoized calls are shared within a request."
+ },
+ {
+  "id": "mcq_246",
+  "category": "Next.js",
+  "topic": "Performance",
+  "difficulty": "Hard",
+  "question": "Which helps reduce client JS from large icon libraries?",
+  "options": [
+   "output: 'export'",
+   "reactStrictMode",
+   "images.remotePatterns",
+   "optimizePackageImports"
+  ],
+  "correctAnswer": 3,
+  "explanation": "It imports only the modules you use."
+ },
+ {
+  "id": "mcq_247",
+  "category": "Next.js",
+  "topic": "Performance",
+  "difficulty": "Hard",
+  "question": "Which change most reduces client JavaScript in an App Router app?",
+  "options": [
+   "Adding 'use client' to layouts",
+   "Using more Context",
+   "Disabling prefetch",
+   "Keeping non-interactive UI as Server Components"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Server Component code never ships to the browser."
+ },
+ {
+  "id": "mcq_248",
+  "category": "Next.js",
+  "topic": "Next.js 15",
+  "difficulty": "Hard",
+  "question": "Which API became async in Next.js 15?",
+  "options": [
+   "useState",
+   "fetch",
+   "cookies(), headers(), params and searchParams",
+   "next/link"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Request APIs are async to enable better prerendering."
+ },
+ {
+  "id": "mcq_249",
+  "category": "Next.js",
+  "topic": "Migration",
+  "difficulty": "Hard",
+  "question": "Which App Router concept replaces getServerSideProps?",
+  "options": [
+   "route.ts only",
+   "generateStaticParams",
+   "useEffect",
+   "A dynamic async Server Component"
+  ],
+  "correctAnswer": 3,
+  "explanation": "Fetch directly in the component; reading request data makes it dynamic."
+ },
+ {
+  "id": "mcq_250",
+  "category": "Next.js",
+  "topic": "Forms",
+  "difficulty": "Hard",
+  "question": "Why return validation errors from a Server Action instead of throwing?",
+  "options": [
+   "Throwing is slower",
+   "Throwing is not allowed",
+   "Expected errors should keep form state; throwing hits the error boundary",
+   "Return values are cached"
+  ],
+  "correctAnswer": 2,
+  "explanation": "Return expected errors; throw unexpected ones."
+ }
+]
