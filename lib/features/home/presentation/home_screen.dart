@@ -2,41 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/constants/app_constants.dart';
-import '../../../core/providers/core_providers.dart';
 import '../../../core/router/app_router.dart';
-import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../data/models/enums.dart';
 import '../../../shared/widgets/common.dart';
-import '../../daily_challenge/daily_challenge_providers.dart';
 import '../../interview/providers/interview_providers.dart';
 import '../../learn/presentation/widgets/learn_widgets.dart';
 import '../../learn/providers/learn_providers.dart';
-import '../../progress/presentation/progress_widgets.dart';
 import '../../progress/providers/progress_provider.dart';
-import '../../settings/providers/settings_provider.dart';
+import 'home_widgets.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final children = <Widget>[
-      const _Header(),
-      const SizedBox(height: AppSpacing.lg),
-      const LevelCard(),
+      const HomeHeader(),
+      const HomeLevelCard(),
       const SizedBox(height: AppSpacing.md),
-      const _StatsGrid(),
+      const HomeStatsGrid(),
       const SizedBox(height: AppSpacing.md),
-      const StreakWeekCard(),
-      const SectionHeader('Continue learning'),
-      const _ContinueLearningCard(),
-      const SectionHeader('Your tracks'),
-      const _TrackRow(),
-      const SectionHeader('Daily challenge'),
-      const _DailyChallengeCard(),
-      const SectionHeader('Practice'),
+      const HomeStreakCard(),
+      HomeSectionHeader(
+        'Continue learning',
+        onViewAll: () => context.go(AppRoutes.learn),
+      ),
+      const HomeContinueCard(),
+      HomeSectionHeader(
+        'Your tracks',
+        subtitle: 'Choose a track and keep learning.',
+        onViewAll: () => context.go(AppRoutes.learn),
+      ),
+      const HomeTrackRow(),
+      const HomeSectionHeader(
+        'Daily challenge',
+        subtitle: 'A new challenge every day to boost your skills.',
+        trailing: HomeXpPill(),
+      ),
+      const HomeDailyChallengeCard(),
+      const HomeSectionHeader('Practice'),
       const _InterviewProgressCard(),
       const SizedBox(height: AppSpacing.md),
       const _QuizStatsCard(),
@@ -44,319 +48,28 @@ class HomeScreen extends ConsumerWidget {
       const _RecentlyCompletedSection(),
       const SizedBox(height: AppSpacing.xl),
     ];
+    final dark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      body: SafeArea(
-        bottom: false,
-        child: ListView.builder(
-          padding: AppSpacing.screen,
-          itemCount: children.length,
-          itemBuilder: (context, i) =>
-              FadeSlideIn(index: i, child: children[i]),
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: dark
+              ? null
+              : const LinearGradient(
+                  colors: [Color(0xFFF1F2FE), Color(0xFFF7F8FD)],
+                  begin: Alignment.topCenter,
+                  end: Alignment(0, -0.2),
+                ),
+        ),
+        child: SafeArea(
+          bottom: false,
+          child: ListView.builder(
+            padding: AppSpacing.screen,
+            itemCount: children.length,
+            itemBuilder: (context, i) =>
+                FadeSlideIn(index: i, child: children[i]),
+          ),
         ),
       ),
-    );
-  }
-}
-
-class _Header extends ConsumerWidget {
-  const _Header();
-
-  String _greeting(DateTime now) {
-    final h = now.hour;
-    if (h < 12) return 'Good morning';
-    if (h < 17) return 'Good afternoon';
-    return 'Good evening';
-  }
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final name = ref.watch(settingsProvider.select((s) => s.userName));
-    final now = ref.watch(clockProvider)();
-    final theme = Theme.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                '${_greeting(now)}, $name 👋',
-                style: theme.textTheme.titleSmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ),
-            IconButton(
-              tooltip: 'Search',
-              onPressed: () => context.push(AppRoutes.search),
-              icon: const Icon(Icons.search_rounded),
-            ),
-            IconButton(
-              tooltip: 'Bookmarks',
-              onPressed: () => context.push(AppRoutes.bookmarks),
-              icon: const Icon(Icons.bookmarks_outlined),
-            ),
-          ],
-        ),
-        Semantics(
-          header: true,
-          child: Text(
-            AppConstants.tagline,
-            style: theme.textTheme.headlineMedium,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.xs),
-        Text(
-          AppConstants.subtitle,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _StatsGrid extends ConsumerWidget {
-  const _StatsGrid();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final streak = ref.watch(streakProvider.select((s) => s.current));
-    final level = ref.watch(levelProvider);
-    final lessons = ref.watch(
-      progressProvider.select((p) => p.lessonsCompleted),
-    );
-    final interview = ref.watch(
-      progressProvider.select((p) => p.interviewCompleted),
-    );
-    final stats = ref.watch(quizStatsProvider);
-    final dark = Theme.of(context).brightness == Brightness.dark;
-    return ResponsiveGrid(
-      minItemWidth: 100,
-      children: [
-        StatTile(
-          icon: Icons.local_fire_department_rounded,
-          label: 'Day streak',
-          value: '$streak',
-          color: dark ? const Color(0xFFFB923C) : AppColors.streak,
-        ),
-        StatTile(
-          icon: Icons.bolt_rounded,
-          label: 'Total XP',
-          value: '${level.totalXp}',
-          color: dark ? AppColors.warningLight : AppColors.xp,
-        ),
-        StatTile(
-          icon: Icons.trending_up_rounded,
-          label: 'Level',
-          value: '${level.level}',
-        ),
-        StatTile(
-          icon: Icons.menu_book_rounded,
-          label: 'Topics done',
-          value: '$lessons',
-        ),
-        StatTile(
-          icon: Icons.track_changes_rounded,
-          label: 'Quiz accuracy',
-          value: stats.questionsAnswered == 0
-              ? '—'
-              : '${(stats.accuracy * 100).round()}%',
-        ),
-        StatTile(
-          icon: Icons.record_voice_over_rounded,
-          label: 'Interview Qs',
-          value: '$interview',
-        ),
-      ],
-    );
-  }
-}
-
-class _ContinueLearningCard extends ConsumerWidget {
-  const _ContinueLearningCard();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final value = ref.watch(continueLearningProvider);
-    final theme = Theme.of(context);
-    return AsyncValueView(
-      value: value,
-      onRetry: () => ref.invalidate(continueLearningProvider),
-      data: (cl) {
-        if (cl == null) {
-          return const AppCard(
-            child: Row(
-              children: [
-                Icon(Icons.celebration_rounded, size: 32),
-                SizedBox(width: AppSpacing.md),
-                Expanded(
-                  child: Text(
-                    'You completed every lesson. Time to ace interviews!',
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
-        final l = cl.lesson;
-        return AppCard(
-          onTap: () => context.push(AppRoutes.lesson(l.track, l.id)),
-          semanticLabel: 'Continue ${l.category}: ${l.title}',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Wrap(
-                spacing: AppSpacing.sm,
-                runSpacing: AppSpacing.xs,
-                children: [
-                  TrackBadge(l.track),
-                  DifficultyBadge(l.difficulty, lessonStyle: true),
-                ],
-              ),
-              const SizedBox(height: AppSpacing.md),
-              Text(l.category, style: theme.textTheme.titleLarge),
-              const SizedBox(height: 2),
-              Text(
-                'Next up: ${l.title}',
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.md),
-              AnimatedProgressBar(
-                value: cl.categoryTotal == 0
-                    ? 0
-                    : cl.categoryDone / cl.categoryTotal,
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              Wrap(
-                alignment: WrapAlignment.spaceBetween,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: AppSpacing.md,
-                runSpacing: AppSpacing.sm,
-                children: [
-                  Text(
-                    '${cl.categoryDone} of ${cl.categoryTotal} lessons completed',
-                    style: theme.textTheme.labelMedium,
-                  ),
-                  FilledButton.icon(
-                    onPressed: () =>
-                        context.push(AppRoutes.lesson(l.track, l.id)),
-                    icon: const Icon(Icons.play_arrow_rounded),
-                    label: const Text('Continue'),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _TrackRow extends StatelessWidget {
-  const _TrackRow();
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, c) {
-        if (c.maxWidth < 340) {
-          return const Column(
-            children: [
-              TrackCard(track: Track.react),
-              SizedBox(height: AppSpacing.md),
-              TrackCard(track: Track.next),
-            ],
-          );
-        }
-        return const IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(child: TrackCard(track: Track.react, compact: true)),
-              SizedBox(width: AppSpacing.md),
-              Expanded(child: TrackCard(track: Track.next, compact: true)),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _DailyChallengeCard extends ConsumerWidget {
-  const _DailyChallengeCard();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final challenge = ref.watch(dailyChallengeProvider);
-    final done = ref.watch(dailyChallengeDoneProvider);
-    final theme = Theme.of(context);
-    return AsyncValueView(
-      value: challenge,
-      onRetry: () => ref.invalidate(dailyChallengeProvider),
-      data: (c) {
-        if (c == null) return const SizedBox.shrink();
-        return AppCard(
-          onTap: () => context.push(AppRoutes.challenge),
-          semanticLabel: 'Daily challenge: ${c.prompt}',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.emoji_events_rounded,
-                    color: theme.brightness == Brightness.dark
-                        ? AppColors.warningLight
-                        : AppColors.warning,
-                  ),
-                  const SizedBox(width: AppSpacing.sm),
-                  Expanded(
-                    child: Text(
-                      c.typeLabel,
-                      style: theme.textTheme.labelLarge,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  Text(
-                    done ? 'Completed ✓' : '+30 XP',
-                    style: theme.textTheme.labelLarge?.copyWith(
-                      color: done
-                          ? AppColors.success
-                          : theme.colorScheme.primary,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: AppSpacing.md),
-              Text(
-                c.prompt,
-                style: theme.textTheme.titleMedium,
-                maxLines: 4,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              Align(
-                alignment: Alignment.centerRight,
-                child: done
-                    ? OutlinedButton(
-                        onPressed: () => context.push(AppRoutes.challenge),
-                        child: const Text('Review'),
-                      )
-                    : FilledButton(
-                        onPressed: () => context.push(AppRoutes.challenge),
-                        child: const Text('Answer'),
-                      ),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }
@@ -485,7 +198,7 @@ class _RecommendedSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionHeader('Recommended for you'),
+        const HomeSectionHeader('Recommended for you'),
         AppCard(
           onTap: () => context.push(AppRoutes.lesson(lesson.track, lesson.id)),
           semanticLabel: 'Recommended: ${lesson.title}',
@@ -535,7 +248,7 @@ class _RecentlyCompletedSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionHeader('Recently completed'),
+        const HomeSectionHeader('Recently completed'),
         AppCard(
           padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
           child: Column(

@@ -58,10 +58,18 @@ void main() {
       find.text('Master modern web development one concept at a time.'),
       findsOneWidget,
     );
+    await scrollTo(tester, find.text('Continue learning'));
     expect(find.text('Continue learning'), findsOneWidget);
+    await scrollTo(tester, find.text('Continue'));
     expect(find.text('Continue'), findsOneWidget);
-    await scrollTo(tester, find.text('Master modern React'));
-    expect(find.text('Master modern React'), findsOneWidget);
+    await scrollTo(
+      tester,
+      find.text('Master modern React with hands-on examples'),
+    );
+    expect(
+      find.text('Master modern React with hands-on examples'),
+      findsOneWidget,
+    );
 
     await scrollTo(tester, find.text('Daily challenge'));
     expect(find.text('Daily challenge'), findsOneWidget);
