@@ -7,6 +7,7 @@ import '../../features/achievements/presentation/achievements_screen.dart';
 import '../../features/bookmarks/presentation/bookmarks_screen.dart';
 import '../../features/daily_challenge/daily_challenge_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
+import '../../features/interview/presentation/interview_browse_screen.dart';
 import '../../features/interview/presentation/interview_home_screen.dart';
 import '../../features/interview/presentation/interview_list_screen.dart';
 import '../../features/interview/presentation/interview_question_screen.dart';
@@ -34,6 +35,7 @@ abstract final class AppRoutes {
   static const interview = '/interview';
   static String interviewLevel(Difficulty d) => '/interview/${d.slug}';
   static String interviewQuestion(String id) => '/interview/$id';
+  static const interviewBrowse = '/interview/browse';
   static const quiz = '/quiz';
   static const quizSession = '/quiz/session';
   static const quizResult = '/quiz/result';
@@ -111,6 +113,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                       builder: (context, state) =>
                           InterviewListScreen(difficulty: d),
                     ),
+                  GoRoute(
+                    path: 'browse',
+                    builder: (context, state) => const InterviewBrowseScreen(),
+                  ),
                   GoRoute(
                     path: ':questionId',
                     parentNavigatorKey: rootNavigatorKey,

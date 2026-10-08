@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -10,215 +8,11 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../data/models/enums.dart';
 import '../../../shared/widgets/common.dart';
+import '../../../shared/widgets/dashboard.dart';
 import '../../daily_challenge/daily_challenge_providers.dart';
 import '../../learn/providers/learn_providers.dart';
 import '../../progress/providers/progress_provider.dart';
 import '../../settings/providers/settings_provider.dart';
-
-/// Home dashboard palette, taken from the design mockups.
-abstract final class HomeColors {
-  static const Color ink = Color(0xFF0F1222);
-  static const Color reactBlue = Color(0xFF2563EB);
-  static const Color nextPurple = Color(0xFF7C3AED);
-  static const Color cyan = Color(0xFF5EE1FF);
-  static const Color reactCyan = Color(0xFF61DAFB);
-  static const Color link = Color(0xFF4338CA);
-
-  static const LinearGradient level = LinearGradient(
-    colors: [Color(0xFF4A5CF2), Color(0xFF7B63F4), Color(0xFFA772F5)],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
-
-  static const LinearGradient button = LinearGradient(
-    colors: [Color(0xFF4F46E5), Color(0xFF7C3AED)],
-    begin: Alignment.centerLeft,
-    end: Alignment.centerRight,
-  );
-
-  static const LinearGradient reactTrack = LinearGradient(
-    colors: [Color(0xFF1677F0), Color(0xFF3A55EE), Color(0xFF7A3CF3)],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
-
-  static const LinearGradient nextTrack = LinearGradient(
-    colors: [Color(0xFF0B0F1C), Color(0xFF1B2133), Color(0xFF111522)],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
-
-  static List<BoxShadow> softShadow(BuildContext context) =>
-      Theme.of(context).brightness == Brightness.dark
-      ? const []
-      : [
-          BoxShadow(
-            color: const Color(0xFF3C46A0).withValues(alpha: 0.07),
-            blurRadius: 18,
-            offset: const Offset(0, 6),
-          ),
-        ];
-}
-
-bool _isDark(BuildContext context) =>
-    Theme.of(context).brightness == Brightness.dark;
-
-/// React "atom" logo drawn with three orbits and a nucleus.
-class ReactLogo extends StatelessWidget {
-  const ReactLogo({
-    this.size = 24,
-    this.color = HomeColors.reactCyan,
-    super.key,
-  });
-
-  final double size;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox.square(
-      dimension: size,
-      child: CustomPaint(painter: _AtomPainter(color)),
-    );
-  }
-}
-
-class _AtomPainter extends CustomPainter {
-  _AtomPainter(this.color);
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final c = size.center(Offset.zero);
-    final stroke = Paint()
-      ..color = color
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = size.width * 0.07;
-    final orbit = Rect.fromCenter(
-      center: Offset.zero,
-      width: size.width * 0.92,
-      height: size.height * 0.36,
-    );
-    for (var i = 0; i < 3; i++) {
-      canvas
-        ..save()
-        ..translate(c.dx, c.dy)
-        ..rotate(i * math.pi / 3)
-        ..drawOval(orbit, stroke)
-        ..restore();
-    }
-    canvas.drawCircle(c, size.width * 0.09, Paint()..color = color);
-  }
-
-  @override
-  bool shouldRepaint(_AtomPainter old) => old.color != color;
-}
-
-/// Next.js mark: white "N" on a black disc.
-class NextLogo extends StatelessWidget {
-  const NextLogo({this.size = 24, super.key});
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: Colors.black,
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.white24, width: 0.5),
-      ),
-      child: Text(
-        'N',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: size * 0.56,
-          fontWeight: FontWeight.w600,
-          height: 1,
-        ),
-      ),
-    );
-  }
-}
-
-/// Bold section title with optional subtitle and a "View all →" link.
-class HomeSectionHeader extends StatelessWidget {
-  const HomeSectionHeader(
-    this.title, {
-    this.subtitle,
-    this.onViewAll,
-    this.trailing,
-    super.key,
-  });
-
-  final String title;
-  final String? subtitle;
-  final VoidCallback? onViewAll;
-  final Widget? trailing;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final linkColor = _isDark(context)
-        ? theme.colorScheme.primary
-        : HomeColors.link;
-    return Padding(
-      padding: const EdgeInsets.only(top: 28, bottom: AppSpacing.md),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Semantics(
-                  header: true,
-                  child: Text(
-                    title,
-                    style: theme.textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: -0.6,
-                    ),
-                  ),
-                ),
-                if (subtitle != null) ...[
-                  const SizedBox(height: 2),
-                  Text(
-                    subtitle!,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-          ?trailing,
-          if (onViewAll != null)
-            TextButton(
-              onPressed: onViewAll,
-              style: TextButton.styleFrom(
-                foregroundColor: linkColor,
-                minimumSize: const Size(48, 32),
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-              ),
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('View all'),
-                  SizedBox(width: 6),
-                  Icon(Icons.arrow_forward_rounded, size: 20),
-                ],
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
 
 /// Greeting, search/bookmark/avatar actions and the hero title with artwork.
 class HomeHeader extends ConsumerWidget {
@@ -237,7 +31,7 @@ class HomeHeader extends ConsumerWidget {
     final now = ref.watch(clockProvider)();
     final theme = Theme.of(context);
     final ink = theme.colorScheme.onSurface;
-    final dark = _isDark(context);
+    final dark = isDarkTheme(context);
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -307,7 +101,7 @@ class HomeHeader extends ConsumerWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: const Color(0xFFDDE3FB),
-                        boxShadow: HomeColors.softShadow(context),
+                        boxShadow: DashColors.softShadow(context),
                         image: const DecorationImage(
                           image: AssetImage('assets/images/home_avatar.png'),
                           fit: BoxFit.cover,
@@ -333,7 +127,7 @@ class HomeHeader extends ConsumerWidget {
                       height: 1.15,
                       fontWeight: FontWeight.w900,
                       letterSpacing: -0.8,
-                      color: dark ? ink : HomeColors.ink,
+                      color: dark ? ink : DashColors.ink,
                     ),
                     children: [
                       const TextSpan(text: 'Learn '),
@@ -342,7 +136,7 @@ class HomeHeader extends ConsumerWidget {
                         style: TextStyle(
                           color: dark
                               ? const Color(0xFF60A5FA)
-                              : HomeColors.reactBlue,
+                              : DashColors.reactBlue,
                         ),
                       ),
                       const TextSpan(text: ' & '),
@@ -351,7 +145,7 @@ class HomeHeader extends ConsumerWidget {
                         style: TextStyle(
                           color: dark
                               ? AppColors.purpleLight
-                              : HomeColors.nextPurple,
+                              : DashColors.nextPurple,
                         ),
                       ),
                     ],
@@ -410,7 +204,7 @@ class HomeLevelCard extends ConsumerWidget {
             borderRadius: AppRadius.xlAll,
             child: Ink(
               decoration: const BoxDecoration(
-                gradient: HomeColors.level,
+                gradient: DashColors.level,
                 borderRadius: AppRadius.xlAll,
               ),
               padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
@@ -420,8 +214,8 @@ class HomeLevelCard extends ConsumerWidget {
                     value: level.progress,
                     size: 76,
                     strokeWidth: 6,
-                    color: HomeColors.cyan,
-                    trackColor: HomeColors.cyan.withValues(alpha: 0.35),
+                    color: DashColors.cyan,
+                    trackColor: DashColors.cyan.withValues(alpha: 0.35),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -547,7 +341,7 @@ class HomeStatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final dark = _isDark(context);
+    final dark = isDarkTheme(context);
     return Semantics(
       button: true,
       label: '$label: $value',
@@ -555,7 +349,7 @@ class HomeStatTile extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: AppRadius.lgAll,
-          boxShadow: HomeColors.softShadow(context),
+          boxShadow: DashColors.softShadow(context),
         ),
         child: Material(
           type: MaterialType.transparency,
@@ -723,7 +517,7 @@ class HomeStreakCard extends ConsumerWidget {
     final streak = ref.watch(streakProvider);
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    final dark = _isDark(context);
+    final dark = isDarkTheme(context);
     const flame = Color(0xFFF4511E);
     final indigo = dark ? scheme.primary : const Color(0xFF3B3FD8);
     return Container(
@@ -753,7 +547,7 @@ class HomeStreakCard extends ConsumerWidget {
                 decoration: BoxDecoration(
                   color: dark ? scheme.surfaceContainer : Colors.white,
                   borderRadius: AppRadius.mdAll,
-                  boxShadow: HomeColors.softShadow(context),
+                  boxShadow: DashColors.softShadow(context),
                 ),
                 child: TweenAnimationBuilder<double>(
                   tween: Tween(begin: 0.6, end: 1),
@@ -900,145 +694,6 @@ class HomeStreakCard extends ConsumerWidget {
   }
 }
 
-/// Small rounded label with an optional leading widget.
-class _Pill extends StatelessWidget {
-  const _Pill({
-    required this.label,
-    required this.color,
-    required this.background,
-    this.leading,
-  });
-
-  final String label;
-  final Color color;
-  final Color background;
-  final Widget? leading;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: AppRadius.pillAll,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (leading != null) ...[leading!, const SizedBox(width: 6)],
-          Flexible(
-            child: Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: color,
-                fontSize: 13,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _Bars extends StatelessWidget {
-  const _Bars({required this.color});
-  final Color color;
-  static const double size = 12;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        for (var i = 0; i < 3; i++)
-          Container(
-            width: size * 0.22,
-            height: size * (0.45 + i * 0.27),
-            margin: EdgeInsets.only(right: i < 2 ? size * 0.14 : 0),
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.circular(1.5),
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-/// Gradient pill button used for primary calls to action.
-class _GradientButton extends StatelessWidget {
-  const _GradientButton({required this.label, required this.onPressed});
-
-  final String label;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: label,
-      excludeSemantics: true,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: AppRadius.lgAll,
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF5B4BEA).withValues(alpha: 0.35),
-              blurRadius: 14,
-              offset: const Offset(0, 6),
-            ),
-          ],
-        ),
-        child: Material(
-          type: MaterialType.transparency,
-          child: InkWell(
-            onTap: onPressed,
-            borderRadius: AppRadius.lgAll,
-            child: Ink(
-              height: 44,
-              decoration: const BoxDecoration(
-                gradient: HomeColors.button,
-                borderRadius: AppRadius.lgAll,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.play_arrow_rounded, color: Colors.white),
-                  const SizedBox(width: 4),
-                  Flexible(
-                    child: Text(
-                      label,
-                      maxLines: 1,
-                      overflow: TextOverflow.fade,
-                      softWrap: false,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  const Icon(
-                    Icons.arrow_forward_rounded,
-                    color: Colors.white,
-                    size: 18,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 /// "Continue learning" card with badges, meta row, progress and artwork.
 class HomeContinueCard extends ConsumerWidget {
   const HomeContinueCard({super.key});
@@ -1048,7 +703,7 @@ class HomeContinueCard extends ConsumerWidget {
     final value = ref.watch(continueLearningProvider);
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    final dark = _isDark(context);
+    final dark = isDarkTheme(context);
     return AsyncValueView(
       value: value,
       onRetry: () => ref.invalidate(continueLearningProvider),
@@ -1091,7 +746,7 @@ class HomeContinueCard extends ConsumerWidget {
           child: DecoratedBox(
             decoration: BoxDecoration(
               borderRadius: AppRadius.xlAll,
-              boxShadow: HomeColors.softShadow(context),
+              boxShadow: DashColors.softShadow(context),
             ),
             child: Material(
               type: MaterialType.transparency,
@@ -1127,7 +782,7 @@ class HomeContinueCard extends ConsumerWidget {
                               spacing: 6,
                               runSpacing: 6,
                               children: [
-                                _Pill(
+                                TagPill(
                                   label: l.track.label,
                                   color: purple,
                                   background: purple.withValues(alpha: 0.12),
@@ -1135,11 +790,11 @@ class HomeContinueCard extends ConsumerWidget {
                                       ? ReactLogo(size: 16, color: purple)
                                       : const NextLogo(size: 16),
                                 ),
-                                _Pill(
+                                TagPill(
                                   label: l.difficulty.lessonLabel,
                                   color: green,
                                   background: green.withValues(alpha: 0.12),
-                                  leading: _Bars(color: green),
+                                  leading: SignalBars(color: green),
                                 ),
                               ],
                             ),
@@ -1192,7 +847,7 @@ class HomeContinueCard extends ConsumerWidget {
                                     style: meta,
                                   ),
                                   divider(),
-                                  _Bars(color: muted),
+                                  SignalBars(color: muted),
                                   const SizedBox(width: 4),
                                   Text(l.difficulty.lessonLabel, style: meta),
                                 ],
@@ -1235,7 +890,7 @@ class HomeContinueCard extends ConsumerWidget {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            _GradientButton(label: 'Continue', onPressed: open),
+                            GradientButton(label: 'Continue', onPressed: open),
                             const SizedBox(height: 14),
                           ],
                         ),
@@ -1326,8 +981,8 @@ class HomeTrackCard extends ConsumerWidget {
             child: Ink(
               decoration: BoxDecoration(
                 gradient: isReact
-                    ? HomeColors.reactTrack
-                    : HomeColors.nextTrack,
+                    ? DashColors.reactTrack
+                    : DashColors.nextTrack,
                 borderRadius: AppRadius.xlAll,
               ),
               padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
@@ -1358,7 +1013,7 @@ class HomeTrackCard extends ConsumerWidget {
                         value: fraction,
                         size: 50,
                         strokeWidth: 4,
-                        color: HomeColors.cyan,
+                        color: DashColors.cyan,
                         trackColor: Colors.white.withValues(alpha: 0.18),
                         child: Text(
                           '${(fraction * 100).round()}%',
@@ -1396,7 +1051,7 @@ class HomeTrackCard extends ConsumerWidget {
                   AnimatedProgressBar(
                     value: fraction,
                     height: 6,
-                    color: HomeColors.cyan,
+                    color: DashColors.cyan,
                     backgroundColor: Colors.white.withValues(alpha: 0.3),
                   ),
                   const SizedBox(height: 8),
@@ -1476,7 +1131,7 @@ class HomeXpPill extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final done = ref.watch(dailyChallengeDoneProvider);
-    final dark = _isDark(context);
+    final dark = isDarkTheme(context);
     final scheme = Theme.of(context).colorScheme;
     return Container(
       margin: const EdgeInsets.only(top: 2),
@@ -1490,7 +1145,7 @@ class HomeXpPill extends ConsumerWidget {
         style: TextStyle(
           color: done
               ? (dark ? AppColors.successLight : AppColors.success)
-              : (dark ? scheme.primary : HomeColors.link),
+              : (dark ? scheme.primary : DashColors.link),
           fontSize: 14,
           fontWeight: FontWeight.w700,
         ),
@@ -1509,7 +1164,7 @@ class HomeDailyChallengeCard extends ConsumerWidget {
     final done = ref.watch(dailyChallengeDoneProvider);
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    final dark = _isDark(context);
+    final dark = isDarkTheme(context);
     return AsyncValueView(
       value: challenge,
       onRetry: () => ref.invalidate(dailyChallengeProvider),
@@ -1517,7 +1172,7 @@ class HomeDailyChallengeCard extends ConsumerWidget {
         if (c == null) return const SizedBox.shrink();
         void open() => context.push(AppRoutes.challenge);
         final orange = dark ? AppColors.warningLight : const Color(0xFFD97706);
-        final link = dark ? scheme.primary : HomeColors.link;
+        final link = dark ? scheme.primary : DashColors.link;
         return Semantics(
           button: true,
           label: 'Daily challenge: ${c.prompt}',
@@ -1567,7 +1222,7 @@ class HomeDailyChallengeCard extends ConsumerWidget {
                               ),
                               const SizedBox(width: 8),
                               Flexible(
-                                child: _Pill(
+                                child: TagPill(
                                   label: c.typeLabel,
                                   color: orange,
                                   background: orange.withValues(

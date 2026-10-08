@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/router/app_router.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../shared/widgets/common.dart';
+import '../../../shared/widgets/dashboard.dart';
 import '../../interview/providers/interview_providers.dart';
 import '../../learn/presentation/widgets/learn_widgets.dart';
 import '../../learn/providers/learn_providers.dart';
@@ -23,24 +24,24 @@ class HomeScreen extends StatelessWidget {
       const HomeStatsGrid(),
       const SizedBox(height: AppSpacing.md),
       const HomeStreakCard(),
-      HomeSectionHeader(
+      DashSectionHeader(
         'Continue learning',
         onViewAll: () => context.go(AppRoutes.learn),
       ),
       const HomeContinueCard(),
-      HomeSectionHeader(
+      DashSectionHeader(
         'Your tracks',
         subtitle: 'Choose a track and keep learning.',
         onViewAll: () => context.go(AppRoutes.learn),
       ),
       const HomeTrackRow(),
-      const HomeSectionHeader(
+      const DashSectionHeader(
         'Daily challenge',
         subtitle: 'A new challenge every day to boost your skills.',
         trailing: HomeXpPill(),
       ),
       const HomeDailyChallengeCard(),
-      const HomeSectionHeader('Practice'),
+      const DashSectionHeader('Practice'),
       const _InterviewProgressCard(),
       const SizedBox(height: AppSpacing.md),
       const _QuizStatsCard(),
@@ -198,7 +199,7 @@ class _RecommendedSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const HomeSectionHeader('Recommended for you'),
+        const DashSectionHeader('Recommended for you'),
         AppCard(
           onTap: () => context.push(AppRoutes.lesson(lesson.track, lesson.id)),
           semanticLabel: 'Recommended: ${lesson.title}',
@@ -248,7 +249,7 @@ class _RecentlyCompletedSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const HomeSectionHeader('Recently completed'),
+        const DashSectionHeader('Recently completed'),
         AppCard(
           padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
           child: Column(
