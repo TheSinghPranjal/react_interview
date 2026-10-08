@@ -115,14 +115,14 @@ class _InterviewListScreenState extends ConsumerState<InterviewListScreen> {
               ),
               SliverPadding(
                 padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.sm,
+                  AppSpacing.lg,
                   0,
-                  AppSpacing.sm,
+                  AppSpacing.lg,
                   AppSpacing.xl,
                 ),
                 sliver: SliverList.builder(
                   itemCount: list.length,
-                  itemBuilder: (context, i) => InterviewQuestionTile(
+                  itemBuilder: (context, i) => InterviewQuestionCard(
                     question: list[i],
                     number: i + 1,
                     onTap: () => _open(list, list[i].id),

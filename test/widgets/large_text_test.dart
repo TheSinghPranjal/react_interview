@@ -12,6 +12,7 @@ void main() {
     '/learn/react/react_use_memo',
     '/interview',
     '/interview/easy',
+    '/interview/browse',
     '/interview/react_easy_001',
     '/quiz',
     '/profile',

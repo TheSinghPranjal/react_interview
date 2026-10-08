@@ -15,6 +15,8 @@ class InterviewFilterNotifier extends Notifier<InterviewFilter> {
 
   void toggleCategory(Track t) => state = state.toggleCategory(t);
   void toggleDifficulty(Difficulty d) => state = state.toggleDifficulty(d);
+  void setTopic(String? topic) => state = state.withTopic(topic);
+  void set(InterviewFilter filter) => state = filter;
   void clear() => state = const InterviewFilter();
 }
 
@@ -52,6 +54,22 @@ class InterviewProgressSummary {
 
   double get fraction => total == 0 ? 0 : done / total;
 }
+
+/// Question counts per topic, most common first.
+final interviewTopicCountsProvider =
+    FutureProvider.family<List<(String, int)>, Difficulty?>((
+      ref,
+      difficulty,
+    ) async {
+      final all = await ref.watch(interviewQuestionsProvider.future);
+      final counts = <String, int>{};
+      for (final q in all) {
+        if (difficulty != null && q.difficulty != difficulty) continue;
+        counts[q.topic] = (counts[q.topic] ?? 0) + 1;
+      }
+      return [for (final e in counts.entries) (e.key, e.value)]
+        ..sort((a, b) => b.$2.compareTo(a.$2));
+    });
 
 /// Completion summary per difficulty (null = all questions).
 final interviewProgressProvider =
