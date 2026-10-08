@@ -174,7 +174,10 @@ class HomeHeader extends ConsumerWidget {
 
 /// Indigo→violet level card with a cyan ring, XP bar and medal.
 class HomeLevelCard extends ConsumerWidget {
-  const HomeLevelCard({super.key});
+  const HomeLevelCard({this.showNextLevel = false, super.key});
+
+  /// Shows a "Next: Level N →" pill instead of the medal (profile style).
+  final bool showNextLevel;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -278,12 +281,53 @@ class HomeLevelCard extends ConsumerWidget {
                                 ],
                               ),
                             ),
-                            const Text('🏅', style: TextStyle(fontSize: 28)),
-                            const SizedBox(width: 6),
-                            const Icon(
-                              Icons.chevron_right_rounded,
-                              color: Colors.white,
-                            ),
+                            if (showNextLevel)
+                              Flexible(
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 5,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: AppRadius.pillAll,
+                                    border: Border.all(
+                                      color: Colors.white.withValues(
+                                        alpha: 0.6,
+                                      ),
+                                    ),
+                                  ),
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          'Next: Level ${level.level + 1}',
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 6),
+                                        const Icon(
+                                          Icons.arrow_forward_rounded,
+                                          color: Colors.white,
+                                          size: 16,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                            else ...[
+                              const Text('🏅', style: TextStyle(fontSize: 28)),
+                              const SizedBox(width: 6),
+                              const Icon(
+                                Icons.chevron_right_rounded,
+                                color: Colors.white,
+                              ),
+                            ],
                           ],
                         ),
                         const SizedBox(height: AppSpacing.sm),
@@ -510,7 +554,10 @@ class HomeStatsGrid extends ConsumerWidget {
 
 /// Streak summary with a Mon–Sun row inside a soft blue card.
 class HomeStreakCard extends ConsumerWidget {
-  const HomeStreakCard({super.key});
+  const HomeStreakCard({this.plain = false, super.key});
+
+  /// White card with an orange flame disc and gold "Best" pill (profile).
+  final bool plain;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -523,17 +570,22 @@ class HomeStreakCard extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
       decoration: BoxDecoration(
-        gradient: dark
+        boxShadow: plain ? DashColors.softShadow(context) : null,
+        gradient: dark || plain
             ? null
             : const LinearGradient(
                 colors: [Color(0xFFEAF1FF), Color(0xFFF1EFFF)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-        color: dark ? scheme.surface : null,
+        color: dark || plain ? scheme.surface : null,
         borderRadius: AppRadius.xlAll,
         border: Border.all(
-          color: dark ? scheme.outlineVariant : const Color(0xFFD9E3FA),
+          color: dark
+              ? scheme.outlineVariant
+              : plain
+              ? scheme.outlineVariant.withValues(alpha: 0.6)
+              : const Color(0xFFD9E3FA),
         ),
       ),
       child: Column(
@@ -542,12 +594,17 @@ class HomeStreakCard extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 38,
-                height: 38,
+                width: plain ? 46 : 38,
+                height: plain ? 46 : 38,
                 decoration: BoxDecoration(
-                  color: dark ? scheme.surfaceContainer : Colors.white,
-                  borderRadius: AppRadius.mdAll,
-                  boxShadow: DashColors.softShadow(context),
+                  color: plain
+                      ? flame.withValues(alpha: dark ? 0.2 : 0.12)
+                      : dark
+                      ? scheme.surfaceContainer
+                      : Colors.white,
+                  shape: plain ? BoxShape.circle : BoxShape.rectangle,
+                  borderRadius: plain ? null : AppRadius.mdAll,
+                  boxShadow: plain ? null : DashColors.softShadow(context),
                 ),
                 child: TweenAnimationBuilder<double>(
                   tween: Tween(begin: 0.6, end: 1),
@@ -597,11 +654,15 @@ class HomeStreakCard extends ConsumerWidget {
                 decoration: BoxDecoration(
                   color: dark
                       ? scheme.surfaceContainer
+                      : plain
+                      ? const Color(0xFFFFF1D6)
                       : const Color(0xFFE2E9FA),
                   borderRadius: AppRadius.pillAll,
                 ),
                 child: Text(
-                  'Best ${streak.longest}',
+                  plain
+                      ? '👑 Best ${streak.longest}'
+                      : 'Best ${streak.longest}',
                   style: theme.textTheme.labelLarge?.copyWith(fontSize: 13.5),
                 ),
               ),
@@ -611,7 +672,9 @@ class HomeStreakCard extends ConsumerWidget {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 10),
             decoration: BoxDecoration(
-              color: dark
+              color: plain
+                  ? null
+                  : dark
                   ? scheme.surfaceContainer
                   : Colors.white.withValues(alpha: 0.55),
               borderRadius: AppRadius.lgAll,

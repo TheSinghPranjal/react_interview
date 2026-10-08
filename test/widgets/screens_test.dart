@@ -76,7 +76,7 @@ void main() {
 
     await tester.tap(find.text('Quiz').last);
     await tester.pumpAndSettle();
-    expect(find.text('Build your quiz'), findsOneWidget);
+    expect(find.text('Number of questions'), findsOneWidget);
 
     await tester.tap(find.text('Interview').last);
     await tester.pumpAndSettle();

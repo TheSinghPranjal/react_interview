@@ -154,9 +154,11 @@ class DashSectionHeader extends StatelessWidget {
     this.subtitle,
     this.onViewAll,
     this.trailing,
+    this.viewAllLabel = 'View all',
     super.key,
   });
 
+  final String viewAllLabel;
   final String title;
   final String? subtitle;
   final VoidCallback? onViewAll;
@@ -199,12 +201,12 @@ class DashSectionHeader extends StatelessWidget {
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               padding: const EdgeInsets.symmetric(horizontal: 4),
             ),
-            child: const Row(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('View all'),
-                SizedBox(width: 6),
-                Icon(Icons.arrow_forward_rounded, size: 20),
+                Text(viewAllLabel),
+                const SizedBox(width: 6),
+                const Icon(Icons.arrow_forward_rounded, size: 20),
               ],
             ),
           );
@@ -328,9 +330,11 @@ class GradientButton extends StatelessWidget {
     this.height = 44,
     this.leading = const Icon(Icons.play_arrow_rounded, color: Colors.white),
     this.spreadArrow = false,
+    this.showArrow = true,
     super.key,
   });
 
+  final bool showArrow;
   final String label;
   final VoidCallback? onPressed;
   final double height;
@@ -394,11 +398,12 @@ class GradientButton extends StatelessWidget {
                     ),
                     const SizedBox(width: 6),
                     if (spreadArrow) const Spacer(),
-                    const Icon(
-                      Icons.arrow_forward_rounded,
-                      color: Colors.white,
-                      size: 18,
-                    ),
+                    if (showArrow)
+                      const Icon(
+                        Icons.arrow_forward_rounded,
+                        color: Colors.white,
+                        size: 18,
+                      ),
                   ],
                 ),
               ),
@@ -666,8 +671,12 @@ class ChoicePill extends StatelessWidget {
     this.labelColor,
     this.outlinedSelection = false,
     this.expand = false,
+    this.dense = false,
     super.key,
   });
+
+  /// Smaller text and spacing for rows of four or five pills.
+  final bool dense;
 
   final String label;
   final bool selected;
@@ -701,7 +710,7 @@ class ChoicePill extends StatelessWidget {
           onTap: onTap,
           borderRadius: AppRadius.pillAll,
           child: Ink(
-            height: 44,
+            height: dense ? 40 : 44,
             padding: EdgeInsets.symmetric(horizontal: expand ? 6 : 14),
             decoration: BoxDecoration(
               gradient: filled ? DashColors.button : null,
@@ -718,34 +727,52 @@ class ChoicePill extends StatelessWidget {
                       width: selected ? 1.6 : 1,
                     ),
             ),
-            child: Row(
-              mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (filled) ...[
-                  const Icon(
-                    Icons.check_rounded,
-                    color: Colors.white,
-                    size: 18,
+            child: Builder(
+              builder: (context) {
+                final text = Text(
+                  label,
+                  maxLines: 1,
+                  overflow: expand ? null : TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: fg,
+                    fontSize: dense ? 13.5 : 15,
+                    fontWeight: FontWeight.w600,
                   ),
-                  const SizedBox(width: 8),
-                ] else if (leading != null) ...[
-                  leading!,
-                  const SizedBox(width: 8),
-                ],
-                Flexible(
-                  child: Text(
-                    label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: fg,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
+                );
+                final lead = <Widget>[
+                  if (filled) ...[
+                    Icon(
+                      Icons.check_rounded,
+                      color: Colors.white,
+                      size: dense ? 16 : 18,
                     ),
-                  ),
-                ),
-              ],
+                    SizedBox(width: dense ? 5 : 8),
+                  ] else if (leading != null) ...[
+                    leading!,
+                    SizedBox(width: dense ? 5 : 8),
+                  ],
+                ];
+                // Full-width pills shrink their content rather than
+                // truncating it.
+                if (expand) {
+                  return Center(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [...lead, text],
+                      ),
+                    ),
+                  );
+                }
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ...lead,
+                    Flexible(child: text),
+                  ],
+                );
+              },
             ),
           ),
         ),

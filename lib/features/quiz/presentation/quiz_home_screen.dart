@@ -109,44 +109,28 @@ class _QuizHomeScreenState extends ConsumerState<QuizHomeScreen> {
       ),
       const SizedBox(height: AppSpacing.lg),
       const _QuizSummaryCard(),
-      const DashSectionHeader(
-        'Build your quiz',
-        subtitle: 'Customize your quiz and start practicing.',
-      ),
+      const SizedBox(height: AppSpacing.md),
       _OptionCard(
         icon: Icons.article_outlined,
         color: const Color(0xFF2563EB),
         title: 'Number of questions',
         subtitle: 'Choose how many questions you want to attempt.',
-        child: LayoutBuilder(
-          builder: (context, c) {
-            const gap = 8.0;
-            final options = QuizDefaults.questionCountOptions;
-            final narrow =
-                c.maxWidth < 260 * MediaQuery.textScalerOf(context).scale(1);
-            final w = narrow
-                ? null
-                : (c.maxWidth - gap * (options.length - 1) - 30) /
-                      options.length;
-            return Wrap(
-              spacing: gap,
-              runSpacing: gap,
-              children: [
-                for (final n in options)
-                  SizedBox(
-                    width: w == null
-                        ? null
-                        : (config.questionCount == n ? w + 30 : w),
-                    child: ChoicePill(
-                      label: '$n',
-                      expand: w != null,
-                      selected: config.questionCount == n,
-                      onTap: () => notifier.setCount(n),
-                    ),
-                  ),
-              ],
-            );
-          },
+        child: _PillRow(
+          minPill: 46,
+          flex: [
+            for (final n in QuizDefaults.questionCountOptions)
+              config.questionCount == n ? 6 : 4,
+          ],
+          children: [
+            for (final n in QuizDefaults.questionCountOptions)
+              ChoicePill(
+                label: '$n',
+                expand: true,
+                dense: true,
+                selected: config.questionCount == n,
+                onTap: () => notifier.setCount(n),
+              ),
+          ],
         ),
       ),
       const SizedBox(height: AppSpacing.md),
@@ -189,11 +173,12 @@ class _QuizHomeScreenState extends ConsumerState<QuizHomeScreen> {
         subtitle: 'Choose the difficulty level.',
         child: _PillRow(
           flex: const [5, 6, 8, 6],
-          minPill: 70,
+          minPill: 62,
           children: [
             ChoicePill(
               label: 'All',
               expand: true,
+              dense: true,
               selected: config.difficulty == null,
               onTap: () => notifier.setDifficulty(null),
             ),
@@ -201,6 +186,7 @@ class _QuizHomeScreenState extends ConsumerState<QuizHomeScreen> {
               ChoicePill(
                 label: d.label,
                 expand: true,
+                dense: true,
                 labelColor: DashColors.difficulty(d, dark: dark),
                 leading: SignalBars(
                   color: DashColors.difficulty(d, dark: dark),
@@ -232,10 +218,9 @@ class _QuizHomeScreenState extends ConsumerState<QuizHomeScreen> {
             : const Icon(Icons.play_arrow_rounded, color: Colors.white),
         onPressed: _starting || count == 0 ? null : _start,
       ),
+      const _RewardedXpCard(),
       const SizedBox(height: AppSpacing.lg),
       const _FeatureRow(),
-      const SizedBox(height: AppSpacing.lg),
-      const _RewardedXpCard(),
       const _RecentHistory(),
       const SizedBox(height: AppSpacing.xl),
     ];
@@ -284,13 +269,32 @@ class _QuizSummaryCard extends ConsumerWidget {
         child: Stack(
           children: [
             Positioned(
+              right: 70,
+              bottom: -4,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  for (final h in const [18.0, 30.0, 44.0])
+                    Container(
+                      width: 12,
+                      height: h,
+                      margin: const EdgeInsets.only(left: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.14),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            Positioned(
               right: 0,
               top: 0,
               bottom: 0,
               child: Icon(
                 Icons.emoji_events_rounded,
                 size: 76,
-                color: Colors.white.withValues(alpha: 0.12),
+                color: Colors.white.withValues(alpha: 0.18),
               ),
             ),
             Row(
@@ -378,41 +382,36 @@ class _OptionCard extends StatelessWidget {
       borderColor: scheme.outlineVariant.withValues(
         alpha: isDarkTheme(context) ? 1 : 0.6,
       ),
-      padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
-      child: Column(
+      padding: const EdgeInsets.fromLTRB(12, 14, 12, 14),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              IconDisc(icon: icon, color: color, size: 46),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      subtitle,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: scheme.onSurfaceVariant,
-                        fontSize: 13.5,
-                      ),
-                    ),
-                  ],
+          IconDisc(icon: icon, color: color, size: 42),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 2),
+                Text(
+                  subtitle,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: scheme.onSurfaceVariant,
+                    fontSize: 13.5,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                child,
+              ],
+            ),
           ),
-          const SizedBox(height: 12),
-          child,
         ],
       ),
     );
@@ -636,22 +635,75 @@ class _RewardedXpCard extends ConsumerWidget {
       return const SizedBox.shrink();
     }
     final theme = Theme.of(context);
-    return AppCard(
-      child: Row(
-        children: [
-          Icon(Icons.card_giftcard_rounded, color: theme.colorScheme.secondary),
-          const SizedBox(width: AppSpacing.md),
-          Expanded(
-            child: Text(
-              'Watch a short ad to earn +${XpRewards.rewardedAd} XP',
-              style: theme.textTheme.bodyMedium,
+    final scheme = theme.colorScheme;
+    final dark = isDarkTheme(context);
+    final purple = dark ? AppColors.purpleLight : const Color(0xFF7C3AED);
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.md),
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+        decoration: BoxDecoration(
+          gradient: dark
+              ? null
+              : const LinearGradient(
+                  colors: [Color(0xFFFDF2FB), Color(0xFFF5F0FF)],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                ),
+          color: dark ? scheme.surface : null,
+          borderRadius: AppRadius.lgAll,
+          border: Border.all(
+            color: dark ? scheme.outlineVariant : const Color(0xFFF3D9F0),
+          ),
+        ),
+        child: Row(
+          children: [
+            IconDisc(
+              icon: Icons.card_giftcard_rounded,
+              color: purple,
+              size: 46,
             ),
-          ),
-          TextButton(
-            onPressed: () => _watch(context, ref),
-            child: const Text('Watch'),
-          ),
-        ],
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text.rich(
+                    TextSpan(
+                      text: 'Watch a short ad to earn ',
+                      children: [
+                        TextSpan(
+                          text: '+${XpRewards.rewardedAd} XP',
+                          style: TextStyle(color: purple),
+                        ),
+                      ],
+                    ),
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    'Support the app and get extra reward.',
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: scheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            SizedBox(
+              width: 104,
+              child: GradientButton(
+                label: 'Watch',
+                height: 42,
+                onPressed: () => _watch(context, ref),
+                showArrow: false,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
