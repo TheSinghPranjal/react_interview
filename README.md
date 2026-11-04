@@ -36,6 +36,24 @@ flutter run
 5. Replace the placeholder **privacy policy / terms** (`lib/features/profile/presentation/info_screens.dart`), host the policy at a public URL, and set `AppConstants.supportEmail`.
 6. Configure the consent message (GDPR/US states) in the AdMob console's *Privacy & messaging* section.
 
+## Production deploy
+
+Manual only: Actions → **Production Deploy** → Run workflow. There are no inputs, and the workflow does not run on push (the version-bump commit it pushes to `main` would otherwise start another deploy). The file is `.github/workflows/deploy.yml`. It checks out `main`, bumps the pubspec build number by 1, commits `chore: bump version to <version>` as `github-actions[bot]`, builds a release app bundle, and uploads it to the Play production track with status `completed`. Flutter is pinned to **3.41.9** because current stable no longer exports `CupertinoPageTransitionsBuilder` from `material.dart`, which this app's theme uses.
+
+Add these repository secrets. The names must match exactly:
+
+- `KEYSTORE_BASE64` — base64 of the upload keystore. The job writes `android/app/keystore/upload-keystore.jks` and fails if the secret is empty.
+- `KEYSTORE_PASSWORD` — keystore password
+- `KEY_ALIAS` — upload key alias
+- `KEY_PASSWORD` — key password
+- `GOOGLE_PLAY_SERVICE_ACCOUNT` — the Play Console service-account JSON
+
+`pubspec.yaml` is `1.0.0+1`, so the first run ships **1.0.0+2** (`versionCode` 2) as `com.the_lazy_bear_club.react_interview`. Confirm that application id matches the Play listing. `android/app/build.gradle.kts` still describes it as a placeholder, and it cannot be changed after the app is published. If Play already has version code 2 or higher, raise the `+build` number on `main` above that code before running.
+
+An upload failure can mean either (a) "The caller does not have permission": the Play service account has no release access to this app under Users and permissions in Play Console, or (b) a version code already on Play, in which case run again.
+
+There is no release AdMob validation in this repo, and the workflow does not pass ad ids. The bundle therefore keeps Google's test ad units and the test app id `ca-app-pub-3940256099942544~3347511713`. `config/admob.example.json` is placeholders only. The in-app privacy policy, terms, and `support@example.com` are still placeholders.
+
 ## Notes
 - iOS: google_mobile_ads 9.1.0 needs `CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES` (set in `ios/Flutter/*.xcconfig` and the Podfile), and SwiftPM is disabled for this project in `pubspec.yaml`. Revisit both when upgrading the plugin.
 - Premium is abstracted behind `SubscriptionService` (free tier only; no payments implemented).
