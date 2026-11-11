@@ -6,6 +6,7 @@ import 'core/router/app_router.dart';
 import 'core/services/ad_providers.dart';
 import 'core/theme/app_theme.dart';
 import 'features/settings/providers/settings_provider.dart';
+import 'features/splash/studio_splash.dart';
 
 class ReactMasterApp extends ConsumerStatefulWidget {
   const ReactMasterApp({this.initializeAds = true, super.key});
@@ -49,7 +50,7 @@ class _ReactMasterAppState extends ConsumerState<ReactMasterApp> {
           data: mq.copyWith(
             textScaler: mq.textScaler.clamp(maxScaleFactor: 1.8),
           ),
-          child: child ?? const SizedBox.shrink(),
+          child: StudioSplashGate(child: child ?? const SizedBox.shrink()),
         );
       },
     );
